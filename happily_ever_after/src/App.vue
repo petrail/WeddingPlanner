@@ -1,17 +1,18 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 import NavBar from './components/NavBar.vue'
 </script>
 
 <template>
   <header>
-    <NavBar/>
+    <NavBar hasLogin/>
     
   </header>
 </template>
 
 <style scoped>
+
+
 header {
   line-height: 1.5;
   max-height: 100vh;
