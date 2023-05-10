@@ -1,21 +1,23 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import NavBar from './components/NavBar.vue'
+import TopBar from './components/TopBar.vue'
 </script>
 
 <template>
-  <header>
-    <NavBar hasLogin/>
-    
-  </header>
+  
+  <TopBar hasLogin/>
+  <div class="header">
+
+  </div>
 </template>
 
 <style scoped>
 
 
-header {
+.header {
   line-height: 1.5;
-  max-height: 100vh;
+  /*max-height: 100vh;*/
+  min-height: 150vh;
   display:flex;
   flex-direction:column;
 }

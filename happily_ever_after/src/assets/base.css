@@ -24,7 +24,9 @@
 /* semantic color variables for this project */
 :root {
     /*OVDE STOJE PROMENLJIVE - BOJE KOJE SE KORISTE KROZ CEO PROJEKAT*/
-    --navbar-color:#88888880;
+    --navbar-color:#888888a8;
+    --navbar-hover-bg:#fff;
+    --navbar-hover-cl:#000;
 }
 
 *,

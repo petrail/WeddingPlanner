@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <div :class="topOfPage? 'navbar normal': 'navbar scrolled'">
     <div class="topbar">
         <div class="info">
             <img src="../assets/navbar/email.png"/>
@@ -16,7 +16,7 @@
     </div>
     <div class="navitems">
         <div class="logo">
-            <h2>Happily Ever After</h2>
+            <h2 :class="topOfPage? '':'white'">Happily Ever After</h2>
         </div>
         <div class="nav">
             <ul v-if="inStore && screenWidth>700">
@@ -40,15 +40,15 @@
             </div>
         </div>
     </div>
-    <div class="dropdown" v-if = "dropdownopen && screenWidth<=700">
-        <div v-if="inStore" class="dropdownMenu">
+    <div :class="dropdownopen? 'dropdown open': 'dropdown closed'" v-if = "screenWidth<=700">
+        <div v-if="inStore && dropdownopen" class="dropdownMenu">
             <a href="index.html">Proizvodi</a>
             <a href="about.html">Korpa</a>
             <a href="service.html">Poruke</a>
             <a href="contact.html">Kontakt</a>
         </div>
             <!--DROPDOWN MENU-->
-        <div v-else class="dropdownMenu">
+        <div v-else-if="dropdownopen" class="dropdownMenu">
             <a href="index.html">Početna</a>
             <a href="about.html">O nama</a>
             <a href="service.html">Servisi</a>
@@ -78,6 +78,9 @@ export default{
         this.onScreenResize();
     },
     methods: {
+        hej(){
+            console.log("HEJ");
+        },
         onScreenResize() {
             window.addEventListener("resize", () => {
                 this.updateScreenWidth();
@@ -87,14 +90,26 @@ export default{
             this.screenWidth = window.innerWidth;
         },
         toggleDropdown(){
+            console.log("hej");
             this.dropdownopen = !this.dropdownopen;
+        },
+        handleScroll(){
+        if(window.pageYOffset>0){
+            if(this.topOfPage) this.topOfPage = false
+            } else {
+            if(!this.topOfPage) this.topOfPage = true
+            }
         },
     },
     data() {
         return {
             screenWidth: 0,
             dropdownopen: false,
+            topOfPage: true
         };
+    },
+    beforeMount() {
+        window.addEventListener('scroll', this.handleScroll)
     },
     
 };
@@ -116,8 +131,16 @@ ul{
     flex-direction:column;
     position:fixed;
     top:0;
-    background-color: var(--navbar-color);
+    transition: all 0.5s ease;
+    z-index: 999;
+}
 
+.normal{
+    background-color: var(--navbar-color);
+}
+.scrolled{
+    background-color: #000;
+    color:white !important;
 }
 .topbar{
     width:100vw;
@@ -177,22 +200,39 @@ img{
     margin-right:10px;
 }
 .dropdownBtn{
-    height:20px;
-    width:20px;
-    background-image: url('../assets/navbar/login.png');
+    height:32px;
+    width:32px;
+    background-image: url('../assets/navbar/menu.png');
     background-size: cover;
     background-repeat: no-repeat;
+    z-index: 5;
 }
 .dropdown{
     width:100vw;
+    transition: all 0.5s ease;
+}
+.closed{
+    height:0;
+    max-height: 0;
+}
+.open{
+    height:160px;
+    max-height: 160px;
 }
 .dropdownMenu{
     width:100vw;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
+    height:150px;
     padding:2vw;
+    text-align: left !important;
 }
 .dropdownMenu a{
     margin-bottom: 1vh;
+}
+a:hover{
+    background-color: var(--navbar-hover-bg);
+    color:var(--navbar-hover-cl);
 }
 </style>
