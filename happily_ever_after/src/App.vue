@@ -1,14 +1,16 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import TopBar from './components/TopBar.vue'
+import ServiceInfo from './components/ServiceInfo.vue';
+import AboutUsInfo from './components/AboutUsInfo.vue';
 </script>
 
 <template>
   
   <TopBar hasLogin/>
-  <div class="header">
+  <ServiceInfo/>
+  <AboutUsInfo/>
 
-  </div>
 </template>
 
 <style scoped>
@@ -17,7 +19,6 @@ import TopBar from './components/TopBar.vue'
 .header {
   line-height: 1.5;
   /*max-height: 100vh;*/
-  min-height: 150vh;
   display:flex;
   flex-direction:column;
 }
