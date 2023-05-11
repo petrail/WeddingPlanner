@@ -8,13 +8,13 @@ import AboutUsInfo from './components/AboutUsInfo.vue';
 <template>
   
   <TopBar hasLogin/>
+  <AboutUsInfo/>  
   <ServiceInfo/>
-  <AboutUsInfo/>
+  
 
 </template>
 
 <style scoped>
-
 
 .header {
   line-height: 1.5;

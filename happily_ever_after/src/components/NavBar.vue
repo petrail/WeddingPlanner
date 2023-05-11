@@ -16,6 +16,7 @@
     </div>
     <div class="navitems">
         <div class="logo">
+            <img class="rings" src="../assets/navbar/wedding.png"/>
             <h2 :class="topOfPage? '':'white'">Happily Ever After</h2>
         </div>
         <div class="nav">
@@ -27,7 +28,7 @@
             </ul>
             <!--DROPDOWN MENU-->
 
-            <ul v-if = "!inStore && screenWidth>700">
+            <ul v-if="!inStore && screenWidth>700">
                 <li><a href="index.html">Početna</a></li>
                 <li><a href="about.html">O nama</a></li>
                 <li><a href="service.html">Servisi</a></li>
@@ -35,12 +36,12 @@
                 <li><a href="contact.html">Kontakt</a></li>
             </ul>
 
-            <div @click = "toggleDropdown" class="dropdownBtn" v-if="screenWidth<=700">
+            <div @click="toggleDropdown" class="dropdownBtn" v-if="screenWidth<=700">
                 
             </div>
         </div>
     </div>
-    <div :class="dropdownopen? 'dropdown open': 'dropdown closed'" v-if = "screenWidth<=700">
+    <div :class="dropdownopen? 'dropdown open': 'dropdown closed'" v-if="screenWidth<=700">
         <div v-if="inStore && dropdownopen" class="dropdownMenu">
             <a href="index.html">Proizvodi</a>
             <a href="about.html">Korpa</a>
@@ -139,8 +140,7 @@ ul{
     background-color: var(--navbar-color);
 }
 .scrolled{
-    background-color: #000;
-    color:white !important;
+    background-color: var(--light-pink);
 }
 .topbar{
     width:100vw;
@@ -157,11 +157,18 @@ ul{
     padding-top:1vh;
     padding-bottom:1.5vh;
 }
+h2{
+    font-weight:600;
+}
+.rings{
+    width:30px;
+    height:30px;
+}
 h3{
     margin:0;
-    font-size:10pt;
+    font-size:12pt;
     margin-right:1vw;
-    color:white
+    color:var(--font-dark);
 }
 .nav{
     display:flex;
@@ -177,9 +184,18 @@ h3{
     align-items: center;
     font-size: min(3vw,12pt);
 }
+@media (width<500px){
+    .logo{
+        width:70vw !important;
+    }
+    .nav{
+        width:30vw !important;
+    }
+}
 a{
-    font-size:min(4vw,12pt);
-    color:#fff;
+    font-size:min(5vw,15pt);
+    color:var(--font-dark);
+    padding:5px;
 }
 .info, .register{
     display: flex;
@@ -216,23 +232,24 @@ img{
     max-height: 0;
 }
 .open{
-    height:160px;
-    max-height: 160px;
+    height:250px;
+    max-height: 250px;
 }
 .dropdownMenu{
     width:100vw;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height:150px;
+    height:200px;
     padding:2vw;
     text-align: left !important;
+    margin-top:20px;
 }
 .dropdownMenu a{
     margin-bottom: 1vh;
 }
 a:hover{
     background-color: var(--navbar-hover-bg);
-    color:var(--navbar-hover-cl);
+    color:var(--navbar-hover-cl);   
 }
 </style>

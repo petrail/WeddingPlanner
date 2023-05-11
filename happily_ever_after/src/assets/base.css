@@ -24,11 +24,38 @@
 /* semantic color variables for this project */
 :root {
     /*OVDE STOJE PROMENLJIVE - BOJE KOJE SE KORISTE KROZ CEO PROJEKAT*/
-    --navbar-color:#888888a8;
+    --navbar-color:#ddbaa7b6;
     --navbar-hover-bg:#fff;
     --navbar-hover-cl:#000;
-}
 
+    --light-purple: #dbcfd3;
+    --light-pink: #ddbaa7;
+    --dark-purple: #877978;
+    --light-red: #c38a77;
+    --white-pink:#f6efe9;
+    --light-blue: #c2b5bd;
+    --font-dark: #36302f;
+
+    --info-bckg:#fff5fa;
+}
+@font-face {
+  font-family: Dosis;
+  src: url(./fonts/Dosis-Regular.ttf);
+  font-weight: normal;
+}
+@font-face {
+  font-family: Dosis;
+  src: url(./fonts/Dosis-Bold.ttf);
+  font-weight: bold;
+}
+@font-face {
+  font-family: Dosis;
+  src: url(./fonts/Dosis-SemiBold.ttf);
+  font-weight:600;
+}
+*{
+  font-family:"Dosis";
+}
 *,
 *::before,
 *::after {

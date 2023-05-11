@@ -47,8 +47,18 @@
   h3{
     font-weight: bold;
     margin-bottom: 1.5vh;
+    font-size:16pt;
+  }
+  p{
+    font-size:12pt;
+  }
+  @media (width>700px){
+    p{
+      font-size:14pt !important;
+    }
   }
   .aboutusContainer{
+    margin-top:80vh;
     max-width:100vw;
     width:100vw;
     display:flex;

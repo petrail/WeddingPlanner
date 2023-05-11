@@ -30,17 +30,28 @@
   </script>
   
   <style scoped>
+  h1{
+    font-weight:600;
+  }
   h3{
     font-weight: bold;
     margin-bottom: 1.5vh;
+    font-size:min(4vw,16pt);
+  }
+  p{
+    font-size:12pt;
+  }
+  @media (width>700px){
+    p{
+      font-size:14pt !important;
+    }
   }
   .serviceContainer{
-    margin-top:80vh;
     max-width:100vw;
     width:100vw;
     display:flex;
     flex-wrap: wrap;
-    background-color: #f2f4f5;
+    background-color: var(--info-bckg);
   }
   .serviceTitle{
     width:100vw;
