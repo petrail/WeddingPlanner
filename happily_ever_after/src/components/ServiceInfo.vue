@@ -69,9 +69,12 @@
     padding-right:10vh;
     animation: popup 0.5s ease;
   }
-  @media (width<700px) {
+  @media (width<1000px) {
     .serviceText{
       width:100vw !important; 
+    }
+    .serviceContainer{
+      flex-direction: column;
     }
   }
   @keyframes popup {

@@ -1,4 +1,27 @@
 @import './base.css';
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+  background: var(--white-pink);
+  height: 80vh;
+  border:0;
+  border-radius: 100vw;
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+  background: var(--dark-purple);
+  border:0;
+  border-radius: 15px;
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--light-pink);
+}
 
 #app {
   max-width: 100vw;

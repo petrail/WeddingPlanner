@@ -3,12 +3,14 @@ import { RouterLink, RouterView } from 'vue-router'
 import TopBar from './components/TopBar.vue'
 import ServiceInfo from './components/ServiceInfo.vue';
 import AboutUsInfo from './components/AboutUsInfo.vue';
+import Gallery from './components/Gallery.vue';
 </script>
 
 <template>
   
   <TopBar hasLogin/>
   <AboutUsInfo/>  
+  <Gallery/>
   <ServiceInfo/>
   
 

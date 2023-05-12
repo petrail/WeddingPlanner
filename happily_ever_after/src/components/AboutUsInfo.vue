@@ -58,7 +58,7 @@
     }
   }
   .aboutusContainer{
-    margin-top:80vh;
+    margin-top:85vh;
     max-width:100vw;
     width:100vw;
     display:flex;
@@ -84,13 +84,18 @@
     width:25vw;
     padding:7vh;
     animation: popup 0.5s ease;
-    padding:4vh;
-    padding-left:10vh;
-    padding-right:10vh;
+    padding:3vh;
+    padding-left:3.5vh;
+    padding-right:3.5vh;
   }
-  @media (width<700px) {
+  @media (width<1000px) {
     .aboutusTitle, .aboutusText, .aboutusRight{
       width:100vw !important; 
+    }
+    .aboutusText{
+      padding:4vh !important;
+      padding-left:10vh !important;
+      padding-right:10vh !important;
     }
   }
   @keyframes popup {
