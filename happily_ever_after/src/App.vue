@@ -4,6 +4,7 @@ import TopBar from './components/TopBar.vue'
 import ServiceInfo from './components/ServiceInfo.vue';
 import AboutUsInfo from './components/AboutUsInfo.vue';
 import Gallery from './components/Gallery.vue';
+import Footer from './components/Footer.vue';
 </script>
 
 <template>
@@ -12,7 +13,7 @@ import Gallery from './components/Gallery.vue';
   <AboutUsInfo/>  
   <Gallery/>
   <ServiceInfo/>
-  
+  <Footer/>
 
 </template>
 
