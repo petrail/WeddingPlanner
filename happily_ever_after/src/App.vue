@@ -8,17 +8,11 @@ import Footer from './components/Footer.vue';
 </script>
 
 <template>
-  
-  <TopBar hasLogin/>
-  <AboutUsInfo/>  
-  <Gallery/>
-  <ServiceInfo/>
+  <router-view/>
   <Footer/>
-
 </template>
 
 <style scoped>
-
 .header {
   line-height: 1.5;
   /*max-height: 100vh;*/

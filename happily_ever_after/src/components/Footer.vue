@@ -7,11 +7,10 @@
         </div>
         <div class="row"> 
             <ul>
-                <li><a href="index.html">Početna</a></li>
-                <li><a href="about.html">O nama</a></li>
-                <li><a href="service.html">Servisi</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="contact.html">Kontakt</a></li>
+                <li><router-link to="/">Početna</router-link></li>
+                <li><router-link to="/about">O nama</router-link></li>
+                <li><router-link to="/services">Servisi</router-link></li>
+                <li><router-link to="/contact">Kontakt</router-link></li>
             </ul>
         </div>
         <div class="row">

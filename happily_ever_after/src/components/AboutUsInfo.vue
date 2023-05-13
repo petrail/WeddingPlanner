@@ -58,7 +58,6 @@
     }
   }
   .aboutusContainer{
-    margin-top:85vh;
     max-width:100vw;
     width:100vw;
     display:flex;

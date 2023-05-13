@@ -9,9 +9,9 @@
         </div>
         <div class="register" v-if="hasLogin">
             <img src="../assets/navbar/login.png"/>
-            <a class="login">Login</a>
+            <router-link to="/login" class="login">Login</router-link>
             <img src="../assets/navbar/register.png"/>
-            <a>Register</a>
+            <router-link to="/register">Register</router-link>
         </div>
     </div>
     <div class="navitems">
@@ -21,7 +21,7 @@
         </div>
         <div class="nav">
             <ul v-if="inStore && screenWidth>700">
-                <li><a href="index.html">Proizvodi</a></li>
+                <li><a>Proizvodi</a></li>
                 <li><a href="about.html">Korpa</a></li>
                 <li><a href="service.html">Poruke</a></li>
                 <li><a href="contact.html">Kontakt</a></li>
@@ -29,11 +29,10 @@
             <!--DROPDOWN MENU-->
 
             <ul v-if="!inStore && screenWidth>700">
-                <li><a href="index.html">Početna</a></li>
-                <li><a href="about.html">O nama</a></li>
-                <li><a href="service.html">Servisi</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="contact.html">Kontakt</a></li>
+                <li><router-link to="/">Početna</router-link></li>
+                <li><router-link to="/about">O nama</router-link></li>
+                <li><router-link to="/services">Servisi</router-link></li>
+                <li><router-link to="/contact">Kontakt</router-link></li>
             </ul>
 
             <div @click="toggleDropdown" class="dropdownBtn" v-if="screenWidth<=700">
@@ -50,11 +49,10 @@
         </div>
             <!--DROPDOWN MENU-->
         <div v-else-if="dropdownopen" class="dropdownMenu">
-            <a href="index.html">Početna</a>
-            <a href="about.html">O nama</a>
-            <a href="service.html">Servisi</a>
-            <a href="portfolio.html">Portfolio</a>
-            <a href="contact.html">Kontakt</a>
+            <router-link to="/">Početna</router-link>
+            <router-link to="/about">O nama</router-link>
+            <router-link to="/services">Servisi</router-link>
+            <router-link to="/contact">Kontakt</router-link>
         </div>
     </div>
 
