@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import TopBar from '../components/TopBar.vue'
 import ServiceInfo from '../components/ServiceInfo.vue';
 import AboutUsInfo from '../components/AboutUsInfo.vue';
-import Gallery from '../components/Gallery.vue';
+import TeamInfo from '../components/TeamInfo.vue';
 import Footer from '../components/Footer.vue';
 </script>
 
@@ -11,7 +11,7 @@ import Footer from '../components/Footer.vue';
   <TopBar hasLogin :barText="'O NAMA'"/>
   <div class = "content">
     <AboutUsInfo/>  
-    <Gallery/>
+    <TeamInfo/>
   </div>
 
 </template>

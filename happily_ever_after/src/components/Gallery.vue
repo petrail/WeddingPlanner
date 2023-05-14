@@ -1,7 +1,8 @@
 <template>
     <div class="galleryContainer">
         <div class="border"></div>
-        <div class="photo" v-for="(img,index) in imgs" :key="index" :style="`background-image: url(${img.url})`">
+        <div :class="tall? 'photo tall':'photo'" v-for="(img,index) in imgs" :key="index" :style="`background-image: url(${img.url})`">
+            <h2 class="opis">{{img.opis}}</h2>
         </div>
     </div>
   </template>
@@ -9,24 +10,37 @@
   <script>
     export default{
         name: "Gallery",
-        data(){
-            return{
-                imgs:[
-                    {url: 'src/assets/main_gallery/img1.jpg'},
-                    {url: 'src/assets/main_gallery/img2.webp'},
-                    {url: 'src/assets/main_gallery/img3.jpg'},
-                    {url: 'src/assets/main_gallery/img4.jpg'},
-                    {url: 'src/assets/main_gallery/img5.jpg'},
-                    {url: 'src/assets/main_gallery/img6.jpg'},
-                    {url: 'src/assets/main_gallery/img7.jpg'},
-                    {url: 'src/assets/main_gallery/img8.webp'},
-                ],
-            }
+        props:{
+            imgs:{
+                type:Object,
+                default:[{url: 'src/assets/main_gallery/img1.jpg', opis:''},
+                    {url: 'src/assets/main_gallery/img2.webp', opis:''},
+                    {url: 'src/assets/main_gallery/img3.jpg', opis:''},
+                    {url: 'src/assets/main_gallery/img4.jpg', opis:''},
+                    {url: 'src/assets/main_gallery/img5.jpg', opis:''},
+                    {url: 'src/assets/main_gallery/img6.jpg', opis:''},
+                    {url: 'src/assets/main_gallery/img7.jpg', opis:''},
+                    {url: 'src/assets/main_gallery/img8.webp', opis:''}],
             },
+            tall:{
+                type:Boolean,
+                default:false,
+            }
+        },
         };
   </script>
   
   <style scoped>
+    .opis{
+        position: relative;
+        display:flex;
+        justify-content: center;
+        bottom:0;
+        left:0;
+        width:100%;
+        color:white;
+        background-image: linear-gradient(to right bottom, rgba(137, 137, 137, 0.644), rgba(31, 31, 31, 0.753));
+    }
     .border{
         width:80vw;
         margin:10vw;
@@ -36,6 +50,8 @@
     }
     .photo{
         transition: all 0.5s ease;
+        display: flex;
+        align-items: flex-end;
         background-size: cover;
         background-position: center center;
         box-shadow: 15px 50px 21px rgba(0, 0, 0, 0.01), 9px 28px 18px rgba(0, 0, 0, 0.03), 4px 12px 13px rgba(0, 0, 0, 0.04), 1px 3px 7px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05);
@@ -53,8 +69,11 @@
     @media (width>=1000px){
         .photo{
             width:20vw;
-            height:12vw;
+            height:10vw;
             margin-bottom: 3vw;
+        }
+        .tall{
+            height:25vw !important;
         }
     }
     @media (width<1000px){
@@ -63,6 +82,9 @@
             height:28vw;
             margin-bottom: 4vw;
         }
+        .tall{
+            height:48vw;
+        }
     }
     @media (width<700px){
         .photo{
@@ -70,7 +92,7 @@
             margin-right:5vw;
             margin-bottom: 7vw;
             width:90vw;
-            height:60vw;
+            height:90vw;
         }
     }
   </style>
