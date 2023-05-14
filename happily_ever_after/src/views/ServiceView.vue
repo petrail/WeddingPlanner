@@ -7,7 +7,7 @@ import Footer from '../components/Footer.vue';
 </script>
 
 <template>
-  <TopBar hasLogin/>
+  <TopBar hasLogin :barText="'USLUGE'"/>
   <div class = "content">
   <ServiceInfo/>
   <Gallery/>
@@ -17,6 +17,6 @@ import Footer from '../components/Footer.vue';
 
 <style scoped>
 .content{
-  margin-top: 80vh;
+  margin-top: 85vh;
 }
 </style>

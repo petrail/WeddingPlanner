@@ -9,7 +9,7 @@
             <ul>
                 <li><router-link to="/">Početna</router-link></li>
                 <li><router-link to="/about">O nama</router-link></li>
-                <li><router-link to="/services">Servisi</router-link></li>
+                <li><router-link to="/services">USLUGE</router-link></li>
                 <li><router-link to="/contact">Kontakt</router-link></li>
             </ul>
         </div>

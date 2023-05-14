@@ -7,7 +7,7 @@
 
             Takođe, možete pregledati sve važne korake u planiranju venčanja, uključujući izbor lokacije, odabir cveća, muzike, hrane i pića, odjeće i mnogo više.
 
-            Naš tim stručnjaka za venčanja je ovde kako bi vam pomogao u svakom koraku, od izbora savršene lokacije do pronalaska pravog fotografa i ostalih dobavljača za vaše venčanje. Takođe, možete se osloniti na našu aplikaciju za praćenje vašeg proračuna i organizovanje svih detalja.
+            Naš tim stručnjaka za venčanja je ovde kako bi vam pomogao u svakom koraku, od izbora savršene lokacije do pronalaska pravog fotografa i ostalih dobavljača za vaše venčanje.
 
             Naš cilj je da vaše venčanje bude potpuno personalizovano i jedinstveno za vas i vaše goste, a mi ćemo se pobrinuti da sve ide glatko.
 
@@ -17,22 +17,22 @@
             <div class="aboutusText">
                 <img src="../assets/aboutus/music.png"/>
                 <h3>Muzika</h3>
-                <p> Zabava bez muzike nije zabava! Rezervirajte svoj bend ili DJ-a unaprijed kako bi se osigurali da će vaša glazba biti upravo ono što ste zamislili za svoj veliki dan.</p>
+                <p> Zabava bez muzike nije zabava! Rezervišite svoj bend ili DJ-a unapred kako bi se osigurali da će vaša muzika biti upravo ono što ste zamislili za svoj veliki dan.</p>
             </div>
             <div class="aboutusText">
                 <img src="../assets/aboutus/diamond.png"/>
                 <h3>Zlatare</h3>
-                <p>Burme su simbol vaše vjere u ljubav i vašeg zajedništva. Pronađite savršen par burmi koje odražavaju vaš stil, i budite sigurni da ih naručite unaprijed kako bi stigli na vrijeme za vaš veliki dan.</p>
+                <p>Burme su simbol vaše vere u ljubav i vašeg zajedništva. Pronađite savršen par burmi koje odražavaju vaš stil, i budite sigurni da ih naručite unapred kako bi stigli na vreme za vaš veliki dan.</p>
             </div>
             <div class="aboutusText">
                 <img src="../assets/aboutus/restaurant.png"/>
                 <h3>Restoran</h3>
-                <p>Hrana je srce svakog slavlja. Izaberite restoran koji će zadovoljiti vaše ukuse i vaš proračun, i rezervirajte svoje mjesto unaprijed kako biste izbjegli gužve i stres na dan vjenčanja.</p>
+                <p>Hrana je srce svakog slavlja. Izaberite restoran koji će zadovoljiti vaše ukuse i vaš budžet, i rezervišite svoje mesto unapred kako biste izbegli gužve i stres na dan venčanja.</p>
             </div>
             <div class="aboutusText">
                 <img src="../assets/aboutus/dress.png"/>
                 <h3>Odeća</h3>
-                <p>Hrana je srce svakog slavlja. Izaberite restoran koji će zadovoljiti vaše ukuse i vaš proračun, i rezervirajte svoje mjesto unaprijed kako biste izbjegli gužve i stres na dan vjenčanja.</p>
+                <p>Odeća za venčanja mora biti jedinstvena i posebna, kao i vaš najvažniji dan. Naša kolekcija odeće za venčanja nudi nezaboravne i prefinjene stilove koji se savršeno uklapaju u vašu viziju venčanja.</p>
             </div>
         </div>
     </div>
@@ -69,38 +69,40 @@
     display:flex;
     flex-wrap: wrap;
     background-color: #fff;
+    padding: 3vw;
   }
   .aboutusTitle{
-    width:50vw;
+    width:45vw;
     display: flex;
     flex-direction: column;
-    padding:4vh;
-    padding-left:10vh;
-    padding-right:10vh;
+    margin-right:4vw;
+
   }
   .aboutusRight{
-    width:50vw;
+    width:45vw;
     display: flex;
     flex-wrap: wrap;
   }
   .aboutusText{
     display: flex;
     flex-direction: column;
-    width:25vw;
-    padding:7vh;
+    width:21.5vw;
+    margin-bottom:7vh;
+    margin-right:1vw;
     animation: popup 0.5s ease;
-    padding:3vh;
-    padding-left:3.5vh;
-    padding-right:3.5vh;
   }
   @media (width<1000px) {
     .aboutusTitle, .aboutusText, .aboutusRight{
-      width:100vw !important; 
+      width:100% !important; 
+      margin-right: 0;
+    }
+    .aboutusContainer{
+      padding:8vw;
     }
     .aboutusText{
-      padding:4vh !important;
-      padding-left:10vh !important;
-      padding-right:10vh !important;
+      padding:0vh !important;
+      margin-bottom: 2vh;
+      margin-top:2vh;
     }
   }
   @keyframes popup {
@@ -110,6 +112,9 @@
     100%{
         transform: translateY(0);
     }
+  }
+  h1{
+    margin-bottom:2vh;
   }
   </style>
   

@@ -1,7 +1,7 @@
 <template>
     <div class="serviceContainer">
         <div class="serviceTitle">
-            <h1>SERVISI</h1>
+            <h1>USLUGE</h1>
         </div>
         <div class="serviceText">
             <h3>Organizacija vencanja</h3>
@@ -18,7 +18,7 @@
         </div>
         <div class="serviceText">
             <h3>Postavljanje dekora za događaje</h3>
-            <p>Pravimo visokokvalitetno postavljanje dekora na bilo kojoj lokaciji. Naši dizajneri događaja i menadžeri će biti na licu mesta kako bi izveli postavljanje dekora. Koordiniramo isporuke dobavljača, sarađujemo sa osobljem lokacije i stilizujemo dekor na dan događaja. Imamo mogućnost da pružamo usluge na više lokacija, dostavljamo lični dekor, montiramo dekor, postavljamo dekor, pravimo dobrodošlice poklone, dostavljamo dobrodošlice poklone i organizujemo plan za demontažu na kraju događaja.</p>
+            <p>Pravimo visokokvalitetno postavljanje dekora na bilo kojoj lokaciji. Naši dizajneri događaja i menadžeri će biti na licu mesta kako bi izveli postavljanje dekora. Koordiniramo isporuke dobavljača, sarađujemo sa osobljem lokacije i stilizujemo dekor na dan događaja. Imamo mogućnost da pružamo USLUGE na više lokacija, dostavljamo lični dekor, montiramo dekor, postavljamo dekor, pravimo dobrodošlice poklone, dostavljamo dobrodošlice poklone i organizujemo plan za demontažu na kraju događaja.</p>
         </div>
     </div>
   </template>

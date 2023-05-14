@@ -8,7 +8,7 @@ import Footer from '../components/Footer.vue';
 </script>
 
 <template>
-  <TopBar hasLogin/>
+  <TopBar hasLogin :barText="'KONTAKT'"/>
   <div class = "content">
     <ServiceInfo/>
     <Gallery/>

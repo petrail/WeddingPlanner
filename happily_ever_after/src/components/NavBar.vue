@@ -31,7 +31,7 @@
             <ul v-if="!inStore && screenWidth>700">
                 <li><router-link to="/">Početna</router-link></li>
                 <li><router-link to="/about">O nama</router-link></li>
-                <li><router-link to="/services">Servisi</router-link></li>
+                <li><router-link to="/services">Usluge</router-link></li>
                 <li><router-link to="/contact">Kontakt</router-link></li>
             </ul>
 
@@ -51,7 +51,7 @@
         <div v-else-if="dropdownopen" class="dropdownMenu">
             <router-link to="/">Početna</router-link>
             <router-link to="/about">O nama</router-link>
-            <router-link to="/services">Servisi</router-link>
+            <router-link to="/services">Usluge</router-link>
             <router-link to="/contact">Kontakt</router-link>
         </div>
     </div>

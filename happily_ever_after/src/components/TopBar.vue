@@ -5,16 +5,16 @@
             <div class="slide one">
             </div>
             <div class="info">
-                <h2>Sve što vam je potrebno je ljubav, a mi ćemo se pobrinuti za ostalo</h2>
-                <p>“Najbolji brakovi su oni koji su izgrađeni pomoću timskog rada.” - Fon Viver</p>
+                <h2>{{this.barText}}</h2>
+                <p v-if="isWelcome">“Najbolji brakovi su oni koji su izgrađeni pomoću timskog rada.” - Fon Viver</p>
             </div>
         </div>
         <div :class="!first? 'contain':'contain inv'">
             <div class="slide two">
             </div>
             <div class="info">
-                <h2>Sve što vam je potrebno je ljubav, a mi ćemo se pobrinuti za ostalo</h2>
-                <p>“Najbolji brakovi su oni koji su izgrađeni pomoću timskog rada.” - Fon Viver</p>
+                <h2>{{this.barText}}</h2>
+                <p v-if="isWelcome">“Najbolji brakovi su oni koji su izgrađeni pomoću timskog rada.” - Fon Viver</p>
             </div>
         </div>
 
@@ -37,6 +37,14 @@
         },
         inStore:{
             type: Boolean,
+            default:false
+        },
+        barText:{
+            type:String,
+            default:"Sve što vam je potrebno je ljubav, a mi ćemo se pobrinuti za ostalo"
+        },
+        isWelcome:{
+            type:Boolean,
             default:false
         }
       },

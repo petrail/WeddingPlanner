@@ -9,7 +9,7 @@ import Contact from '../components/Contact.vue';
 </script>
 
 <template>
-  <TopBar hasLogin/>
+  <TopBar hasLogin isWelcome/>
   <div class = "content">
   <AboutUsInfo/>
   <Gallery/>
@@ -20,6 +20,6 @@ import Contact from '../components/Contact.vue';
 </template>
 <style scoped>
 .content{
-  margin-top: 80vh;
+  margin-top: 85vh;
 }
 </style>
