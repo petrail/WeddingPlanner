@@ -29,6 +29,11 @@
                 <h3>Restoran</h3>
                 <p>Hrana je srce svakog slavlja. Izaberite restoran koji će zadovoljiti vaše ukuse i vaš proračun, i rezervirajte svoje mjesto unaprijed kako biste izbjegli gužve i stres na dan vjenčanja.</p>
             </div>
+            <div class="aboutusText">
+                <img src="../assets/aboutus/dress.png"/>
+                <h3>Odeća</h3>
+                <p>Hrana je srce svakog slavlja. Izaberite restoran koji će zadovoljiti vaše ukuse i vaš proračun, i rezervirajte svoje mjesto unaprijed kako biste izbjegli gužve i stres na dan vjenčanja.</p>
+            </div>
         </div>
     </div>
   </template>
@@ -51,6 +56,7 @@
   }
   p{
     font-size:12pt;
+    text-align: justify;
   }
   @media (width>700px){
     p{

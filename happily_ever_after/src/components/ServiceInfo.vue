@@ -40,6 +40,7 @@
   }
   p{
     font-size:12pt;
+    text-align: justify;
   }
   @media (width>700px){
     p{

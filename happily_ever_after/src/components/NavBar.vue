@@ -182,7 +182,7 @@ h3{
     align-items: center;
     font-size: min(3vw,12pt);
 }
-@media (width<500px){
+@media (width<700px){
     .logo{
         width:70vw !important;
     }

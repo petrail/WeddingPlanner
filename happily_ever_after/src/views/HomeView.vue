@@ -5,6 +5,7 @@ import ServiceInfo from '../components/ServiceInfo.vue';
 import Gallery from '../components/Gallery.vue';
 import Footer from '../components/Footer.vue';
 import AboutUsInfo from '../components/AboutUsInfo.vue';
+import Contact from '../components/Contact.vue';
 </script>
 
 <template>
@@ -13,6 +14,7 @@ import AboutUsInfo from '../components/AboutUsInfo.vue';
   <AboutUsInfo/>
   <Gallery/>
   <ServiceInfo/>
+  <Contact/>
   </div>
 
 </template>

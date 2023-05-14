@@ -112,14 +112,16 @@
 .info{
     position: absolute;
     width:100vw;
-    top:30vh;
+    bottom:20vh;
     left:0vh;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 h2{
-    font-weight: bold;
+    font-weight: 600;
+    text-transform:uppercase;
+    font-size:max(2.5vw,16pt);
 }
 *{
     text-align: center;
