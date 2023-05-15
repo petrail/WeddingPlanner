@@ -31,9 +31,10 @@
         padding:5vw;
         padding-top:2vw;
         display:flex;
+        flex-wrap:wrap;
     }
     .forma{
-        width:50vw;
+        width:48%;
         display:flex;
         flex-direction: column;
         padding:2vw;
@@ -62,7 +63,7 @@
         height:15vh;
     }
     button{
-        border-radius:.25vw;
+        border-radius:.5vw;
         width:30%;
         height:5vh;
         background-color: var(--light-blue);
@@ -76,14 +77,22 @@
         margin-right: 1vw;
     }
     .mapadiv{
-        width:50vw;
+        width:48%;
     }
     .map{
-        width: 100%;
+        width:100%;
         height: 100%;
         border:0;
         box-shadow: 15px 50px 21px rgba(0, 0, 0, 0.01), 9px 28px 18px rgba(0, 0, 0, 0.03), 4px 12px 13px rgba(0, 0, 0, 0.04), 1px 3px 7px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05);
         border-radius: 1vw;
+    }
+    @media (width<700px){
+        .mapadiv, .forma{
+            width:100%;
+        }
+        .map{
+            height: 30vh;
+        }
     }
 </style>
   

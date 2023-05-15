@@ -1,22 +1,83 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import TopBar from '../components/TopBar.vue'
-import ServiceInfo from '../components/ServiceInfo.vue';
-import AboutUsInfo from '../components/AboutUsInfo.vue';
-import Gallery from '../components/Gallery.vue';
-import Footer from '../components/Footer.vue';
-</script>
 
 <template>
   <TopBar hasLogin :barText="'KONTAKT'"/>
   <div class = "content">
-    <ServiceInfo/>
-    <Gallery/>
+    <Contact/>
+    <div class="kontakt">
+      <div class="img">
+        <img src="../assets/contact.jpg"/>
+      </div>
+      <div class="info">
+          <p class="sub">Povežite se s nama i iskusite vrhunsku uslugu!</p>
+          <p>Adresa: Bulevar Nemanjića 15, Niš</p>
+          <p>Telefon: +381649974169</p>
+          <p>Email: theappangels@gmail.com</p>
+          <p>Otvoreno: Pon - Sub: 8 AM to 9 PM</p>
+      </div>
+    </div>
+    
   </div>
 </template>
 
+<script>
+import { RouterLink, RouterView } from 'vue-router'
+import TopBar from '../components/TopBar.vue'
+import Contact from '../components/Contact.vue';
+export default({
+  name:"ContactView",
+  components:{
+    TopBar,Contact
+  },
+  mounted () {
+    window.scrollTo(0, 0)
+  }
+})
+</script>
+
 <style scoped>
+.kontakt{
+  width:100vw;
+  padding:3vw;
+  display:flex;
+} 
+.sub{
+  margin-bottom:2vh;
+}
+p{
+  font-size:16pt;
+}
+h2{
+  font-size:20pt;
+  font-weight: 600;
+}
+.img{
+  width:48%;
+  margin-right:2%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+img{
+  width:80%;
+}
+.info{
+  width:50%;
+  padding:3vw;
+}
 .content{
   margin-top: 80vh;
+}
+@media (width<700px){
+  .kontakt{
+    flex-direction:column;
+  }
+  .img{
+    width:100%;
+    margin:0;
+    margin-bottom:2vh;
+  }
+  .info{
+    width:100%;
+  }
 }
 </style>

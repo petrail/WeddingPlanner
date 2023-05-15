@@ -9,7 +9,7 @@
             <ul>
                 <li><router-link to="/">Početna</router-link></li>
                 <li><router-link to="/about">O nama</router-link></li>
-                <li><router-link to="/services">USLUGE</router-link></li>
+                <li><router-link to="/services">Usluge</router-link></li>
                 <li><router-link to="/contact">Kontakt</router-link></li>
             </ul>
         </div>
@@ -18,8 +18,6 @@
             <img src="../assets/footer/facebook.svg"/>
             <img src="../assets/footer/twitter.svg"/>
         </div>
-
-
     </div>
     
   </template>
