@@ -46,11 +46,13 @@ export default {
 .login-page {
   display: flex;
   flex-direction: column;
+  justify-content:center;
   align-items: center;
   background: rgba(150, 150, 150, 0.5);
   width:90%;
   max-width:800px;
-  height:70%;
+  height:auto;
+  max-height:95%;
 
   padding:8%;
   padding-top:3vh;
@@ -91,7 +93,7 @@ label {
 input{
     border-radius:1vw;
     border:0;
-    height: 50px;
+    height: 40px;
     width:100%;
     color: white !important;
     font-size:max(1.25vw,16pt);

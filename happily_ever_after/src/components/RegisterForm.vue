@@ -58,11 +58,13 @@ export default {
 .register-page {
   display: flex;
   flex-direction: column;
+  justify-content:center;
   align-items: center;
   background: rgba(150, 150, 150, 0.5);
   width:90%;
   max-width:800px;
-  height:70%;
+  height:auto;
+  max-height:95%;
 
   padding:8%;
   padding-top:3vh;
@@ -84,6 +86,7 @@ h1{
     color:white;
     font-weight:600;
     margin-bottom:3vh;
+    margin-top:3vh;
 }
 p{
     font-size:max(2vw,20pt);
@@ -103,7 +106,7 @@ label {
 input{
     border-radius:1vw;
     border:0;
-    height: 50px;
+    height: 40px;
     width:100%;
     color: white !important;
     font-size:max(1.25vw,16pt);
