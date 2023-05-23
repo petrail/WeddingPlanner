@@ -1,6 +1,3 @@
-<script setup>
-
-</script>
 
 <template>
   <TopBar hasLogin :barText="'O NAMA'"/>

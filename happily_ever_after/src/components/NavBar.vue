@@ -1,5 +1,5 @@
 <template>
-  <div :class="topOfPage? 'navbar normal': 'navbar scrolled'">
+  <div :class="transparency && !topOfPage? 'navbar normal': 'navbar scrolled'">
     <div class="topbar">
         <div class="info">
             <img src="../assets/navbar/email.png"/>
@@ -75,6 +75,10 @@ export default{
         inStore:{
             type: Boolean,
             default:false
+        },
+        transparency:{
+            type:Boolean,
+            default:true
         }
     },
     mounted() {
