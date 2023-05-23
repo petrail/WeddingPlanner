@@ -13,6 +13,9 @@
             <img src="../assets/navbar/register.png"/>
             <router-link to="/register">Register</router-link>
         </div>
+        <div class="register" v-else>
+        <p> Ime </p>
+        </div>
     </div>
     <div class="navitems">
         <div class="logo">
@@ -248,6 +251,9 @@ img{
 }
 a:hover{
     background-color: var(--navbar-hover-bg);
-    color:var(--navbar-hover-cl);   
+    color:var(--navbar-hover-cl); 
+    border:0;
+    border-radius:1vw;
+     
 }
 </style>

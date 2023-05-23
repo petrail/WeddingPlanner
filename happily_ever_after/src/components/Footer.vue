@@ -51,6 +51,8 @@ a{
 }
 a:hover{
     background-color: var(--white-pink);
+    border:0;
+    border-radius:1vw;
 }
 .row{
     width:100vw;

@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { RouterLink, RouterView } from 'vue-router'
 export default {
   name: 'LoginForm',
   data() {
@@ -37,6 +38,7 @@ export default {
       console.log('Login clicked');
       console.log('Username:', this.username);
       console.log('Password:', this.password);
+      this.$router.push({ path: '/shopmain' })
     }
   }
 };

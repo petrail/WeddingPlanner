@@ -46,6 +46,10 @@
         isWelcome:{
             type:Boolean,
             default:false
+        },
+        short:{
+            type:Boolean,
+            default:false
         }
       },
       data(){
