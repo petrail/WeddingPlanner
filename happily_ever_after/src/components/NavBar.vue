@@ -14,7 +14,9 @@
             <router-link to="/register">Register</router-link>
         </div>
         <div class="register" v-else>
-        <p> Ime </p>
+        <router-link to="/account">Nalog</router-link>
+        <a @click="logout">Logout</a>
+
         </div>
     </div>
     <div class="navitems">
@@ -24,10 +26,10 @@
         </div>
         <div class="nav">
             <ul v-if="inStore && screenWidth>700">
-                <li><a>Proizvodi</a></li>
-                <li><a href="about.html">Korpa</a></li>
-                <li><a href="service.html">Poruke</a></li>
-                <li><a href="contact.html">Kontakt</a></li>
+                <li><router-link to="/shopmain">Proizvodi</router-link></li>
+                <li><router-link to="/">Korpa</router-link></li>
+                <li><router-link to="/">Poruke</router-link></li>
+                <li><router-link to="/">Kontakt</router-link></li>
             </ul>
             <!--DROPDOWN MENU-->
 
@@ -80,7 +82,7 @@ export default{
         this.onScreenResize();
     },
     methods: {
-        hej(){
+        logout(){
             console.log("HEJ");
         },
         onScreenResize() {
