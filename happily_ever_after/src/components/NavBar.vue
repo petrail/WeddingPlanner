@@ -1,5 +1,5 @@
 <template>
-  <div :class="transparency && !topOfPage? 'navbar normal': 'navbar scrolled'">
+  <div :class="!transparency || !topOfPage? 'navbar scrolled': 'navbar normal'">
     <div class="topbar">
         <div class="info">
             <img src="../assets/navbar/email.png"/>
@@ -14,8 +14,10 @@
             <router-link to="/register">Register</router-link>
         </div>
         <div class="register" v-else>
-        <router-link to="/account">Nalog</router-link>
-        <a @click="logout">Logout</a>
+            <img src="../assets/navbar/account.png"/>
+            <router-link to="/account" class="login">Nalog</router-link>
+            <img src="../assets/navbar/logout.png"/>
+            <a href="" @click="logout">Logout</a>
 
         </div>
     </div>

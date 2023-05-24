@@ -33,13 +33,22 @@ export default({
 }
 .content{
   margin-top: 10vh;
-  width:50%;
+  width:60%;
 }
 .photo{
-  width:50%;
-  background-image: url('../assets/wedding.jpeg');
+  width:40%;
+  background-image: url('../assets/ring.jpg');
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
+  filter: brightness(0.8);
+}
+@media (width<1000px){
+.content{
+  width:80%;
+}
+.photo{
+  width:20%;
+}
 }
 </style>

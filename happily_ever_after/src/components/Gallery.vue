@@ -1,32 +1,47 @@
 <template>
     <div class="galleryContainer">
-        <div class="border"></div>
-        <div :class="tall? 'photo tall':'photo'" v-for="(img,index) in imgs" :key="index" :style="`background-image: url(${img.url})`">
+        <div v-if="!hiddenBar" class="border"></div>
+        <div @click="route(img)" :class="tall? 'photo tall':'photo'" v-for="(img,index) in imgs" :key="index" :style="`background-image: url(${img.url})`">
             <h2 class="opis">{{img.opis}}</h2>
         </div>
     </div>
   </template>
   
   <script>
+   import { RouterLink, RouterView } from 'vue-router'
     export default{
         name: "Gallery",
         props:{
             imgs:{
                 type:Object,
-                default:[{url: 'src/assets/main_gallery/img1.jpg', opis:''},
-                    {url: 'src/assets/main_gallery/img2.webp', opis:''},
-                    {url: 'src/assets/main_gallery/img3.jpg', opis:''},
-                    {url: 'src/assets/main_gallery/img4.jpg', opis:''},
-                    {url: 'src/assets/main_gallery/img5.jpg', opis:''},
-                    {url: 'src/assets/main_gallery/img6.jpg', opis:''},
-                    {url: 'src/assets/main_gallery/img7.jpg', opis:''},
-                    {url: 'src/assets/main_gallery/img8.webp', opis:''}],
+                default:[{url: 'src/assets/main_gallery/img1.jpg', opis:'',route:''},
+                    {url: 'src/assets/main_gallery/img2.webp', opis:'',route:''},
+                    {url: 'src/assets/main_gallery/img3.jpg', opis:'',route:''},
+                    {url: 'src/assets/main_gallery/img4.jpg', opis:'',route:''},
+                    {url: 'src/assets/main_gallery/img5.jpg', opis:'',route:''},
+                    {url: 'src/assets/main_gallery/img6.jpg', opis:'',route:''},
+                    {url: 'src/assets/main_gallery/img7.jpg', opis:'',route:''},
+                    {url: 'src/assets/main_gallery/img8.webp', opis:'',route:''}],
             },
             tall:{
                 type:Boolean,
                 default:false,
+            },
+            clickable:{
+                type:Boolean,
+                default:false,
+            },
+            hiddenBar:{
+                type:Boolean,
+                default:false
             }
         },
+        methods:{
+            route(img){
+                if(!this.clickable) return;
+                this.$emit('clicked', img) //Mozda bolje samo ime
+            },
+        }
         };
   </script>
   

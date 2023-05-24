@@ -1,6 +1,6 @@
 <template>
-    <NavBar :hasLogin = "hasLogin" :inStore="inStore"/>
-    <div class="bkg">
+    <NavBar :hasLogin="hasLogin" :inStore="inStore"/>
+    <div :class="short?'bkg short':'bkg'">
         <div :class="first? 'contain':'contain inv'">
             <div class="slide one">
             </div>
@@ -65,7 +65,9 @@
   </script>
   
 <style scoped>  
-
+.short{
+    height:40vh !important;
+}
 .bkg{
     width:100vw;
     display: flex;
@@ -77,7 +79,7 @@
 }
 .contain{
     width:100vw;
-    height:80vh;
+    height:100%;
 
     position: absolute;
     top:0;
@@ -104,7 +106,7 @@
     padding:10vh;
 
     position: absolute;
-    height: 80vh;
+    height: 100%;
 
     animation: slide 24s linear infinite;
     
@@ -124,7 +126,7 @@
 .info{
     position: absolute;
     width:100vw;
-    bottom:20vh;
+    bottom:25%;
     left:0vh;
     display: flex;
     align-items: center;

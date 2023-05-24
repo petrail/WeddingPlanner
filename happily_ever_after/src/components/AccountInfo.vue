@@ -41,7 +41,7 @@
             password:'petra',
             email:'petrail@elfak.rs',
             ime_prezime: 'Petra Ilkovski',
-            url:'src/assets/wedding.jpeg'
+            url:'src/assets/akaunt.png'
         }
       };
     },
@@ -62,7 +62,7 @@
 <style scoped>
 h1{
     font-weight: 600;
-    font-size: 30pt;
+    font-size: 3.5vw;
 }
 .acccontainer{
     display: flex;
@@ -101,7 +101,7 @@ h1{
     justify-content: center;
 }
 input{
-    border-radius:1vw;
+    border-radius:.5vw;
     border:2px solid var(--light-blue);
     height: 32px;
     width:100%;
@@ -116,16 +116,18 @@ input::placeholder{
     color:white;
 }
 button{
-    width:50%;
+    width:70%;
     margin-top:1vh;
-    background: var(--light-pink) !important;
+    background-color: var(--light-blue);
     border:0;
     color: var(--font-dark) !important;
-    border-radius:1vw;
+    border-radius:.5vw;
     height:40px;
-    font-size:max(1.25vw,16pt);
-    font-weight:bold;
+    font-size:max(1.25vw,14pt);
 }
+button:hover{
+    background-color: var(--light-pink);
+ }
 @media (width<700px){
     input{
         font-size:12pt;
