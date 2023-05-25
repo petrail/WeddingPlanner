@@ -11,10 +11,6 @@ const restaurantSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite lokaciju"],
     },
-    picture: {
-      type: Buffer,
-      required: [true, "Unesite sliku"],
-    },
     link: {
       type: String,
       required: [true, "Unesite link"],
@@ -23,37 +19,15 @@ const restaurantSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite broj telefona"],
     },
-    numberGuests: {
+    maxNumberGuests: {
       type: Number,
       required: [true, "Unesite maximalan broj gostiju"],
     },
-    priceMenu1: {
-      type: Number,
-      required: [false, "Unesite cenu po menija 1"],
-    },
-    priceMenu2: {
-      type: Number,
-      required: [false, "Unesite cenu po menija 2"],
-    },
-    priceMenu3: {
-      type: Number,
-      required: [false, "Unesite cenu po menija 3"],
-    },
-    descMenu1: {
-      type: String,
-      required: [false, "Unesite opis menija 1"],
-    },
-    descMenu2: {
-      type: String,
-      required: [false, "Unesite opis menija 2"],
-    },
-    descMenu3: {
-      type: String,
-      required: [false, "Unesite opis menija 3"],
-    },
+    service: [{descMenu: String, priceMenu: Number, img:Buffer}],
+
     parking: {
       type: Boolean,
-      required: [true, "Unesite da li ima parking"],
+      required: [false, "Unesite da li ima parking"],
     },
     dateReserved: {
       type: [Date],

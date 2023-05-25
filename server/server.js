@@ -1,831 +1,238 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const Admin = require("./models/admin");
-const Bride = require("./models/bride");
-const Cake = require("./models/cake");
-const Coordinator = require("./models/coordinator");
-const CosmeticSalon = require("./models/cosmeticSalon");
-const DanceLessons = require("./models/danceLessons");
-const Decoration = require("./models/decoration");
-const Groom = require("./models/groom");
-const JewelleryStore = require("./models/jewleryStore");
-const Music = require("./models/music");
-const PhotoStudio = require("./models/photoStudio");
-const Registrar = require("./models/registrar");
-const Restaurant = require("./models/restaurant");
-const User = require("./models/user");
+const AdminController = require("./controllers/admin");
+const BrideController = require("./controllers/bride");
+const CakeController = require("./controllers/cake");
+const CoordinatorController = require("./controllers/coordinator");
+const CosmeticSalonController = require("./controllers/cosmeticSalon");
+const DanceLessonsController = require("./controllers/danceLessons");
+const DecorationController = require("./controllers/decoration");
+const GroomController = require("./controllers/groom");
+const JewelleryStoreController = require("./controllers/jewelleryStore");
+const MusicController = require("./controllers/music");
+const OtherController = require("./controllers/other");
+const PhotoStudioController = require("./controllers/photoStudio");
+const RegistrarController = require("./controllers/registrar");
+const RestaurantController = require("./controllers/restaurant");
+const UserController = require("./controllers/user");
 const app = express();
 
+const cors = require("cors");
+app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname + "/img"));
 
 //----------------------------------------------------------------------------------------------------------------------------
 //post methods
 //admin
-app.post("/admin", async (req, res) => {
-  try {
-    const admin = await Admin.create(req.body);
-    res.status(200).json(admin);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/admin", AdminController.post_admin);
 //bride
-app.post("/bride", async (req, res) => {
-  try {
-    const bride = await Bride.create(req.body);
-    res.status(200).json(bride);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/bride", BrideController.post_bride);
 //cake
-app.post("/cake", async (req, res) => {
-  try {
-    const cake = await Cake.create(req.body);
-    res.status(200).json(cake);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/cake", CakeController.post_cake);
 //coordinator
-app.post("/coordinator", async (req, res) => {
-  try {
-    const coordinator = await Coordinator.create(req.body);
-    res.status(200).json(coordinator);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/coordinator", CoordinatorController.post_coordinator);
 //cosmeticSalon
-app.post("/cosmeticSalon", async (req, res) => {
-  try {
-    const cosmeticSalon = await CosmeticSalon.create(req.body);
-    res.status(200).json(cosmeticSalon);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/cosmeticSalon", CosmeticSalonController.post_salon);
 //danceLessons
-app.post("/danceLessons", async (req, res) => {
-  try {
-    const danceLessons = await DanceLessons.create(req.body);
-    res.status(200).json(danceLessons);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/danceLessons", DanceLessonsController.post_dance_lessons);
 //decoration
-app.post("/decoration", async (req, res) => {
-  try {
-    const decoration = await Decoration.create(req.body);
-    res.status(200).json(decoration);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/decoration", DecorationController.post_decoration);
 //groom
-app.post("/groom", async (req, res) => {
-  try {
-    const groom = await Groom.create(req.body);
-    res.status(200).json(groom);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/groom", GroomController.post_groom);
 //jewellery
-app.post("/jewleryStore", async (req, res) => {
-  try {
-    const jewellery = await JewelleryStore.create(req.body);
-    res.status(200).json(jewellery);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/jewleryStore", JewelleryStoreController.post_jewellery);
 //music
-app.post("/music", async (req, res) => {
-  try {
-    const music = await Music.create(req.body);
-    res.status(200).json(music);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/music", MusicController.post_music);
+//other
+app.post("/other", OtherController.post_other);
 //photoStudio
-app.post("/photoStudio", async (req, res) => {
-  try {
-    const photo = await PhotoStudio.create(req.body);
-    res.status(200).json(photo);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/photoStudio", PhotoStudioController.post_photo_studio);
 //registrar
-app.post("/registrar", async (req, res) => {
-  try {
-    const registrar = await Registrar.create(req.body);
-    res.status(200).json(registrar);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/registrar", RegistrarController.post_registrar);
 //restaurant
-app.post("/restaurant", async (req, res) => {
-  try {
-    const restaurant = await Restaurant.create(req.body);
-    res.status(200).json(restaurant);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/restaurant", RestaurantController.post_restaurant);
 //user
-app.post("/user", async (req, res) => {
-  try {
-    const user = await User.create(req.body);
-    res.status(200).json(user);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.post("/user", UserController.post_user);
 //end post methods
 
 //----------------------------------------------------------------------------------------------------------------------------
 
 //all get methods
-
 //admin
-app.get("/admin", async (req, res) => {
-  try {
-    const admin = await Admin.find({});
-    res.status(200).json(admin);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/admin", AdminController.get_all_admins);
 //bride
-app.get("/bride", async (req, res) => {
-  try {
-    const bride = await Bride.find({});
-    res.status(200).json(bride);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/bride", BrideController.get_all_brides);
 //cake
-app.get("/cake", async (req, res) => {
-  try {
-    const cake = await Cake.find({});
-    res.status(200).json(cake);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/cake", CakeController.get_all_cakes);
 //coordinator
-app.get("/coordinator", async (req, res) => {
-  try {
-    const coordinator = await Coordinator.find({});
-    res.status(200).json(coordinator);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/coordinator", CoordinatorController.get_all_coordinators);
 //cosmeticSalon
-app.get("/cosmeticSalon", async (req, res) => {
-  try {
-    const salon = await CosmeticSalon.find({});
-    res.status(200).json(salon);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/cosmeticSalon", CosmeticSalonController.get_all_salons);
 //dance lessons
-app.get("/danceLessons", async (req, res) => {
-  try {
-    const dance = await DanceLessons.find({});
-    res.status(200).json(dance);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/danceLessons", DanceLessonsController.get_all_lessons);
 //decoration
-app.get("/decoration", async (req, res) => {
-  try {
-    const decoration = await Decoration.find({});
-    res.status(200).json(decoration);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/decoration", DecorationController.get_all_decorations);
 //groom
-app.get("/groom", async (req, res) => {
-  try {
-    const groom = await Groom.find({});
-    res.status(200).json(groom);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/groom", GroomController.get_all_grooms);
 //jewellery
-app.get("/jewleryStore", async (req, res) => {
-  try {
-    const jewellery = await JewelleryStore.find({});
-    res.status(200).json(jewellery);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/jewleryStore", JewelleryStoreController.get_all_jewellerys);
 //music
-app.get("/music", async (req, res) => {
-  try {
-    const music = await Music.find({});
-    res.status(200).json(music);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/music", MusicController.get_all_bands);
+//other
+app.get("/other", OtherController.get_all_other);
 //photoStudio
-app.get("/photoStudio", async (req, res) => {
-  try {
-    const photo = await PhotoStudio.find({});
-    res.status(200).json(photo);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/photoStudio", PhotoStudioController.get_all_photoStudios);
 //registrar
-app.get("/registrar", async (req, res) => {
-  try {
-    const registrar = await Registrar.find({});
-    res.status(200).json(registrar);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/registrar", RegistrarController.get_all_registrars);
 //restaurant
-app.get("/restaurant", async (req, res) => {
-  try {
-    const restaurant = await Restaurant.find({});
-    res.status(200).json(restaurant);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.get("/restaurant", RestaurantController.get_all_restaurants);
 //user
-app.get("/user", async (req, res) => {
-  try {
-    const user = await User.find({});
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+app.get("/user", UserController.get_all_users);
 // end get all methods
 
 //----------------------------------------------------------------------------------------------------------------------------
 
 // update/put methods - ID
 //admin
-app.put("/admin/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const admin = await Admin.findByIdAndUpdate(id, req.body);
-    if (!admin) {
-      return res.status(404).json({ message: `Admin with id ${id} not found` });
-    }
-    const updatedAdmin = await Admin.findById(id);
-    res.status(200).json(updatedAdmin);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/admin/:id", AdminController.put_admin);
 //bride
-app.put("/bride/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const bride = await Bride.findByIdAndUpdate(id, req.body);
-    if (!bride) {
-      return res.status(404).json({ message: `Bride with id ${id} not found` });
-    }
-    const updatedBride = await Bride.findById(id);
-    res.status(200).json(updatedBride);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/bride/:id", BrideController.put_bride);
 //cake
-app.put("/cake/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const cake = await Cake.findByIdAndUpdate(id, req.body);
-    if (!cake) {
-      return res.status(404).json({ message: `Cake with id ${id} not found` });
-    }
-    const updatedCake = await Cake.findById(id);
-    res.status(200).json(updatedCake);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/cake/:id", CakeController.put_cake);
 //coordinator
-app.put("/coordinator/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const coordinator = await Coordinator.findByIdAndUpdate(id, req.body);
-    if (!coordinator) {
-      return res
-        .status(404)
-        .json({ message: `Coordinator with id ${id} not found` });
-    }
-    const updatedCoordinator = await Coordinator.findById(id);
-    res.status(200).json(updatedCoordinator);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/coordinator/:id", CoordinatorController.put_coordinator);
 //cosmeticSalon
-app.put("/cosmeticSalon/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const salon = await CosmeticSalon.findByIdAndUpdate(id, req.body);
-    if (!salon) {
-      return res
-        .status(404)
-        .json({ message: `Cosmetic salon with id ${id} not found` });
-    }
-    const updatedSalon = await CosmeticSalon.findById(id);
-    res.status(200).json(updatedSalon);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/cosmeticSalon/:id", CosmeticSalonController.put_salon);
 //dance lessons
-app.put("/danceLessons/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const dance = await DanceLessons.findByIdAndUpdate(id, req.body);
-    if (!dance) {
-      return res
-        .status(404)
-        .json({ message: `Dance lessons with id ${id} not found` });
-    }
-    const updatedDance = await DanceLessons.findById(id);
-    res.status(200).json(updatedDance);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/danceLessons/:id", DanceLessonsController.put_dance_lessons);
 //decoration
-app.put("/decoration/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const decoration = await Decoration.findByIdAndUpdate(id, req.body);
-    if (!decoration) {
-      return res
-        .status(404)
-        .json({ message: `Decoration with id ${id} not found` });
-    }
-    const updatedDecoration = await Decoration.findById(id);
-    res.status(200).json(updatedDecoration);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/decoration/:id", DecorationController.put_decoration);
 //groom
-app.put("/groom/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const groom = await Groom.findByIdAndUpdate(id, req.body);
-    if (!groom) {
-      return res.status(404).json({ message: `Groom with id ${id} not found` });
-    }
-    const updatedGroom = await Groom.findById(id);
-    res.status(200).json(updatedGroom);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/groom/:id", GroomController.put_groom);
 //jewellery
-app.put("/jewleryStore/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const jewellery = await JewelleryStore.findByIdAndUpdate(id, req.body);
-    if (!jewellery) {
-      return res
-        .status(404)
-        .json({ message: `Jewellery with id ${id} not found` });
-    }
-    const updatedJewellery = await JewelleryStore.findById(id);
-    res.status(200).json(updatedJewellery);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/jewleryStore/:id", JewelleryStoreController.put_jewellery);
 //music
-app.put("/music/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const music = await Music.findByIdAndUpdate(id, req.body);
-    if (!music) {
-      return res
-        .status(404)
-        .json({ message: `Music band with id ${id} not found` });
-    }
-    const updatedMusic = await Music.findById(id);
-    res.status(200).json(updatedMusic);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/music/:id", MusicController.put_music);
 //photoStudio
-app.put("/photoStudio/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const photoStudio = await PhotoStudio.findByIdAndUpdate(id, req.body);
-    if (!photoStudio) {
-      return res
-        .status(404)
-        .json({ message: `Photo studio with id ${id} not found` });
-    }
-    const updatedPhoto = await PhotoStudio.findById(id);
-    res.status(200).json(updatedPhoto);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/photoStudio/:id", PhotoStudioController.put_photo_studio);
 //registrar
-app.put("/registrar/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const registrar = await Registrar.findByIdAndUpdate(id, req.body);
-    if (!registrar) {
-      return res
-        .status(404)
-        .json({ message: `Registrar with id ${id} not found` });
-    }
-    const updatedRegistrar = await Registrar.findById(id);
-    res.status(200).json(updatedRegistrar);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/registrar/:id", RegistrarController.put_registrar);
 //restaurant
-app.put("/restaurant/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const restaurant = await Restaurant.findByIdAndUpdate(id, req.body);
-    if (!restaurant) {
-      return res
-        .status(404)
-        .json({ message: `Restaurant with id ${id} not found` });
-    }
-    const updatedRestaurant = await Restaurant.findById(id);
-    res.status(200).json(updatedRestaurant);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.put("/restaurant/:id", RestaurantController.put_restaurant);
 //user
-app.put("/user/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findByIdAndUpdate(id, req.body);
-    if (!user) {
-      return res.status(404).json({ message: `User with id ${id} not found` });
-    }
-    const updatedUser = await User.findById(id);
-    res.status(200).json(updatedUser);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+app.put("/user/:id", UserController.put_user);
 // end update/put methods
 
 //----------------------------------------------------------------------------------------------------------------------------
 
 //delete methods
 //admin
-app.delete("/admin/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const admin = await Admin.findByIdAndUpdate(id);
-    if (!admin) {
-      return res.status(404).json({ message: `Admin with id ${id} not found` });
-    }
-    res.status(200).json(admin);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/admin/:id", AdminController.delete_admin);
 //bride
-app.delete("/bride/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const bride = await Bride.findByIdAndUpdate(id);
-    if (!bride) {
-      return res.status(404).json({ message: `Bride with id ${id} not found` });
-    }
-    res.status(200).json(bride);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/bride/:id", BrideController.delete_bride);
 //cake
-app.delete("/cake/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const cake = await Cake.findByIdAndUpdate(id);
-    if (!cake) {
-      return res.status(404).json({ message: `Cake with id ${id} not found` });
-    }
-    res.status(200).json(cake);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/cake/:id", CakeController.delete_cake);
 //coordinator
-app.delete("/coordinator/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const coordinator = await Coordinator.findByIdAndUpdate(id);
-    if (!coordinator) {
-      return res
-        .status(404)
-        .json({ message: `Coordinator with id ${id} not found` });
-    }
-    res.status(200).json(coordinator);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/coordinator/:id", CoordinatorController.delete_coordinator);
 //cosmeticSalon
-app.delete("/cosmeticSalon/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const salon = await CosmeticSalon.findByIdAndUpdate(id);
-    if (!salon) {
-      return res.status(404).json({ message: `Salon with id ${id} not found` });
-    }
-    res.status(200).json(salon);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/cosmeticSalon/:id", CosmeticSalonController.delete_cosmetic_salon);
 //danceLessons
-app.delete("/danceLessons/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const dance = await DanceLessons.findByIdAndUpdate(id);
-    if (!dance) {
-      return res
-        .status(404)
-        .json({ message: `Dance lesson with id ${id} not found` });
-    }
-    res.status(200).json(dance);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/danceLessons/:id", DanceLessonsController.delete_dance_lesson);
 //decoration
-app.delete("/decoration/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const decoration = await Decoration.findByIdAndUpdate(id);
-    if (!decoration) {
-      return res
-        .status(404)
-        .json({ message: `Decoration with id ${id} not found` });
-    }
-    res.status(200).json(decoration);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/decoration/:id", DecorationController.delete_decoration);
 //groom
-app.delete("/groom/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const groom = await Groom.findByIdAndUpdate(id);
-    if (!groom) {
-      return res.status(404).json({ message: `Groom with id ${id} not found` });
-    }
-    res.status(200).json(groom);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/groom/:id", GroomController.delete_groom);
 //jewellery
-app.delete("/jewleryStore/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const jewellery = await JewelleryStore.findByIdAndUpdate(id);
-    if (!jewellery) {
-      return res
-        .status(404)
-        .json({ message: `Jewellery with id ${id} not found` });
-    }
-    res.status(200).json(jewellery);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/jewleryStore/:id", JewelleryStoreController.delete_jewellery);
 //music
-app.delete("/music/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const music = await Music.findByIdAndUpdate(id);
-    if (!music) {
-      return res.status(404).json({ message: `Music with id ${id} not found` });
-    }
-    res.status(200).json(music);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/music/:id", MusicController.delete_music);
+//other
+app.delete("/other/:id", OtherController.delete_other);
 //photoStudio
-app.delete("/photoStudio/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const photo = await PhotoStudio.findByIdAndUpdate(id);
-    if (!photo) {
-      return res
-        .status(404)
-        .json({ message: `Photo studio with id ${id} not found` });
-    }
-    res.status(200).json(photo);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/photoStudio/:id", PhotoStudioController.delete_photo_studio);
 //registrar
-app.delete("/registrar/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const registrar = await Registrar.findByIdAndUpdate(id);
-    if (!registrar) {
-      return res
-        .status(404)
-        .json({ message: `Registrar with id ${id} not found` });
-    }
-    res.status(200).json(registrar);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/registrar/:id", RegistrarController.delete_registrar);
 //restaurant
-app.delete("/restaurant/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const restaurant = await Restaurant.findByIdAndUpdate(id);
-    if (!restaurant) {
-      return res
-        .status(404)
-        .json({ message: `Restaurant with id ${id} not found` });
-    }
-    res.status(200).json(restaurant);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
+app.delete("/restaurant/:id", RestaurantController.delete_restaurant);
 //user
-app.delete("/user/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findByIdAndUpdate(id);
-    if (!user) {
-      return res.status(404).json({ message: `User with id ${id} not found` });
-    }
-    res.status(200).json(user);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
+app.delete("/user/:id", UserController.delete_user);
 //end delete methods
 
 //----------------------------------------------------------------------------------------------------------------------------
 
 //additional methods
-app.get("/restaurant/:name", async (req, res) => {
-  try {
-    const { name } = req.params;
-    const restaurant = await Restaurant.findOne({ name: name });
-    if (!restaurant) {
-      return res.status(404).json({ message: "Restaurant not found" });
-    }
-    res.status(200).json(restaurant);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
+//admin
+app.get("/admin/:username", AdminController.get_admin_by_username);
+//end admin
+//bride
+app.get("/bride/:name", BrideController.get_bride_by_boutique_name);
+//end bride
+//cake
+app.get("/cake/:nameOfTheWafery", CakeController.get_wafery_by_name);
+//cake end
+//coordinator
+app.get(
+  "/coordinator/:username",
+  CoordinatorController.get_coordinator_by_username
+);
+//coordinator end
+//cosmeticSalon
+app.get("/cosmeticSalon/:name", CosmeticSalonController.get_salon_by_name);
+app.get(
+  "/cosmeticSalon/:dateReserved",
+  CosmeticSalonController.get_salon_when_reserved
+);
+//cosmeticSalon end
+//dance lessons
+app.get("/danceLessons/:name", DanceLessonsController.get_dance_studio_by_name);
+app.get("/danceLessons/:name", DanceLessonsController.get_nearest_dance_studio);
+//dance lessons end
+//decoration
+app.get("/decoration/:nmeOfTheStore", DecorationController.get_store_by_name);
+//decoration end
+//groom
+app.get("/groom/:name", GroomController.get_groom_by_boutique_name);
+//groom end
+//jewellery
+app.get(
+  "/jewleryStore/:name",
+  JewelleryStoreController.get_jewellery_store_by_name
+);
+//jewellery end
+//music
+app.get("/music/:nameOfTheBand", MusicController.get_band_by_name);
+app.get("/music/:dateReserved", MusicController.get_band_when_reserved);
+//music end
+//other
+app.get("/other/:nameOfTheStore", OtherController.get_store_by_name);
+//other end
+//photo studio
+app.get("/photoStudio/:name", PhotoStudioController.get_studio_by_name);
+app.get(
+  "/photoStudio/:dateReserved",
+  PhotoStudioController.get_studio_when_reserved
+);
+//photo studio end
+//registrar
+app.get("/registrar/:name", RegistrarController.get_registrar_by_name);
+app.get(
+  "/registrar/:dateReserved",
+  RegistrarController.get_registrar_when_reserved
+);
+//registrar end
+//restaurant
+app.get("/restaurant/:name", RestaurantController.get_restaurant_by_name);
+app.get(
+  "/restaurant/:location",
+  RestaurantController.get_restaurant_by_location
+);
+//restaurant end
+//user
+app.get("/user/:name", UserController.get_user_by_name);
+app.delete("/user/:username", UserController.delete_user_by_username);
+//user end
 
-app.get("/user/:name", async (req, res) => {
-  try {
-    const { name } = req.params;
-    const user = await User.findOne({ name: name });
-    if (!user) {
-      return res.status(404).json({ message: "user not found" });
-    }
-    res.status(200).json(user);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-app.delete("/user/:username", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findByIdAndUpdate(id);
-    if (!user) {
-      return res.status(404).json({ message: "user not found" });
-    }
-    res.status(200).json(user);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
 //end additional methods
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -845,3 +252,7 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+
+app.get("http://localhost:3000/user", (req, res) => {
+  res.json({ message: "Hello from the server!" });
+});

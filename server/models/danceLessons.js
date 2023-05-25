@@ -12,12 +12,12 @@ const danceSchema = mongose.Schema(
       required: [true, "Unesite lokaciju"],
     },
     picture: {
-      type: String,
+      type: Buffer,
       required: [true, "Unesite sliku"],
     },
     link: {
       type: String,
-      required: [true, "Unesite link"],
+      required: [false, "Unesite link"],
     },
     phoneNumber: {
       type: String,
@@ -25,11 +25,11 @@ const danceSchema = mongose.Schema(
     },
     priceIndividual: {
       type: Number,
-      required: [true, "Unesite cenu za individualne casove"],
+      required: [false, "Unesite cenu za individualne casove"],
     },
     priceGroup: {
       type: Number,
-      required: [true, "Unesite cenu za grupne casove"],
+      required: [false, "Unesite cenu za grupne casove"],
     },
   },
   {

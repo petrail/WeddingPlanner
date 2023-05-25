@@ -15,6 +15,7 @@
           <p>Otvoreno: Pon - Sub: 8 AM to 9 PM</p>
       </div>
     </div>
+    <GetUsers/>
     
   </div>
   <Footer :inStore="inStore"/>
@@ -23,12 +24,13 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 import TopBar from '../components/TopBar.vue'
-import Contact from '../components/Contact.vue';
+import Contact from '../components/Contact.vue'
+import GetUsers from '../components/GetUsers.vue';
 import Footer from '../components/Footer.vue';
 export default({
   name:"ContactView",
   components:{
-    TopBar,Contact, Footer
+    TopBar,Contact, Footer, GetUsers
   },
   props:{
     inStore:{

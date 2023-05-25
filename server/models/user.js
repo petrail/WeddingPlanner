@@ -27,10 +27,11 @@ const userSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite E-mail"],
     },
-    dateWedding: {
-      type: Date,
-      required: false,
+    picture: {
+      type: Buffer,
+      required: [false, "Unesite sliku"],
     },
+    usluge :{type:[Object]}
   },
   {
     timestamps: true,

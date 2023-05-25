@@ -7,18 +7,9 @@ const cosmeticSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite ime kozmetickog salona"],
     },
-    pictureMakeUp: {
-      type: String,
-      required: [false, "Unesite sliku sminke"],
-    },
-    pictureHair: {
-      type: String,
-      required: [false, "Unesite sliku frizure"],
-    },
-    pictureNails: {
-      type: String,
-      required: [false, "Unesite sliku noktiju"],
-    },
+
+    service: [{typeOfService: String, price:Number, img:Buffer}],
+
     location: {
       type: String,
       required: [true, "Unesite lokaciju"],
@@ -31,22 +22,10 @@ const cosmeticSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite broj telefona"],
     },
-    priceMakeUp: {
-      type: Number,
-      required: [true, "Unesite cenu sminke"],
-    },
-    priceHair: {
-      type: Number,
-      required: [true, "Unesite cenu frizure"],
-    },
-    priceNails: {
-      type: Number,
-      required: [true, "Unesite cenu noktiju"],
-    },
     dateReserved: {
       type: [Date],
       required: [true, "Unesite datume kada je restoran rezervisan"],
-    },
+    }
   },
   {
     timestamps: true,

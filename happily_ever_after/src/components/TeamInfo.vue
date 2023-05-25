@@ -50,7 +50,8 @@
   
   <script>
     import Gallery from '../components/Gallery.vue';
-    export default{
+  
+  export default{
         name: "TeamInfo",
         components:{
             Gallery

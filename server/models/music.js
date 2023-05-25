@@ -8,10 +8,6 @@ const musicSchema = mongose.Schema (
         type: String,
         required: [true, "Unesite ime benda"]
     },
-    image: {
-        type: String,
-        required: [true, "Unesite sliku benda"]
-    },
     link: {
         type: String,
         required: [true, "Unesite link stranice benda"]
@@ -20,15 +16,10 @@ const musicSchema = mongose.Schema (
         type: String,
          required: [true, "Unesite broj telefona benda"]
     },
-    price: {
-        type: Number,
-        required: [true, "Unesite cenu repertoara"]
-    },
-    typeOfService: {
-         type: String,
-         required: [true, "Unesite tip muzike: DJ, trubaci ili bend"]
-    },
-        dateReserved: {
+
+    service: [{typeOfService: String, price:Number, img:Buffer}],
+
+    dateReserved: {
             type: [Date],
             required: [true, "Unesite datume kada je bend. rezervisan"]
         }

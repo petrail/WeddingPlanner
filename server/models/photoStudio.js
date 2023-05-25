@@ -8,7 +8,7 @@ const photoSchema = mongose.Schema(
       required: [true, "Unesite ime foto studia"],
     },
     picture: {
-      type: String,
+      type: [Buffer],
       required: [true, "Unesite sliku"],
     },
     link: {

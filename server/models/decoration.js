@@ -7,10 +7,6 @@ const decorationSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite ime torte"],
     },
-    image: {
-      type: [String],
-      required: [true, "Unesite sliku dekoracije"],
-    },
     location: {
       type: String,
       required: [true, "Unesite lokaciju prodavnice dekoracije"],
@@ -23,14 +19,7 @@ const decorationSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite broj telefona prodavnice dekoracije"],
     },
-    price: {
-      type: [Number],
-      required: [true, "Unesite cenu dekoracije"],
-    },
-    typeOfService: {
-      type: [String],
-      required: [true, "Unesite tip usluge"],
-    },
+    service: [{typeOfService: String, price:Number, img:Buffer}]
   },
   {
     timestamps: true,

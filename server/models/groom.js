@@ -7,14 +7,8 @@ const groomSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite ime butika"],
     },
-    pictureSuit: {
-      type: String,
-      required: [false, "Unesite sliku odela"],
-    },
-    pictureBoots: {
-      type: String,
-      required: [false, "Unesite sliku cipela"],
-    },
+    service: [{typeOfServide: String, color:String, price:Number, size:String, img:Buffer}],
+
     location: {
       type: String,
       required: [true, "Unesite lokaciju"],
@@ -26,31 +20,8 @@ const groomSchema = mongose.Schema(
     phoneNumber: {
       type: String,
       required: [true, "Unesite broj telefona"],
-    },
-    priceSuit: {
-      type: Number,
-      required: [true, "Unesite cenu odela"],
-    },
-    priceBoots: {
-      type: Number,
-      required: [true, "Unesite cenu cipela"],
-    },
-    numberBoots: {
-      type: [Number],
-      required: [true, "Unesite dostupne velicine za cipele"],
-    },
-    numberSuit: {
-      type: [Number],
-      required: [true, "Unesite dostupne velicine za odela"],
-    },
-    colorOfSuit: {
-      type: [String],
-      required: [true, "Unesite dostupne boju dostupnih odela"],
-    },
-    colorOfBoots: {
-      type: [String],
-      required: [true, "Unesite dostupne boju dostupnih cipeli"],
-    },
+    }
+    
   },
   {
     timestamps: true,

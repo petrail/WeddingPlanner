@@ -24,7 +24,7 @@ const coordinatorSchema = mongose.Schema(
       required: [true, "Unesite broj telefona"],
     },
     picture: {
-      type: String,
+      type: Buffer,
       required: [false, "Unesite sliku"],
     },
     email: {

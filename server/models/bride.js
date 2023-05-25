@@ -7,14 +7,9 @@ const brideSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite ime butika"],
     },
-    pictureDress: {
-      type: String,
-      required: [false, "Unesite sliku vencanjice"],
-    },
-    pictureHeels: {
-      type: String,
-      required: [false, "Unesite sliku stikli"],
-    },
+
+    service: [{typeOfService: String, price:Number, size:String, img:Buffer}],
+
     location: {
       type: String,
       required: [true, "Unesite lokaciju"],
@@ -26,27 +21,8 @@ const brideSchema = mongose.Schema(
     phoneNumber: {
       type: String,
       required: [true, "Unesite broj telefona"],
-    },
-    priceDress: {
-      type: Number,
-      required: [true, "Unesite cenu vencanice"],
-    },
-    priceHeels: {
-      type: Number,
-      required: [true, "Unesite cenu stikli"],
-    },
-    numberHeels: {
-      type: [Number],
-      required: [true, "Unesite dostupne velicine za stikle"],
-    },
-    numberDress: {
-      type: [Number],
-      required: [true, "Unesite dostupne velicine za vencanice"],
-    },
-    colorOfHeels: {
-      type: [String],
-      required: [true, "Unesite dostupne boju dostupnih stikli"],
-    },
+    }
+
   },
   {
     timestamps: true,
