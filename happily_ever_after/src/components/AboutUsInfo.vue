@@ -52,7 +52,9 @@
   h3{
     font-weight: bold;
     margin-bottom: 1.5vh;
-    font-size:16pt;
+    font-size:20pt;
+    font-family: 'HHoney';
+    
   }
   p{
     font-size:12pt;

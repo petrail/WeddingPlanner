@@ -171,6 +171,7 @@ h2{
     font-weight:600;
     font-family: 'HHoney';
     font-size:max(2vw,20pt);
+    opacity: 0.6;
 }
 .rings{
     width:30px;

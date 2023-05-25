@@ -1,7 +1,7 @@
 <template>
     <div class="serviceContainer">
         <div class="serviceTitle">
-            <h1>USLUGE</h1>
+            <h1>Pružamo vam...</h1>
         </div>
         <div class="serviceText">
             <h3>Organizacija vencanja</h3>

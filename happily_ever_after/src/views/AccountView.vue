@@ -39,11 +39,10 @@ export default({
 }
 .photo{
   width:40%;
-  background-image: url('../assets/ring.jpg');
+  background-image: url('../assets/account.jpg');
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  filter: brightness(0.8);
 }
 @media (width<1000px){
 .content{
