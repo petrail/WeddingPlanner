@@ -5,9 +5,12 @@
   <Gallery v-if="!clicked" hiddenBar clickable tall :imgs="imgs" @clicked="onClick"/>
   <div class="container" v-else>
     <h2>{{this.selected}}</h2>
+    <div class="back">
+        <router-link class="link" to='/shopmain'> Vrati se na sve ponude </router-link>
+    </div>
     <div class="search"><SearchBar/></div>
     <div class="main">
-      <div class="filter"><CategoryFilter/></div>
+      <div class="filter"><CategoryFilter/></div> 
       <div class="list"><CategoryList/></div>
     </div>
   </div>
@@ -38,7 +41,7 @@ export default({
               {url: 'src/assets/services/serv6.jpg', opis:'Matičari',route:'/shopmain'},
               {url: 'src/assets/services/serv8.jpg', opis:'Dekoracija',route:'/shopmain'},
               {url: 'src/assets/services/serv9.jpg', opis:'Časovi plesa',route:'/shopmain'},
-              {url: 'src/assets/services/serv10.jpeg', opis:'Kozmetički salon',route:'/shopmain'},
+              {url: 'src/assets/services/serv10.jpeg', opis:'Kozmetički saloni',route:'/shopmain'},
               {url: 'src/assets/services/serv11.jpg', opis:'Torte',route:'/shopmain'},
               {url: 'src/assets/services/serv12.jpg', opis:'Ostalo',route:'/shopmain'}],
       clicked:false,
@@ -64,6 +67,8 @@ export default({
   display:flex;
   flex-direction:column;
   padding:5vw;
+  padding-top:1vw;
+
 }
 .search{
   width:75%;
@@ -85,4 +90,34 @@ export default({
 .content{
   margin-top: 45vh;
 }
+h2{
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 40px;
+  font-weight: bold;
+  color:var(--dark-purple);
+  padding:3vw;
+}
+.link{
+  font-size:min(5vw,17pt);
+  color:var(--font-dark);
+
+}
+.link:hover{
+    color:var(--font-dark); 
+    border:0;
+    background-color: var(--white-pink);
+    border-radius:.7vw;
+    padding:0.2vw
+}
+@media (width<700px){
+    h2{
+        text-align: center;
+        text-transform: uppercase;
+        font-size:30px;
+        font-weight: bold;
+        color:var(--dark-purple);
+      }
+    }
+
 </style>

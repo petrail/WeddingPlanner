@@ -29,7 +29,7 @@
         <div class="nav">
             <ul v-if="inStore && screenWidth>700">
                 <li><router-link to="/shopmain">Proizvodi</router-link></li>
-                <li><router-link to="/">Korpa</router-link></li>
+                <li><router-link to="/liked">Korpa</router-link></li>
                 <li><router-link to="/">Poruke</router-link></li>
                 <li><router-link to="/">Kontakt</router-link></li>
             </ul>
@@ -262,6 +262,5 @@ a:hover{
     color:var(--navbar-hover-cl); 
     border:0;
     border-radius:1vw;
-     
 }
 </style>

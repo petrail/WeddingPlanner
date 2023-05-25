@@ -12,7 +12,7 @@
             <button>POŠALJI PORUKU</button>
         </div>
         <div class="mapadiv">
-            <iframe class="map" src="https://maps.google.com/maps?q=Faculty of Electronic Engineering&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
+            <iframe class="map" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Bulevar%20Nemanji%C4%87a%2015+(Happily%20Ever%20After)&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" allowfullscreen></iframe>
         </div>
 
     </div>

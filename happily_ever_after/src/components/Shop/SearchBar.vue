@@ -1,6 +1,6 @@
 <template>
-    <div class="searchContainer"> 
-
+    <div>
+    <input class="bar" type="text" v-model="searchQuery" @input="handleInput" placeholder="Pretraži...">
     </div>
     
   </template>
@@ -9,14 +9,24 @@
   export default{
       name: "SearchBar",
       
+      
   };
   </script>
   
 <style scoped>  
-.searchContainer{
-    width:100%;
-    height:100%;
-    background-color:black;
+.bar {
+    padding: 8px;
+    width: 500px;
+    border: 2px solid #ccc;
+    border-radius: .7vw;
 }
+@media (width<700px){
+    .bar{
+        padding: 8px;
+        width:300px;
+        border: 2px solid #ccc;
+        border-radius: 1vw;
+    }
+    }
 </style>
   

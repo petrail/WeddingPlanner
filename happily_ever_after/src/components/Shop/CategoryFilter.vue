@@ -1,6 +1,5 @@
 <template>
     <div class="categoryContainer"> 
-
     </div>
     
   </template>
