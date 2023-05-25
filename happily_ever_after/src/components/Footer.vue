@@ -5,8 +5,14 @@
             © 2023 Happily Ever After
            </h2>  
         </div>
-        <div class="row"> 
-            <ul>
+        <div class="row">
+            <ul v-if="inStore">
+                <li><router-link to="/shopmain">Proizvodi</router-link></li>
+                <li><router-link to="/liked">Korpa</router-link></li>
+                <li><router-link to="/">Poruke</router-link></li>
+                <li><router-link to="/">Kontakt</router-link></li>
+            </ul>
+            <ul v-if="!inStore">
                 <li><router-link to="/">Početna</router-link></li>
                 <li><router-link to="/about">O nama</router-link></li>
                 <li><router-link to="/services">Usluge</router-link></li>
@@ -23,10 +29,15 @@
   </template>
   
   <script>
-  export default{
-      name: "Footer",
-      
-  };
+export default{
+    name: "Footer",
+    props:{
+        inStore:{
+            type: Boolean,
+            default:false
+        },
+    }
+}
   </script>
   
 <style scoped>  

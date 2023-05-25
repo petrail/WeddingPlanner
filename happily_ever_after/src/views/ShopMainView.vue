@@ -35,11 +35,11 @@ export default({
       imgs:[{url: 'src/assets/services/serv1.jpeg', opis:'Muzika',route:'/shopmain'},
               {url: 'src/assets/services/serv2.jpg', opis:'Restorani',route:'/shopmain'},
               {url: 'src/assets/services/serv3.jpg', opis:'Burme',route:'/shopmain'},
-              {url: 'src/assets/services/serv4.jpg', opis:'Fotografisanje',route:'/shopmain'},
+              {url: 'src/assets/services/serv8.jpg', opis:'Dekoracija',route:'/shopmain'},
               {url: 'src/assets/services/serv5.jpg', opis:'Za mladu',route:'/shopmain'},
               {url: 'src/assets/services/serv7.jpg', opis:'Za mladoženju',route:'/shopmain'},
               {url: 'src/assets/services/serv6.jpg', opis:'Matičari',route:'/shopmain'},
-              {url: 'src/assets/services/serv8.jpg', opis:'Dekoracija',route:'/shopmain'},
+              {url: 'src/assets/services/serv4.jpg', opis:'Fotografisanje',route:'/shopmain'},
               {url: 'src/assets/services/serv9.jpg', opis:'Časovi plesa',route:'/shopmain'},
               {url: 'src/assets/services/serv10.jpeg', opis:'Kozmetički saloni',route:'/shopmain'},
               {url: 'src/assets/services/serv11.jpg', opis:'Torte',route:'/shopmain'},
@@ -97,6 +97,7 @@ h2{
   font-weight: bold;
   color:var(--dark-purple);
   padding:3vw;
+
 }
 .link{
   font-size:min(5vw,17pt);
