@@ -2,6 +2,7 @@
   <div class="background">
     <LoginForm/>
   </div>
+  <Footer/>
 </template>
 
 <script>

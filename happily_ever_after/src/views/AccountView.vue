@@ -8,6 +8,7 @@
 
     </div>
   </div>
+  <Footer inStore/>
 
 </template>
 
@@ -15,10 +16,11 @@
 import { RouterLink, RouterView } from 'vue-router'
 import NavBar from '../components/NavBar.vue'
 import AccountInfo from '../components/AccountInfo.vue'
+import Footer from '../components/Footer.vue';
 export default({
   name:"AccountView",
   components:{
-    NavBar,AccountInfo
+    NavBar,AccountInfo, Footer
   },
   mounted () {
     window.scrollTo(0, 0)

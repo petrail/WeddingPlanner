@@ -17,16 +17,24 @@
     </div>
     
   </div>
+  <Footer :inStore="inStore"/>
 </template>
 
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 import TopBar from '../components/TopBar.vue'
 import Contact from '../components/Contact.vue';
+import Footer from '../components/Footer.vue';
 export default({
   name:"ContactView",
   components:{
-    TopBar,Contact
+    TopBar,Contact, Footer
+  },
+  props:{
+    inStore:{
+      type:Boolean,
+      default:false
+    }
   },
   mounted () {
     window.scrollTo(0, 0)

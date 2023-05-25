@@ -77,6 +77,7 @@
         flex-wrap: wrap;
         justify-content:space-between;
         padding:5vw;
+        padding-top:0;
     }
     .photo:hover{
         transform: scale(1.1);

@@ -16,14 +16,14 @@
 <style scoped>  
 .bar {
     padding: 8px;
-    width: 500px;
+    width: 100%;
     border: 2px solid #ccc;
     border-radius: .7vw;
 }
 @media (width<700px){
     .bar{
         padding: 8px;
-        width:300px;
+        width:100%;
         border: 2px solid #ccc;
         border-radius: 1vw;
     }

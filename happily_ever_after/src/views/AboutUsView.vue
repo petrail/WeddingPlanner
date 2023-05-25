@@ -5,7 +5,7 @@
     <AboutUsInfo/>  
     <TeamInfo/>
   </div>
-
+  <Footer/>
 </template>
 
 <script>
@@ -13,10 +13,11 @@ import { RouterLink, RouterView } from 'vue-router'
 import TopBar from '../components/TopBar.vue'
 import AboutUsInfo from '../components/AboutUsInfo.vue';
 import TeamInfo from '../components/TeamInfo.vue';
+import Footer from '../components/Footer.vue';
 export default({
   name:"AboutUsView",
   components:{
-    TopBar,AboutUsInfo,TeamInfo
+    TopBar,AboutUsInfo,TeamInfo,Footer
   },
   mounted () {
     window.scrollTo(0, 0)

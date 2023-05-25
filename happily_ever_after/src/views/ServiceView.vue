@@ -6,7 +6,7 @@
   <ServiceInfo/>
   <Gallery clickable :imgs="this.imgs"/>
   </div>
-
+  <Footer/>
 </template>
 
 <script>
@@ -14,10 +14,11 @@ import { RouterLink, RouterView } from 'vue-router'
 import TopBar from '../components/TopBar.vue'
 import ServiceInfo from '../components/ServiceInfo.vue';
 import Gallery from '../components/Gallery.vue';
+import Footer from '../components/Footer.vue';
 export default({
   name:"ServiceView",
   components:{
-    TopBar,ServiceInfo,Gallery
+    TopBar,ServiceInfo,Gallery, Footer
   },
   data(){
     return{

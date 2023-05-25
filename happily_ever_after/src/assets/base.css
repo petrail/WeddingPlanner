@@ -53,6 +53,11 @@
   src: url(./fonts/Dosis-SemiBold.ttf);
   font-weight:600;
 }
+@font-face {
+  font-family: HHoney;
+  src: url(./fonts/hello-honey.otf);
+  font-weight: normal;
+}
 *{
   font-family:"Dosis";
 }

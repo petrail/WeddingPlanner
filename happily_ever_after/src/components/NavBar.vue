@@ -1,5 +1,5 @@
 <template>
-  <div :class="!transparency || !topOfPage? 'navbar scrolled': 'navbar normal'">
+  <div :class="(!transparency || !topOfPage) || dropdownopen? 'navbar scrolled': 'navbar normal'">
     <div class="topbar">
         <div class="info">
             <img src="../assets/navbar/email.png"/>
@@ -101,6 +101,7 @@ export default{
         },
         toggleDropdown(){
             console.log("hej");
+            
             this.dropdownopen = !this.dropdownopen;
         },
         handleScroll(){
@@ -168,6 +169,8 @@ ul{
 }
 h2{
     font-weight:600;
+    font-family: 'HHoney';
+    font-size:max(2vw,20pt);
 }
 .rings{
     width:30px;

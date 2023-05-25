@@ -3,6 +3,7 @@
   <div class="background">
     <RegisterForm/>
   </div>
+  <Footer/>
 </template>
 
 <script>
