@@ -21,14 +21,14 @@ export default({
   },
   data(){
     return{
-      imgs:[{url: 'src/assets/services/serv1.jpg', opis:'Muzika',route:'/shopmain'},
-              {url: 'src/assets/services/serv2.jpg', opis:'Restoran',route:''},
+      imgs:[{url: 'src/assets/services/serv1.jpeg', opis:'Muzika',route:'/shopmain'},
+              {url: 'src/assets/services/serv2.jpg', opis:'Restorani',route:''},
               {url: 'src/assets/services/serv3.jpg', opis:'Burme',route:''},
               {url: 'src/assets/services/serv4.jpg', opis:'Fotografisanje',route:''},
-              {url: 'src/assets/services/serv5.jpg', opis:'Haljine',route:''},
-              {url: 'src/assets/services/serv6.webp', opis:'Matičari',route:''},
-              {url: 'src/assets/services/serv7.jpg', opis:'Odela',route:''},
-              {url: 'src/assets/services/serv8.jpg', opis:'Bidermajer',route:''}],
+              {url: 'src/assets/services/serv5.jpg', opis:'Za mladu',route:''},
+              {url: 'src/assets/services/serv7.jpg', opis:'Za mladoženju',route:''},
+              {url: 'src/assets/services/serv6.jpg', opis:'Matičari',route:''},
+              {url: 'src/assets/services/serv8.jpg', opis:'Dekoracija',route:''}],
         
       }
   },
