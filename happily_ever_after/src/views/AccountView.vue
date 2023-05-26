@@ -39,7 +39,7 @@ export default({
 }
 .photo{
   width:40%;
-  background-image: url('../assets/account.jpg');
+  background-image: url('../assets/nalog.jpg');
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;

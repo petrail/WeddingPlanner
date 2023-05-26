@@ -41,7 +41,7 @@
             password:'petra',
             email:'petrail@elfak.rs',
             ime_prezime: 'Petra Ilkovski',
-            url:'src/assets/akaunt.png'
+            url:'src/assets/account.jpg'
         }
       };
     },
