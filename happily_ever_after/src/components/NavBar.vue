@@ -31,7 +31,7 @@
                 <li><router-link to="/shopmain">Proizvodi</router-link></li>
                 <li><router-link to="/liked">Korpa</router-link></li>
                 <li><router-link to="/">Poruke</router-link></li>
-                <li><router-link to="/">Kontakt</router-link></li>
+                <li><router-link to="/shopcontact">Kontakt</router-link></li>
             </ul>
             <!--DROPDOWN MENU-->
 
@@ -49,10 +49,10 @@
     </div>
     <div :class="dropdownopen? 'dropdown open': 'dropdown closed'" v-if="screenWidth<=700">
         <div v-if="inStore && dropdownopen" class="dropdownMenu">
-            <a href="index.html">Proizvodi</a>
-            <a href="about.html">Korpa</a>
-            <a href="service.html">Poruke</a>
-            <a href="contact.html">Kontakt</a>
+            <router-link to="/shopmain">Proizvodi</router-link>
+            <router-link to="/liked">Korpa</router-link>
+            <router-link to="/">Poruke</router-link>
+            <router-link to="/shopcontact">Kontakt</router-link>
         </div>
             <!--DROPDOWN MENU-->
         <div v-else-if="dropdownopen" class="dropdownMenu">
@@ -90,6 +90,8 @@ export default{
     methods: {
         logout(){
             console.log("HEJ");
+            //Ovde logika za brisanje login cookie-a
+            this.$router.push('/');
         },
         onScreenResize() {
             window.addEventListener("resize", () => {
@@ -143,7 +145,7 @@ ul{
     position:fixed;
     top:0;
     transition: all 0.5s ease;
-    z-index: 999;
+    z-index: 900;
 }
 
 .normal{

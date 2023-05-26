@@ -1,68 +1,117 @@
 <template>
     <div class="listContainer">
-        <div @click="selectItem(pred)" class="photo" v-for="(pred,index) in predmeti" :key="index">
-            <div class="slika" :style="`background-image: url(${pred.url})`">
-                <img class="srce" :src="pred.liked? 'src/assets/liked.png':'src/assets/not-liked.png'" @click="like(pred)"/>
-            </div>
-            <div class="opis">
-                <h2 class="naslov">
-                    {{ pred.naslov }}
-                </h2>
-                <p class="detalji">
-                    {{ pred.opis }}
-                </p>
-            </div>
+        <div v-if="itemOpen==null" class="photo" v-for="(pred,index) in predmeti" :key="index">
+            <CategoryListItem @open="open" @add="addToLiked" @remove="removeFromLiked" :pred="pred" :liked="isLiked(pred)"/>
+        </div>
+    </div>
+    <div v-if="itemOpen!=null" class="dark">
+        <div class="openCard">
+            <CategoryListItem open @close="closeItem" @add="addToLiked" @remove="removeFromLiked" :liked="isLiked(itemOpen)" :pred="itemOpen"/>
         </div>
     </div>
 </template>
   
   <script>
+import CategoryListItem from './CategoryListItem.vue';
+
   export default{
     name: "CategoryList",
-    props:{
-        predmeti:{
-                type:Object,
-                default:[
-                    {id:0, url: 'src/assets/main_gallery/img1.jpg', naslov:'Prvi',opis:'Neki opis', liked:false},
-                    {id:1, url: 'src/assets/main_gallery/img2.webp', naslov:'Drugi',opis:'Neki opis', liked:true},
-                    {id:2, url: 'src/assets/main_gallery/img3.jpg', naslov:'Treci',opis:'Neki opis', liked:false},
-                    {id:3, url: 'src/assets/main_gallery/img4.jpg', naslov:'Cetvrti',opis:'Neki opis', liked:true},
-                    {id:4, url: 'src/assets/main_gallery/img5.jpg', naslov:'Peti',opis:'Neki opis', liked:false},
-                    {id:5, url: 'src/assets/main_gallery/img6.jpg', naslov:'Sesti',opis:'Neki opis', liked:false},
-                    {id:6, url: 'src/assets/main_gallery/img7.jpg', naslov:'Sedmi',opis:'Neki opis', liked:true},
-                    {id:7, url: 'src/assets/main_gallery/img8.webp', naslov:'Osmi',opis:'Neki opis', liked:false},
-                    {id:0, url: 'src/assets/main_gallery/img1.jpg', naslov:'Prvi',opis:'Neki opis', liked:false},
-                    {id:1, url: 'src/assets/main_gallery/img2.webp', naslov:'Drugi',opis:'Neki opis', liked:true},
-                    {id:2, url: 'src/assets/main_gallery/img3.jpg', naslov:'Treci',opis:'Neki opis', liked:false},
-                    {id:3, url: 'src/assets/main_gallery/img4.jpg', naslov:'Cetvrti',opis:'Neki opis', liked:true},
-                    {id:4, url: 'src/assets/main_gallery/img5.jpg', naslov:'Peti',opis:'Neki opis', liked:false},
-                    {id:5, url: 'src/assets/main_gallery/img6.jpg', naslov:'Sesti',opis:'Neki opis', liked:false},
-                    {id:6, url: 'src/assets/main_gallery/img7.jpg', naslov:'Sedmi',opis:'Neki opis', liked:true},
-                    {id:7, url: 'src/assets/main_gallery/img8.webp', naslov:'Osmi',opis:'Neki opis', liked:false}]
-            },
-        liked:{
-            
+    components:{
+        CategoryListItem,
+    },
+    props: {
+        predmeti: {
+            type: Object,
+            default: [
+                { id: 0, url: "src/assets/main_gallery/img1.jpg", naslov: "Prvi", opis: "Neki opis" },
+                { id: 1, url: "src/assets/main_gallery/img2.webp", naslov: "Drugi", opis: "Neki opis" },
+                { id: 2, url: "src/assets/main_gallery/img3.jpg", naslov: "Treci", opis: "Neki opis" },
+                { id: 3, url: "src/assets/main_gallery/img4.jpg", naslov: "Cetvrti", opis: "Neki opis" },
+                { id: 4, url: "src/assets/main_gallery/img5.jpg", naslov: "Peti", opis: "Neki opis" },
+                { id: 5, url: "src/assets/main_gallery/img6.jpg", naslov: "Sesti", opis: "Neki opis" },
+                { id: 6, url: "src/assets/main_gallery/img7.jpg", naslov: "Sedmi", opis: "Neki opis" },
+                { id: 7, url: "src/assets/main_gallery/img8.webp", naslov: "Osmi", opis: "Neki opis" },
+                { id: 8, url: "src/assets/main_gallery/img1.jpg", naslov: "Prvi", opis: "Neki opis" },
+                { id: 9, url: "src/assets/main_gallery/img2.webp", naslov: "Drugi", opis: "Neki opis" },
+                { id: 10, url: "src/assets/main_gallery/img3.jpg", naslov: "Treci", opis: "Neki opis" },
+                { id: 11, url: "src/assets/main_gallery/img4.jpg", naslov: "Cetvrti", opis: "Neki opis" },
+                { id: 12, url: "src/assets/main_gallery/img5.jpg", naslov: "Peti", opis: "Neki opis" },
+                { id: 13, url: "src/assets/main_gallery/img6.jpg", naslov: "Sesti", opis: "Neki opis" },
+                { id: 14, url: "src/assets/main_gallery/img7.jpg", naslov: "Sedmi", opis: "Neki opis" },
+                { id: 15, url: "src/assets/main_gallery/img8.webp", naslov: "Osmi", opis: "Neki opis" }
+            ]
+        },
+        liked: {
+            type: Object,
+            default: [1, 3, 6, 9, 11, 14]
         }
     },
-    mounted(){
-        //za Juliju - ovde treba da se povuku items sa baze
-
+    data(){
+        return{
+            itemOpen:null,
+        }
     },
-    methods:{
-        selectItem(item){
+    mounted() {
+        //Ovde treba da se povuku items sa baze
+        //Povuci sa baze sve predmete kao i sve sto je likeovano
+        //Moja funkcija dole ce da izracuna dal treba da bude likeovano ili ne
+        //Pametno bi bilo da se napravi funkcija na backendu da pribavi sve likovane usluge po kategoriji,
+            // npr da ti nadje sve likeovane restorane itd
+        //Najbolje da se na bazi likeovi pamte kao {KategorijaUsluge, IDUsluge}
+    },
+    methods: {
+        selectItem(item) {
             //Kad kliknes otvori se prozor za item
-            console.log(item);
+            console.log("nesto");
         },
-        like(pred){
-            console.log("LIKE!");
-            pred.liked=!pred.liked;
+        isLiked(pred) {
+            return this.liked.includes(pred.id);
+        },
+        //Ove dve funkcije treba da se povezu sa bazom da bi se znalo sta si likeovao
+        //Mozda nije najbolje da se pamti sta je likeovano po ID-u, s obzirom da su velike sanse da ce npr restoran i bend da imaju isti ID
+        //Mozda bolje po imenu
+        addToLiked(id){
+            this.liked.push(id);
+        },
+        removeFromLiked(id){
+            const index = this.liked.indexOf(id);
+            this.liked.splice(index, 1);
+        },
+        open(pred){
+            this.itemOpen = pred;
+        },
+        closeItem(){
+            this.itemOpen=null;
         }
     }
-      
-  };
+};
   </script>
   
 <style scoped>
+.dark{
+    background-color: #00000094;
+    backdrop-filter: blur(5px);
+    width:100vw;
+    height:100vh;
+    position: fixed;
+    top:0;
+    left:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index:902;
+}
+.openCard{
+    width:90vw;
+    height:90vh;
+    z-index:905;
+    display: flex;
+}
+@media (width<1000px) {
+    .openCard{
+        flex-direction: column;
+    }   
+}
 .srce{
     position: absolute;
     top:5%;

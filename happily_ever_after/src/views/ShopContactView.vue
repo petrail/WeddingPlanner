@@ -1,6 +1,6 @@
 
 <template>
-  <TopBar hasLogin :barText="'KONTAKT'"/>
+  <TopBar short inStore :barText="'KONTAKT'"/>
   <div class = "content">
     <Contact/>
     <div class="kontakt">
@@ -18,7 +18,7 @@
     <GetUsers/>
     
   </div>
-  <Footer/>
+  <Footer inStore/>
 </template>
 
 <script>
@@ -28,9 +28,15 @@ import Contact from '../components/Contact.vue'
 import GetUsers from '../components/GetUsers.vue';
 import Footer from '../components/Footer.vue';
 export default({
-  name:"ContactView",
+  name:"ShopContactView",
   components:{
     TopBar,Contact, Footer, GetUsers
+  },
+  props:{
+    inStore:{
+      type:Boolean,
+      default:false
+    }
   },
   mounted () {
     window.scrollTo(0, 0)
@@ -69,7 +75,7 @@ img{
   padding:3vw;
 }
 .content{
-  margin-top: 80vh;
+  margin-top: 40vh;
 }
 @media (width<700px){
   .kontakt{

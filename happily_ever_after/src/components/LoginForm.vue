@@ -35,6 +35,7 @@ export default {
   methods: {
     login() {
       // Perform login logic here, e.g., send username and password to the server
+      // Ovde logika za dodavanje login cookie-a
       console.log('Login clicked');
       console.log('Username:', this.username);
       console.log('Password:', this.password);

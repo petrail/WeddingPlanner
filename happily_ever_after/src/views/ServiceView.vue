@@ -3,7 +3,7 @@
 <template>
   <TopBar hasLogin :barText="'USLUGE'"/>
   <div class = "content">
-  <ServiceInfo/>
+  <ServiceInfo class="margin"/>
   <Gallery clickable :imgs="this.imgs"/>
   </div>
   <Footer/>
@@ -41,6 +41,9 @@ export default({
 
 
 <style scoped>
+.margin{
+  margin-bottom: 10vh;
+}
 .content{
   margin-top: 85vh;
 }

@@ -9,6 +9,7 @@ import RegisterView from '../views/RegisterView.vue'
 import ShopMainView from '../views/ShopMainView.vue'
 import AccountView from '../views/AccountView.vue'
 import LikedView from '../views/LikedView.vue'
+import ShopContactView from '../views/ShopContactView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,7 +59,12 @@ const router = createRouter({
       path: '/liked',
       name: 'liked',
       component: LikedView
-    }
+    },
+    {
+      path: '/shopcontact',
+      name: 'shopcontact',
+      component: ShopContactView
+    },
   ]
 })
 
