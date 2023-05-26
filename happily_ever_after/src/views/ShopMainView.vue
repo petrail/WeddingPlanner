@@ -74,9 +74,11 @@ export default({
     onClick(img){
       this.clicked=true;
       this.selected=img.opis;
+      window.scrollTo(0, 0)
     },
     backToCateg(){
       this.clicked=false;
+      window.scrollTo(0, 0)
     }
   }
 })
