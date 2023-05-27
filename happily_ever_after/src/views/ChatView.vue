@@ -2,9 +2,7 @@
     <TopBar short inStore :barText="'PORUKE'"/>
 <div class="app">
     <h1>Chat App</h1>
-    <chat-messages :messages="messages" />
-    <chat-input @new-message="addMessage" />
-    <user-list :users="users" />
+    <ChatContactList/>
   </div>
     <Footer inStore/>
 </template>
@@ -12,18 +10,14 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 import TopBar from '../components/TopBar.vue'
-import ChatMessages from "../components/Chat/ChatMessages.vue";
-import ChatInput from "../components/Chat/ChatInput.vue";
-import UserList from "../components/Chat/UserList.vue";
+import ChatContactList from "../components/Chat/ChatContactList.vue";
 import Footer from '../components/Footer.vue';
 
 export default {
     name: 'ChatView',
     components: {
     TopBar,
-    ChatMessages,
-    ChatInput,
-    UserList,
+    ChatContactList,
     Footer
   },
     data() {
@@ -54,10 +48,10 @@ export default {
 </script>
 <style scoped>
 .app {
-  max-width: 600px;
-  margin: 20vw;
-  padding: 20px;
+  margin-top:40vh;
+  width:100vw;
   font-family: Arial, sans-serif;
+  padding:5vw;
 }
 
 h1 {
