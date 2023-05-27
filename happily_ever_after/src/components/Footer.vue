@@ -9,8 +9,8 @@
             <ul v-if="inStore">
                 <li><router-link to="/shopmain">Proizvodi</router-link></li>
                 <li><router-link to="/liked">Korpa</router-link></li>
-                <li><router-link to="/">Poruke</router-link></li>
-                <li><router-link to="/">Kontakt</router-link></li>
+                <li><router-link to="/chat">Poruke</router-link></li>
+                <li><router-link to="/shopcontact">Kontakt</router-link></li>
             </ul>
             <ul v-if="!inStore">
                 <li><router-link to="/">Početna</router-link></li>

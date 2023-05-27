@@ -1,5 +1,5 @@
 <template>
-  <TopBar short inStore :barText="'Otkrijte beskrajne mogućnosti za vaše venčanje'"/>
+  <TopBar short inStore :barText="'KORPA'"/>
   <Footer inStore/>
 </template>
 
@@ -11,6 +11,12 @@ export default({
   name:"LikedView",
   components:{
     TopBar, Footer
+  },
+  props:{
+    inStore:{
+      type:Boolean,
+      default:true
+    }
   },
   mounted () {
     window.scrollTo(0, 0)
