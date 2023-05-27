@@ -12,7 +12,7 @@
           <p>Adresa: Bulevar Nemanjića 15, Niš</p>
           <p>Telefon: +381649974169</p>
           <p>Email: theappangels@gmail.com</p>
-          <p>Otvoreno: Pon - Sub: 8 AM to 9 PM</p>
+          <p>Otvoreno: Pon - Sub: 8h-20h</p>
       </div>
     </div>
     <GetUsers/>

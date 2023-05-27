@@ -1,7 +1,7 @@
 <template>
     <TopBar short inStore :barText="'PORUKE'"/>
-  <div class= "content">
-    <h1>Chat</h1>
+<div class="app">
+    <h1>Chat App</h1>
     <chat-messages :messages="messages" />
     <chat-input @new-message="addMessage" />
     <user-list :users="users" />
@@ -53,7 +53,14 @@ export default {
 };
 </script>
 <style scoped>
-.content{
-  margin-top: 40vh;
+.app {
+  max-width: 600px;
+  margin: 20vw;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
 }
 </style>

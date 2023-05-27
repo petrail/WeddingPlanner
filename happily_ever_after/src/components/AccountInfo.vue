@@ -62,7 +62,7 @@
 <style scoped>
 h1{
     font-weight: 600;
-    font-size: 3.5vw;
+    font-size: 3vw;
 }
 .acccontainer{
     display: flex;
@@ -75,7 +75,7 @@ h1{
 }
 .row{
     display:flex;
-    width:75%;
+    width:60%;
     flex-direction: column;
     margin-bottom: .5vh;
 }
