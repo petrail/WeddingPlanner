@@ -5,7 +5,7 @@
             <p>Pošaljite nam poruku</p>
             <div class="ime">
                 <input class="margin" type="text" placeholder="Ime"/>
-                <input type="email" placeholder="Email"/>
+                <input class="email" type="email" placeholder="Email"/>
             </div>
             <input type="text" placeholder="Tema"/>
             <textarea placeholder="Poruka"/>
@@ -85,6 +85,9 @@
         border:0;
         box-shadow: 15px 50px 21px rgba(0, 0, 0, 0.01), 9px 28px 18px rgba(0, 0, 0, 0.03), 4px 12px 13px rgba(0, 0, 0, 0.04), 1px 3px 7px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05);
         border-radius: 1vw;
+    }
+    .email{
+        width: 50%;
     }
     @media (width<700px){
         .mapadiv, .forma{
