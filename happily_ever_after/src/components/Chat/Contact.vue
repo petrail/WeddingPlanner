@@ -1,8 +1,8 @@
 <template>
-    <div class="contactContainer">
+    <div @click="openChat()" class="contactContainer">
         <div class="img" v-bind:style="{ backgroundImage: 'url(' + contact.contactImg + ')' }">
         </div>
-        <div v-if="this.small" class="podaci">
+        <div v-if="!isSmall" class="podaci">
             <h2>{{contact.contactName}}</h2>
             <p>{{contact.lastMsg}}</p>
         </div>
@@ -18,11 +18,18 @@
             type:Object,
             default:null
         },
-        small:false
       },
-      mounted(){
-        small = window.innerWidth < 700;
-      }
+      methods:{
+        openChat(){
+            this.$emit('openChat',props);
+        }
+      },
+      computed:{
+        isSmall:function(){
+            return window.innerWidth<700;
+        }
+      },
+      emits:['openChat']
   };
   </script>
   
@@ -32,6 +39,7 @@
     height:100%;
     background-color:var(--light-pink);
     display:flex;
+    box-shadow: 15px 50px 21px rgba(0, 0, 0, 0.01), 9px 28px 18px rgba(0, 0, 0, 0.03), 4px 12px 13px rgba(0, 0, 0, 0.04), 1px 3px 7px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05);
 }
 .img{
     width:30%;
@@ -46,7 +54,7 @@
     flex-wrap:wrap;
     justify-content:center;
     align-items:center;
-    padding:30px;
+    padding:10px;
 }
 h2,p{
     width:100%;
@@ -54,6 +62,11 @@ h2,p{
 @media (width<700px){
     .img{
         width:100%;
+        border-radius:100%;
+    }
+    .contactContainer{
+        background-color: transparent;
+        border-radius:100%;
     }
     .podaci{
         width:0;

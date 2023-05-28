@@ -1,7 +1,7 @@
 <template>
   <div class="chatListContainer">
     <div class="contact" v-for="(contact,index) in this.contactList" :key="index">
-        <Contact :contact="contact"/>
+        <Contact @openChat="openChat(contact)" :contact="contact"/>
     </div>
   </div>
 </template>
@@ -17,17 +17,21 @@ components:{
     return {
       newMessage: "",
       contactList:[
-        {contactImg:'src/assets/liked.png',contactName:'Neko Nekic',lastMsg:'Hej!'},
-        {contactImg:'src/assets/liked.png',contactName:'Neko Nekic',lastMsg:'Hej!'},
-        {contactImg:'src/assets/liked.png',contactName:'Neko Nekic',lastMsg:'Hej!'},
-        {contactImg:'src/assets/liked.png',contactName:'Neko Nekic',lastMsg:'Hej!'},]
+        {contactImg:'src/assets/services/serv1.jpeg',contactName:'Neko Nekic',lastMsg:'Hej!'},
+        {contactImg:'src/assets/services/serv1.jpeg',contactName:'Neko Nekic',lastMsg:'Hej!'},
+        {contactImg:'src/assets/services/serv1.jpeg',contactName:'Neko Nekic',lastMsg:'Hej!'},
+        {contactImg:'src/assets/services/serv1.jpeg',contactName:'Neko Nekic',lastMsg:'Hej!'},]
     };
   },
   methods: {
     sendMessage() {
       this.$emit("new-message", this.newMessage);
       this.newMessage = "";
-    }
+    },
+    openChat(contact){
+      this.$emit('openChat',contact);
+    },
+    emits:['openChat']
   }
 };
 </script>
@@ -35,14 +39,22 @@ components:{
 <style>
 .chatListContainer{
     max-height:80vh;
-    height:80vh;
-    width:20vw;
+    width:100%;
+    height:100%;
     overflow-y:auto;
-    border: 2px solid var(--dark-purple);
 }
 .contact{
     width:100%;
     height:15%;
     margin-bottom:1vh;
+}
+@media (width<700px){
+  .chatListContainer{
+    width:14vw;
+  }
+  .contact{
+    aspect-ratio: 1/1;
+    height:auto !important;
+  }
 }
 </style>
