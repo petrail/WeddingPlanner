@@ -23,7 +23,7 @@ import CategoryListItem from './CategoryListItem.vue';
         predmeti: {
             type: Object,
             default: [
-                { id: 0, url: "src/assets/main_gallery/img1.jpg", naslov: "Prvi", opis: "Neki opis" },
+                { id: 0, url: "src/assets/main_gallery/img1.jpg", naslov: "Prvi", opis: "Neki opis", lokacija:'Neka', cena:2300, telefon:'0603255700',website:'google.com', recenzije },
                 { id: 1, url: "src/assets/main_gallery/img2.webp", naslov: "Drugi", opis: "Neki opis" },
                 { id: 2, url: "src/assets/main_gallery/img3.jpg", naslov: "Treci", opis: "Neki opis" },
                 { id: 3, url: "src/assets/main_gallery/img4.jpg", naslov: "Cetvrti", opis: "Neki opis" },

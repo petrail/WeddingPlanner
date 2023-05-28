@@ -192,12 +192,13 @@ h2{
   font-size:min(5vw,17pt);
   color:var(--font-dark);
   border:0;
+  
+  width:100%;
   background-color: transparent;
   transition: all 1s ease;
   padding:.5vw;
   display:flex;
   align-items: center;
-  justify-content: center;
 }
 .link:hover{
     color:var(--font-dark); 
