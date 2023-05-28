@@ -1,7 +1,7 @@
 <template>
     <TopBar short inStore :barText="'PORUKE'"/>
 <div class="app">
-  <h1>Chat App</h1>
+  <!-- <h1>Chat App</h1> -->
     <div class="contacts">
       <ChatContactList @openChat="openChat"/>
     </div>
@@ -63,29 +63,21 @@ export default {
   margin-top:40vh;
   width:100vw;
   font-family: Arial, sans-serif;
-  padding:5vw;
+  padding:2vw;
   display:flex;
   flex-wrap:wrap;
 }
 .contacts{
-  width:25%;
-  min-height:60vh;
-  max-height:60vh;
+  width:20%;
+  min-height:80vh;
+  max-height:80vh;
   margin-top:5vh;
-  margin-right:5%;
-}
-@media (width<700px){
-  .contacts{
-    margin-right:0 !important;
-  }
-  .messages{
-    width:75% !important;
-  }
+  margin-right:0;
 }
 .messages{
-  width:70%;
-  max-height:60vh;
-  min-height:60vh;
+  width:80%;
+  max-height:80vh;
+  min-height:80vh;
 }
 h1 {
   text-align: center;

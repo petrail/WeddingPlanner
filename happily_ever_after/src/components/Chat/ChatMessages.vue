@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="input">
-    <input type="text" v-model="msg" placeholder="Message"/>
+    <input class="inputM" type="text" v-model="msg" placeholder="Message"/>
     <button @click="send()" class="btn">Send</button>
   </div>
 </div>
@@ -34,6 +34,7 @@ export default {
   methods:{
     send(){
       const newMsg = {message:this.msg, me:true}
+      this.msg='';
       this.$emit('send',newMsg);
     }
   },
@@ -46,10 +47,9 @@ export default {
   display: flex;
   flex-direction: column;
   width:100%;
-  height:60vh;
+  height:80vh;
 }
 .chat-messages {
-  border: 1px solid var(--light-pink);
   display:flex;
   flex-direction: column;
   overflow-y: auto;
@@ -74,13 +74,14 @@ export default {
   display:flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding:1vw;
-  padding-left:2vw;
-  padding-right:2vw;
+  padding:0.25vw;
+  padding-left:1vw;
+  padding-right:1vw;
   width:50%;
   min-height:5vh;
   border-radius:0.5vw;
   overflow-wrap: break-word;
+  box-shadow: 15px 50px 21px rgba(0, 0, 0, 0.01), 9px 28px 18px rgba(0, 0, 0, 0.03), 4px 12px 13px rgba(0, 0, 0, 0.04), 1px 3px 7px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05);
 }
 .myMsg{
   background-color:var(--white-pink);
@@ -93,13 +94,14 @@ export default {
   height:48px;
   display:flex;
 }
-input{
+.inputM{
   height:48px;
   padding:5px;
   border:1px solid var(--light-pink);
   border-radius:.5vw;
   width:80%;
   margin-right:5%;
+  margin-left:5%;
 }
 button{
   background-color:var(--dark-purple);
