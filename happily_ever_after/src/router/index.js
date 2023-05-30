@@ -8,7 +8,7 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ShopMainView from '../views/ShopMainView.vue'
 import AccountView from '../views/AccountView.vue'
-import LikedView from '../views/LikedView.vue'
+import CartView from '../views/CartView.vue'
 import ShopContactView from '../views/ShopContactView.vue'
 import ChatView from '../views/ChatView.vue'
 
@@ -57,9 +57,9 @@ const router = createRouter({
       component: AccountView
     },
     {
-      path: '/liked',
-      name: 'liked',
-      component: LikedView
+      path: '/cart',
+      name: 'cart',
+      component: CartView
     },
     {
       path: '/shopcontact',

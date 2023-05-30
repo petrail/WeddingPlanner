@@ -21,33 +21,15 @@ import CategoryListItem from './CategoryListItem.vue';
     },
     props: {
         predmeti: {
-            type: Object,
-            default: [
-                { id: 0, url: "src/assets/main_gallery/img1.jpg", naslov: "Prvi", opis: "Neki opis" },
-                { id: 1, url: "src/assets/main_gallery/img2.webp", naslov: "Drugi", opis: "Neki opis" },
-                { id: 2, url: "src/assets/main_gallery/img3.jpg", naslov: "Treci", opis: "Neki opis" },
-                { id: 3, url: "src/assets/main_gallery/img4.jpg", naslov: "Cetvrti", opis: "Neki opis" },
-                { id: 4, url: "src/assets/main_gallery/img5.jpg", naslov: "Peti", opis: "Neki opis" },
-                { id: 5, url: "src/assets/main_gallery/img6.jpg", naslov: "Sesti", opis: "Neki opis" },
-                { id: 6, url: "src/assets/main_gallery/img7.jpg", naslov: "Sedmi", opis: "Neki opis" },
-                { id: 7, url: "src/assets/main_gallery/img8.webp", naslov: "Osmi", opis: "Neki opis" },
-                { id: 8, url: "src/assets/main_gallery/img1.jpg", naslov: "Prvi", opis: "Neki opis" },
-                { id: 9, url: "src/assets/main_gallery/img2.webp", naslov: "Drugi", opis: "Neki opis" },
-                { id: 10, url: "src/assets/main_gallery/img3.jpg", naslov: "Treci", opis: "Neki opis" },
-                { id: 11, url: "src/assets/main_gallery/img4.jpg", naslov: "Cetvrti", opis: "Neki opis" },
-                { id: 12, url: "src/assets/main_gallery/img5.jpg", naslov: "Peti", opis: "Neki opis" },
-                { id: 13, url: "src/assets/main_gallery/img6.jpg", naslov: "Sesti", opis: "Neki opis" },
-                { id: 14, url: "src/assets/main_gallery/img7.jpg", naslov: "Sedmi", opis: "Neki opis" },
-                { id: 15, url: "src/assets/main_gallery/img8.webp", naslov: "Osmi", opis: "Neki opis" }
-            ]
+            type: Array,
         },
         liked: {
-            type: Object,
-            default: [1, 3, 6, 9, 11, 14]
+            type: Array,
+            default:[]
         },
         reserved:{
-            type: Object,
-            default: [2, 4, 6]
+            type: Array,
+            default:[]
         }
     },
     data(){
@@ -69,6 +51,7 @@ import CategoryListItem from './CategoryListItem.vue';
             console.log("nesto");
         },
         isLiked(pred) {
+            if(this.liked==null) return false;
             return this.liked.includes(pred.id);
         },
         //Ove dve funkcije treba da se povezu sa bazom da bi se znalo sta si likeovao
@@ -88,6 +71,7 @@ import CategoryListItem from './CategoryListItem.vue';
             this.itemOpen=null;
         },
         isReserved(pred){
+            if(this.reserved==null) return false;
             return this.reserved.includes(pred.id);
         }
     }

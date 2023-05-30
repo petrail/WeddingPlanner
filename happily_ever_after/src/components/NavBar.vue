@@ -29,7 +29,7 @@
         <div class="nav">
             <ul v-if="inStore && screenWidth>700">
                 <li><router-link to="/shopmain">Proizvodi</router-link></li>
-                <li><router-link to="/liked">Korpa</router-link></li>
+                <li><router-link to="/cart">Korpa</router-link></li>
                 <li><router-link to="/chat">Poruke</router-link></li>
                 <li><router-link to="/shopcontact">Kontakt</router-link></li>
             </ul>
@@ -50,7 +50,7 @@
     <div :class="dropdownopen? 'dropdown open': 'dropdown closed'" v-if="screenWidth<=700">
         <div v-if="inStore && dropdownopen" class="dropdownMenu">
             <router-link to="/shopmain">Proizvodi</router-link>
-            <router-link to="/liked">Korpa</router-link>
+            <router-link to="/cart">Korpa</router-link>
             <router-link to="/chat">Poruke</router-link>
             <router-link to="/shopcontact">Kontakt</router-link>
         </div>
