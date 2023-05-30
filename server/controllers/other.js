@@ -35,7 +35,7 @@ exports.put_other = async (req, res) => {
 exports.delete_other = async (req, res) => {
   try {
     const { id } = req.params;
-    const other = await Other.findByIdAndUpdate(id);
+    const other = await Other.findByIdAndDelete(id);
     if (!other) {
       return res.status(404).json({ message: `Other with id ${id} not found` });
     }
@@ -49,18 +49,35 @@ exports.delete_other = async (req, res) => {
 /**/
 exports.get_store_by_name = async (req, res) => {
   try {
-    const { nameOfTheStore } = req.params;
-    const other = await Other.findOne({
-      nameOfTheStore: nameOfTheStore,
+    const other = await Other.find({ name: req.params.name });
+    res.send(other);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving users");
+  }
+};
+
+exports.get_other_by_service = async (req, res) => {
+  const typeOfService = req.params.typeOfService;
+  try {
+    const other = await Other.find({
+      "service.typeOfService": typeOfService,
     });
-    if (!other) {
-      return res
-        .status(404)
-        .json({ message: `Store named ${nameOfTheStore} not found` });
-    }
-    res.status(200).json(other);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
+    res.json(other);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.get_other_by_location = async (req, res) => {
+  try {
+    const { location } = req.params;
+
+    const other = await Other.find({ location });
+
+    res.send(other);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving salons");
   }
 };

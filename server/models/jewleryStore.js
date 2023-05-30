@@ -23,7 +23,10 @@ const jewlerySchema = mongose.Schema(
       type: String,
       required: [true, "Unesite broj telefona"],
     },
-    service: [{typeOfJewlery: String, price:Number, img:Buffer}]
+    service: [{typeOfJewlery: String, price:Number, img:Buffer}],
+    description: {
+      type: String
+    }
   },
   {
     timestamps: true,

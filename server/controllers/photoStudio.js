@@ -1,8 +1,8 @@
 const PhotoStudio = require("../models/photoStudio");
 exports.post_photo_studio = async (req, res) => {
   try {
-    const photo = await PhotoStudio.find({});
-    res.status(200).json(photo);
+    const photoStudio = await PhotoStudio.create(req.body);
+    res.status(200).json(photoStudio);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -10,8 +10,8 @@ exports.post_photo_studio = async (req, res) => {
 
 exports.get_all_photoStudios = async (req, res) => {
   try {
-    const other = await Other.find({});
-    res.status(200).json(other);
+    const photoStudio = await PhotoStudio.find({});
+    res.status(200).json(photoStudio);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -52,30 +52,22 @@ exports.delete_photo_studio = async (req, res) => {
 /**/
 exports.get_studio_by_name = async (req, res) => {
   try {
-    const { name } = req.params;
-    const photo = await PhotoStudio.findOne({ name: name });
-    if (!photo) {
-      return res
-        .status(404)
-        .json({ message: `Photo studio called ${name} not found` });
-    }
-    res.status(200).json(photo);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
+    const photoStudio = await PhotoStudio.find({ name: req.params.name });
+    res.send(photoStudio);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving users");
   }
 };
 
 exports.get_studio_when_reserved = async (req, res) => {
   try {
-    const { dateReserved } = req.params;
-    const photo = await PhotoStudio.findOne({ dateReserved: dateReserved });
-    if (!photo) {
-      return res.status(404).json({ message: "Photo studio not found" });
-    }
-    res.status(200).json(photo);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
+    const photoStudio = await PhotoStudio.find({
+      dateReserved: req.params.dateReserved,
+    });
+    res.send(photoStudio);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving salons");
   }
 };

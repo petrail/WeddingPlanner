@@ -37,7 +37,7 @@ exports.put_dance_lessons = async (req, res) => {
 exports.delete_dance_lesson = async (req, res) => {
   try {
     const { id } = req.params;
-    const dance = await DanceLessons.findByIdAndUpdate(id);
+    const dance = await DanceLessons.findByIdAndDelete(id);
     if (!dance) {
       return res
         .status(404)
@@ -53,30 +53,20 @@ exports.delete_dance_lesson = async (req, res) => {
 /**/
 exports.get_dance_studio_by_name = async (req, res) => {
   try {
-    const { name } = req.params;
-    const dance = await DanceLessons.findOne({ name: name });
-    if (!dance) {
-      return res
-        .status(404)
-        .json({ message: `Dance studio called ${name} not found` });
-    }
-    res.status(200).json(dance);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
+    const dance = await DanceLessons.find({ name: req.params.name });
+    res.send(dance);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving users");
   }
 };
 
-exports.get_nearest_dance_studio = async (req, res) => {
+exports.get_dance_studio_by_location = async (req, res) => {
   try {
-    const { location } = req.params;
-    const dance = await DanceLessons.findAll({ location: location });
-    if (!dance) {
-      return res.status(404).json({ message: "Dance studio not found" });
-    }
-    res.status(200).json(dance);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
+    const dance = await DanceLessons.find({ location: req.params.location });
+    res.send(dance);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving users");
   }
 };

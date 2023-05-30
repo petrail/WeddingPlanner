@@ -25,6 +25,9 @@ const cosmeticSchema = mongose.Schema(
     dateReserved: {
       type: [Date],
       required: [true, "Unesite datume kada je restoran rezervisan"],
+    },
+    description: {
+      type: String
     }
   },
   {

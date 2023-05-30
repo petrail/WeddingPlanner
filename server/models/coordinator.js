@@ -30,7 +30,7 @@ const coordinatorSchema = mongose.Schema(
     email: {
       type: String,
       required: [true, "Unesite E-mail"],
-    },
+    }
   },
   {
     timestamps: true,

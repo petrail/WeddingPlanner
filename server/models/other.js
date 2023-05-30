@@ -19,7 +19,10 @@ const otherSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite broj telefona"],
     },
-    service: [{typeOfService: String, price:Number, img:Buffer}]
+    service: [{typeOfService: String, price:Number, img:Buffer}],
+    description: {
+      type: String
+    }
   },
   {
     timestamps: true,

@@ -31,6 +31,9 @@ const danceSchema = mongose.Schema(
       type: Number,
       required: [false, "Unesite cenu za grupne casove"],
     },
+    description: {
+      type: String
+    }
   },
   {
     timestamps: true,

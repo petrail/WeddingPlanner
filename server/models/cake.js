@@ -21,6 +21,9 @@ const cakeSchema = mongose.Schema(
     phoneNumber: {
       type: String,
       required: [true, "Unesite broj telefona poslasticare"],
+    },
+    description: {
+      type: String
     }
   },
   {

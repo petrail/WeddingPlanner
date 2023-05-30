@@ -33,6 +33,9 @@ const restaurantSchema = mongose.Schema(
       type: [Date],
       required: [true, "Unesite datume kada je restoran rezervisan"],
     },
+    description: {
+      type: String
+    }
   },
   {
     timestamps: true,

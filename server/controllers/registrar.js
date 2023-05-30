@@ -37,7 +37,7 @@ exports.put_registrar = async (req, res) => {
 exports.delete_registrar = async (req, res) => {
   try {
     const { id } = req.params;
-    const registrar = await Registrar.findByIdAndUpdate(id);
+    const registrar = await Registrar.findByIdAndDelete(id);
     if (!registrar) {
       return res
         .status(404)
@@ -53,30 +53,47 @@ exports.delete_registrar = async (req, res) => {
 /**/
 exports.get_registrar_by_name = async (req, res) => {
   try {
-    const { name } = req.params;
-    const registrar = await Registrar.findOne({ name: name });
-    if (!registrar) {
-      return res
-        .status(404)
-        .json({ message: `Registrar studio called ${name} not found` });
-    }
-    res.status(200).json(registrar);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
+    const registrar = await Registrar.find({ name: req.params.name });
+    res.send(registrar);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving users");
   }
 };
 
 exports.get_registrar_when_reserved = async (req, res) => {
   try {
-    const { dateReserved } = req.params;
-    const registrar = await Registrar.findOne({ dateReserved: dateReserved });
-    if (!registrar) {
-      return res.status(404).json({ message: "Registrar not found" });
-    }
-    res.status(200).json(registrar);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
+    const registrar = await Registrar.find({
+      dateReserved: req.params.dateReserved,
+    });
+    res.send(registrar);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving salons");
+  }
+};
+
+/*price*/
+exports.get_registrar_by_price = async (req, res) => {
+  try {
+    const registrar = await Registrar.find({
+      price: req.params.price,
+    });
+    res.send(registrar);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving salons");
+  }
+};
+
+exports.get_registrar_by_township = async (req, res) => {
+  try {
+    const registrar = await Registrar.find({
+      township: req.params.township,
+    });
+    res.send(registrar);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving salons");
   }
 };

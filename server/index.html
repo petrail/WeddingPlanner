@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat Test</title>
+    <script src="socket.io.js"></script>
+  </head>
+
+  <body>
+    <h1>Chat Test</h1>
+    <div id="messages"></div>
+    <form id="chatForm">
+      <input type="text" id="messageInput" placeholder="Enter your message" />
+      <button type="submit">Send</button>
+    </form>
+
+    <script>
+      // Connect to the Socket.IO server
+      const socket = io();
+
+      // DOM elements
+      const messagesContainer = document.getElementById("messages");
+      const chatForm = document.getElementById("chatForm");
+      const messageInput = document.getElementById("messageInput");
+
+      // Submit the chat form
+      chatForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const message = messageInput.value.trim();
+        if (message) {
+          // Send the chat message to the server
+          socket.emit("chatMessage", message);
+          messageInput.value = "";
+        }
+      });
+
+      // Receive chat messages from the server
+      socket.on("chatMessage", (message) => {
+        const messageElement = document.createElement("div");
+        messageElement.textContent = message;
+        messagesContainer.appendChild(messageElement);
+      });
+    </script>
+  </body>
+</html>

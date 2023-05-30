@@ -37,7 +37,7 @@ exports.put_music = async (req, res) => {
 exports.delete_music = async (req, res) => {
   try {
     const { id } = req.params;
-    const music = await Music.findByIdAndUpdate(id);
+    const music = await Music.findByIdAndDelete(id);
     if (!music) {
       return res.status(404).json({ message: `Music with id ${id} not found` });
     }
@@ -52,30 +52,34 @@ exports.delete_music = async (req, res) => {
 
 exports.get_band_by_name = async (req, res) => {
   try {
-    const { nameOfTheBand } = req.params;
-    const music = await Music.findOne({ nameOfTheBand: nameOfTheBand });
-    if (!music) {
-      return res
-        .status(404)
-        .json({ message: `Band called ${nameOfTheBand} not found` });
-    }
-    res.status(200).json(music);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
+    const music = await Music.find({ nameOfTheBand: req.params.nameOfTheBand });
+    res.send(music);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving users");
   }
 };
 
 exports.get_band_when_reserved = async (req, res) => {
   try {
-    const { dateReserved } = req.params;
-    const music = await Music.findOne({ dateReserved: dateReserved });
-    if (!music) {
-      return res.status(404).json({ message: "Band not found" });
-    }
-    res.status(200).json(music);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
+    const music = await Music.find({
+      dateReserved: req.params.dateReserved,
+    });
+    res.send(music);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving salons");
+  }
+};
+
+exports.get_music_by_service = async (req, res) => {
+  const typeOfService = req.params.typeOfService;
+  try {
+    const music = await Music.find({
+      "service.typeOfService": typeOfService,
+    });
+    res.json(music);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };

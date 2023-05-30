@@ -37,7 +37,7 @@ exports.put_jewellery = async (req, res) => {
 exports.delete_jewellery = async (req, res) => {
   try {
     const { id } = req.params;
-    const jewellery = await JewelleryStore.findByIdAndUpdate(id);
+    const jewellery = await JewelleryStore.findByIdAndDelete(id);
     if (!jewellery) {
       return res
         .status(404)
@@ -53,16 +53,35 @@ exports.delete_jewellery = async (req, res) => {
 /**/
 exports.get_jewellery_store_by_name = async (req, res) => {
   try {
-    const { name } = req.params;
-    const jewellery = await JewelleryStore.findAll({ name: name });
-    if (!jewellery) {
-      return res
-        .status(404)
-        .json({ message: `Jewellery store called ${name} not found` });
-    }
-    res.status(200).json(jewellery);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
+    const jewellery = await JewelleryStore.find({ name: req.params.name });
+    res.send(jewellery);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving users");
+  }
+};
+
+/*location*/
+exports.get_jewellery_shop_by_location = async (req, res) => {
+  try {
+    const jewellery = await JewelleryStore.find({
+      location: req.params.location,
+    });
+    res.send(jewellery);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving users");
+  }
+};
+
+exports.get_jewellery_by_service = async (req, res) => {
+  const typeOfJewlery = req.params.typeOfJewlery;
+  try {
+    const jewellery = await JewelleryStore.find({
+      "service.typeOfJewlery": typeOfJewlery,
+    });
+    res.json(jewellery);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };

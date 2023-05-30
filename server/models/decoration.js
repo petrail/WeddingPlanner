@@ -19,7 +19,10 @@ const decorationSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite broj telefona prodavnice dekoracije"],
     },
-    service: [{typeOfService: String, price:Number, img:Buffer}]
+    service: [{typeOfService: String, price:Number, img:Buffer}],
+    description: {
+      type: String
+    }
   },
   {
     timestamps: true,

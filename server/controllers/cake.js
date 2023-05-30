@@ -35,7 +35,7 @@ exports.put_cake = async (req, res) => {
 exports.delete_cake = async (req, res) => {
   try {
     const { id } = req.params;
-    const cake = await Cake.findByIdAndUpdate(id);
+    const cake = await Cake.findByIdAndDelete(id);
     if (!cake) {
       return res.status(404).json({ message: `Cake with id ${id} not found` });
     }
@@ -50,15 +50,14 @@ exports.delete_cake = async (req, res) => {
 exports.get_wafery_by_name = async (req, res) => {
   try {
     const { nameOfTheWafery } = req.params;
-    const cake = await Cake.findOne({ nameOfTheWafery: nameOfTheWafery });
-    if (!cake) {
-      return res
-        .status(404)
-        .json({ message: `Wafery called ${nameOfTheWafery} not found` });
-    }
-    res.status(200).json(cake);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
+
+    const cakes = await Cake.find({
+      nameOfTheWafery: { $regex: nameOfTheWafery, $options: "i" },
+    });
+
+    res.send(cakes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving waferies");
   }
 };

@@ -22,6 +22,9 @@ const musicSchema = mongose.Schema (
     dateReserved: {
             type: [Date],
             required: [true, "Unesite datume kada je bend. rezervisan"]
+        },
+        description: {
+          type: String
         }
     },
     {

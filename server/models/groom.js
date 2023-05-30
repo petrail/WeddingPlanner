@@ -20,6 +20,9 @@ const groomSchema = mongose.Schema(
     phoneNumber: {
       type: String,
       required: [true, "Unesite broj telefona"],
+    },
+    description: {
+      type: String
     }
     
   },

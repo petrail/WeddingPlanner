@@ -35,7 +35,7 @@ exports.put_admin = async (req, res) => {
 exports.delete_admin = async (req, res) => {
   try {
     const { id } = req.params;
-    const admin = await Admin.findByIdAndUpdate(id);
+    const admin = await Admin.findByIdAndDelete(id);
     if (!admin) {
       return res.status(404).json({ message: `Admin with id ${id} not found` });
     }
@@ -49,16 +49,10 @@ exports.delete_admin = async (req, res) => {
 /**/
 exports.get_admin_by_username = async (req, res) => {
   try {
-    const { username } = req.params;
-    const admin = await Admin.findOne({ username: username });
-    if (!admin) {
-      return res
-        .status(404)
-        .json({ message: `Admin with username ${username} not found` });
-    }
-    res.status(200).json(admin);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
+    const admin = await Admin.find({ username: req.params.username });
+    res.send(admin);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving users");
   }
 };

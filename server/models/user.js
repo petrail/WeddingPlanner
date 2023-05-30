@@ -7,10 +7,6 @@ const userSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite ime"],
     },
-    lastname: {
-      type: String,
-      required: [true, "Unesite prezime"],
-    },
     username: {
       type: String,
       required: [true, "Unesite korisnicko ime"],
@@ -19,17 +15,15 @@ const userSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite sifru"],
     },
-    phoneNumber: {
-      type: String,
-      required: [true, "Unesite broj telefona"],
-    },
     email: {
       type: String,
       required: [true, "Unesite E-mail"],
+      unique: [true, "Email address already taken"],
     },
     picture: {
       type: Buffer,
       required: [false, "Unesite sliku"],
+
     },
     usluge :{type:[Object]}
   },

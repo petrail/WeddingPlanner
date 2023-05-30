@@ -8,7 +8,7 @@ const brideSchema = mongose.Schema(
       required: [true, "Unesite ime butika"],
     },
 
-    service: [{typeOfService: String, price:Number, size:String, img:Buffer}],
+    service: [{typeOfService: String, price: Number, size: Number, img:Buffer}],
 
     location: {
       type: String,
@@ -21,6 +21,9 @@ const brideSchema = mongose.Schema(
     phoneNumber: {
       type: String,
       required: [true, "Unesite broj telefona"],
+    },
+    description: {
+      type: String
     }
 
   },
