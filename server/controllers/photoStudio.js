@@ -1,7 +1,7 @@
-const PhotoStudio = require("../models/photoStudio");
+const PhotoStudioService = require("../models/service");
 exports.post_photo_studio = async (req, res) => {
   try {
-    const photoStudio = await PhotoStudio.create(req.body);
+    const photoStudio = await PhotoStudioService.create(req.body);
     res.status(200).json(photoStudio);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -10,7 +10,7 @@ exports.post_photo_studio = async (req, res) => {
 
 exports.get_all_photoStudios = async (req, res) => {
   try {
-    const photoStudio = await PhotoStudio.find({});
+    const photoStudio = await PhotoStudioService.find({type : 'Fotografisanje'});
     res.status(200).json(photoStudio);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -20,13 +20,13 @@ exports.get_all_photoStudios = async (req, res) => {
 exports.put_photo_studio = async (req, res) => {
   try {
     const { id } = req.params;
-    const photoStudio = await PhotoStudio.findByIdAndUpdate(id, req.body);
+    const photoStudio = await PhotoStudioService.findByIdAndUpdate(id, req.body);
     if (!photoStudio) {
       return res
         .status(404)
         .json({ message: `Photo studio with id ${id} not found` });
     }
-    const updatedPhoto = await PhotoStudio.findById(id);
+    const updatedPhoto = await PhotoStudioService.findById(id);
     res.status(200).json(updatedPhoto);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -36,7 +36,7 @@ exports.put_photo_studio = async (req, res) => {
 exports.delete_photo_studio = async (req, res) => {
   try {
     const { id } = req.params;
-    const photo = await PhotoStudio.findByIdAndUpdate(id);
+    const photo = await PhotoStudioService.findByIdAndUpdate(id);
     if (!photo) {
       return res
         .status(404)
@@ -52,7 +52,7 @@ exports.delete_photo_studio = async (req, res) => {
 /**/
 exports.get_studio_by_name = async (req, res) => {
   try {
-    const photoStudio = await PhotoStudio.find({ name: req.params.name });
+    const photoStudio = await PhotoStudioService.find({ name: req.params.name });
     res.send(photoStudio);
   } catch (err) {
     console.error(err);
@@ -62,7 +62,7 @@ exports.get_studio_by_name = async (req, res) => {
 
 exports.get_studio_when_reserved = async (req, res) => {
   try {
-    const photoStudio = await PhotoStudio.find({
+    const photoStudio = await PhotoStudioService.find({
       dateReserved: req.params.dateReserved,
     });
     res.send(photoStudio);

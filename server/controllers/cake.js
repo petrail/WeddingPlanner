@@ -1,7 +1,8 @@
-const Cake = require("../models/cake");
+const CakeService = require("../models/service");
+
 exports.get_all_cakes = async (req, res) => {
   try {
-    const cake = await Cake.find({});
+    const cake = await CakeService.find({type : 'Maticari'});
     res.status(200).json(cake);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -10,7 +11,7 @@ exports.get_all_cakes = async (req, res) => {
 
 exports.post_cake = async (req, res) => {
   try {
-    const cake = await Cake.create(req.body);
+    const cake = await CakeService.create(req.body);
     res.status(200).json(cake);
   } catch (error) {
     console.log(error.message);
@@ -21,11 +22,11 @@ exports.post_cake = async (req, res) => {
 exports.put_cake = async (req, res) => {
   try {
     const { id } = req.params;
-    const cake = await Cake.findByIdAndUpdate(id, req.body);
+    const cake = await CakeService.findByIdAndUpdate(id, req.body);
     if (!cake) {
       return res.status(404).json({ message: `Cake with id ${id} not found` });
     }
-    const updatedCake = await Cake.findById(id);
+    const updatedCake = await CakeService.findById(id);
     res.status(200).json(updatedCake);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -35,7 +36,7 @@ exports.put_cake = async (req, res) => {
 exports.delete_cake = async (req, res) => {
   try {
     const { id } = req.params;
-    const cake = await Cake.findByIdAndDelete(id);
+    const cake = await CakeService.findByIdAndDelete(id);
     if (!cake) {
       return res.status(404).json({ message: `Cake with id ${id} not found` });
     }
@@ -47,17 +48,12 @@ exports.delete_cake = async (req, res) => {
 };
 
 /**/
-exports.get_wafery_by_name = async (req, res) => {
+exports.get_cake_by_name = async (req, res) => {
   try {
-    const { nameOfTheWafery } = req.params;
-
-    const cakes = await Cake.find({
-      nameOfTheWafery: { $regex: nameOfTheWafery, $options: "i" },
-    });
-
-    res.send(cakes);
+    const cake = await CakeService.find({ name: req.params.name });
+    res.send(cake);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Error retrieving waferies");
+    res.status(500).send("Error retrieving cakes");
   }
 };
