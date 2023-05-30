@@ -1,6 +1,7 @@
 <template>
     <div :class="open?'slika openImg':'slika'" :style="`background-image: url(${pred.url})`">
         <img class="srce" :src="likeImg" @click="like()"/>
+        <img class="reserved" v-if="reserved" src="src/assets/reserved.png" @click="like()"/>
         <img v-if="open" class="close" src="src/assets/close.png" @click="close()"/>
     </div>
     <div :class="open?'opis openText':'opis'" @click="otvori()">
@@ -25,6 +26,10 @@
             default:''
         },
         liked:{
+            type:Boolean,
+            default:false
+        },
+        reserved:{
             type:Boolean,
             default:false
         },
@@ -105,6 +110,13 @@
     height: 2vw;
     transition: all 0.5s ease;
 }
+.reserved{
+    position: absolute;
+    bottom:5%;
+    left:5%;
+    height: 2vw;
+    transition: all 0.5s ease;
+}
 .close{
     position: absolute;
     top:5%;
@@ -139,10 +151,12 @@
   }
 
   @media (width<1000px){
-      .srce, .close{
-        height:7vw;
+      .srce, .close, .reserved{
+        height:6vw;
       }
-      
+      .reserved{
+        height:4.5vw;
+      }
     }
 @keyframes pan{
     0%{

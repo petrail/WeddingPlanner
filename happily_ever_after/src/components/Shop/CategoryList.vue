@@ -1,12 +1,12 @@
 <template>
-    <div class="listContainer">
-        <div v-if="itemOpen==null" class="photo" v-for="(pred,index) in predmeti" :key="index">
-            <CategoryListItem @open="open" @add="addToLiked" @remove="removeFromLiked" :pred="pred" :liked="isLiked(pred)"/>
+    <div class="listContainer" v-if="itemOpen==null">
+        <div class="photo" v-for="(pred,index) in predmeti" :key="index">
+            <CategoryListItem @open="open" @add="addToLiked" @remove="removeFromLiked" :pred="pred" :liked="isLiked(pred)" :reserved="isReserved(pred)"/>
         </div>
     </div>
     <div v-if="itemOpen!=null" class="dark">
         <div class="openCard">
-            <CategoryListItem open @close="closeItem" @add="addToLiked" @remove="removeFromLiked" :liked="isLiked(itemOpen)" :pred="itemOpen"/>
+            <CategoryListItem open @close="closeItem" @add="addToLiked" @remove="removeFromLiked" :liked="isLiked(itemOpen)" :reserved="isReserved(itemOpen)" :pred="itemOpen"/>
         </div>
     </div>
 </template>
@@ -44,6 +44,10 @@ import CategoryListItem from './CategoryListItem.vue';
         liked: {
             type: Object,
             default: [1, 3, 6, 9, 11, 14]
+        },
+        reserved:{
+            type: Object,
+            default: [2, 4, 6]
         }
     },
     data(){
@@ -82,6 +86,9 @@ import CategoryListItem from './CategoryListItem.vue';
         },
         closeItem(){
             this.itemOpen=null;
+        },
+        isReserved(pred){
+            return this.reserved.includes(pred.id);
         }
     }
 };

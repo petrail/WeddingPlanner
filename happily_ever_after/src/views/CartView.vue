@@ -8,12 +8,14 @@
 import { RouterLink, RouterView } from 'vue-router'
 import TopBar from '../components/TopBar.vue'
 import Footer from '../components/Footer.vue';
+import CategoryListVue from '../components/Shop/CategoryList.vue';
 
 export default {
     name: 'ChatView',
     components: {
     TopBar,
     Footer,
+    CategoryListVue
   },
   data() {
     return {
@@ -22,7 +24,8 @@ export default {
         currentActiveChat:{
           messages:[{message:'Hej', me:true},{message:'Hej',me:false},{message:'Hej',me:false},{message:'Hej',me:true}],
           otherUser:"Neko",
-        }
+        },
+        
     };
   },
   props:{
