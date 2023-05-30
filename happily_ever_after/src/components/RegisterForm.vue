@@ -2,21 +2,21 @@
   <div class="register-page">
     <h1>Registracija</h1>
     <p>Popunite svoje lične podatke</p>
-    <form @submit.prevent="register">
+    <form @submit.prevent="saveData">
       <div class="form-group">
-        <input placeholder="Ime i prezime" type="text" id="ime_prezime" v-model="ime_prezime" required>
+        <input placeholder="Ime i prezime" type="text" name="ime_prezime" v-model="user.name" required>
       </div>
       <div class="form-group">
-        <input placeholder="Email" type="email" id="email" v-model="email" required>
+        <input placeholder="Email" type="email" name="email" v-model="user.email" required>
       </div>
       <div class="form-group">
-        <input placeholder="Korisničko ime" type="text" id="username" v-model="username" required>
+        <input placeholder="Korisničko ime" type="text" name="username" v-model="user.username" required>
       </div>
       <div class="form-group">
-        <input  placeholder="Šifra" type="password" id="password" v-model="password" required>
+        <input  placeholder="Šifra" type="password" name="password" v-model="user.password" required>
       </div>
       <div class="form-group">
-        <input  placeholder="Potvrdite šifru" type="password" id="confpassword" v-model="confpassword" required>
+        <input  placeholder="Potvrdite šifru" type="password" name="confpassword" v-model="user.confpassword" required>
       </div>
       <button type="submit">Registruj se</button>
       <div class="form-group">
@@ -32,26 +32,46 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'LoginForm',
   data() {
     return {
-      username: '',
-      password: '',
-      ime_prezime: '',
-      email:'',
-      confpassword:'',
-    };
+      result:{},
+      user: {
+        id: '',
+        username: '',
+        password: '',
+        name: '',
+        email:'',
+        confpassword:'',
+      }
+      
+    }
+  },
+  created(){
+
+  },
+  mounted(){
+    console.log("mounted() called...")
   },
   methods: {
-    register() {
-      // Perform login logic here, e.g., send username and password to the server
-      console.log('Register clicked');
-      console.log('Username:', this.username);
-      console.log('Password:', this.password);
+    saveData(){
+      if (this.user.password !== this.user.confpassword) {      
+        console.log('Password and confirm password do not match');
+        return;
+      }
+      axios.post("http://localhost:3000/user/register", this.user)
+      .then(
+      ({data}) => {         
+          this.$router.push({ path: '/login' });
+        }
+      )
+    }
     }
   }
-};
+
 </script>
 
 <style scoped>

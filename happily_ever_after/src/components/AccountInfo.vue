@@ -1,63 +1,100 @@
 <template>
     <div class="acccontainer">
-        <div class="head row">
-            <div v-bind:style="{ backgroundImage: 'url(' + nalog.url + ')' }" class="photo">
-
-            </div>
-            <div class="title">
-                <h3>VAŠ NALOG</h3>
-                <h1>{{nalog.ime_prezime}}</h1>
-            </div>
+          <div class="photo">
+              <input class="file" type="file" accept="image/*" @change="handleFileUpload">
+              <button @click="uploadImage">Upload</button>
+          </div>
+    <div class="head row">
+        <div class="title">
+          <h3>VAŠ NALOG</h3>
+          <h1>{{ posts.name }}</h1>
         </div>
-        <div class="row">
-            <label for="ime_prezime">Ime i prezime</label>
-            <input placeholder="Ime i prezime" type="text" id="ime_prezime" v-model="nalog.ime_prezime" required>
-        </div>
-        <div class="row">
-            <label for="ime_prezime">Email</label>
-            <input placeholder="Email" type="email" id="email" v-model="nalog.email" required>
-        </div>
-        <div class="row">
-            <label for="ime_prezime">Korisničko ime</label>
-            <input placeholder="Korisničko ime" type="text" id="username" v-model="nalog.username" required>
-        </div>
-        <div class="row">
-            <label for="ime_prezime">Šifra</label>
-            <input  placeholder="Šifra" type="password" id="password" v-model="nalog.password" required>
-        </div>
-        <div class="row">
+      </div>
+      <div class="row">
+        <label for="name">Ime i prezime</label>
+        <input placeholder="Ime i prezime" type="text" id="name" v-model="posts.name" required>
+      </div>
+      <div class="row">
+        <label for="name">Email</label>
+        <input placeholder="Email" type="email" id="email" v-model="posts.email" required>
+      </div>
+      <div class="row">
+        <label for="name">Korisničko ime</label>
+        <input placeholder="Korisničko ime" type="text" id="username" v-model="posts.username" required>
+      </div>
+      <div class="row">
+        <label for="name">Šifra</label>
+        <input placeholder="Šifra" type="password" id="password" v-model="posts.password" required>
+      </div>
+      <div class="row">
         <button @click="save">Sačuvaj izmene</button>
-        </div>
+      </div>
     </div>
   </template>
   
   <script>
+import UserService from '../Service.js';
+import axios from 'axios';
+
   export default {
-    name: 'LoginForm',
     data() {
       return {
-        nalog:{
-            username:'petrail',
-            password:'petra',
-            email:'petrail@elfak.rs',
-            ime_prezime: 'Petra Ilkovski',
-            url:'src/assets/account.jpg'
+        posts: {
+          name: '',
+          email: '',
+          username: '',
+          password: '',
+          selectedFile: null,
+        },
+        error: '',
+      }
+    },
+    async created() {
+      try {
+        const users = await UserService.getUsers();
+        if (users.length > 0) {
+          this.posts = users[0];
         }
-      };
+      } catch (error) {
+        this.error = error.message;
+      }
     },
     methods: {
-      register() {
-        // Perform login logic here, e.g., send username and password to the server
-        console.log('Register clicked');
-        console.log('Username:', this.username);
-        console.log('Password:', this.password);
+      async save() {
+        try {
+          // Make an API request to save user data
+          await UserService.saveUser(this.posts);
+          // Handle the save logic
+          console.log("Changes saved!");
+        } catch (error) {
+          console.log(error.message);
+          this.error = "Error saving user data.";
+        }
       },
-      save(){
-        console.log("SAVE!");
-      }
+      handleFileUpload(event) {
+      this.selectedFile = event.target.files[0];
+    },
+    uploadImage() {
+      if (this.selectedFile) {
+        const formData = new FormData();
+        formData.append('image', this.selectedFile);
+
+        axios.post('/user/upload', formData)
+        .then(response => {
+            // Handle the response after successful upload
+            console.log('Image uploaded successfully');
+        })
+        .catch(error => {
+            // Handle the error if the upload fails
+            console.error('Error uploading image', error);
+        });
+
     }
-  };
+    }}
+}
   </script>
+  
+  
   
 <style scoped>
 h1{
@@ -73,6 +110,11 @@ h1{
     align-items: center;
     justify-content: center;
 }
+@media (width<700px){
+  .acccontainer{
+    margin-top:5vh;
+  }
+}
 .row{
     display:flex;
     width:60%;
@@ -82,11 +124,14 @@ h1{
 .head{
     flex-direction: row !important;
 }
-
+h3{
+  font-size:max(1.5vw,16pt);
+}
 .photo{
     border:0;
     border-radius: 100%;
     width: 40%;
+    margin-bottom:10vh;
     /*height:19vh;*/
     background-size: cover;
     background-repeat: no-repeat;
@@ -96,9 +141,9 @@ h1{
 .title{
     display: flex;
     flex-direction: column;
-    width:75%;
-    padding-left: 2vw;
+    width:100%;
     justify-content: center;
+    align-items:center;
 }
 input{
     border-radius:.5vw;
@@ -115,8 +160,12 @@ input{
 input::placeholder{
     color:white;
 }
+.file{
+  height:100%;
+  padding:1vw;
+}
 button{
-    width:70%;
+    width:100%;
     margin-top:1vh;
     background-color: var(--light-blue);
     border:0;

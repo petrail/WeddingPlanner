@@ -38,6 +38,7 @@
 
 <script>
 import { RouterLink, RouterView } from 'vue-router'
+import axios from 'axios';
 import TopBar from '../components/TopBar.vue'
 import Gallery from '../components/Gallery.vue'
 import SearchBar from '../components/Shop/SearchBar.vue'
@@ -67,6 +68,19 @@ export default({
       selected:''
     } 
   },
+  async created() {
+  try {
+    const response = await axios.get('http://localhost:3000/user/current', {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.log('Error:', error.response.data);
+  }
+},
+
   mounted () {
     window.scrollTo(0, 0)
   },
@@ -192,13 +206,12 @@ h2{
   font-size:min(5vw,17pt);
   color:var(--font-dark);
   border:0;
-  
-  width:100%;
   background-color: transparent;
   transition: all 1s ease;
   padding:.5vw;
   display:flex;
   align-items: center;
+  justify-content: center;
 }
 .link:hover{
     color:var(--font-dark); 

@@ -4,12 +4,12 @@
     <p>Unesite korisničko ime i šifru</p>
     <form @submit.prevent="login">
       <div class="form-group">
-        <input placeholder="Korisničko ime" type="text" id="username" v-model="username" required>
+        <input placeholder="Email" type="email" name="username" v-model="user.email" required>
       </div>
       <div class="form-group">
-        <input  placeholder="Šifra" type="password" id="password" v-model="password" required>
+        <input  placeholder="Šifra" type="password" name="password" v-model="user.password" required>
       </div>
-      <button type="submit">Prijavite se</button>
+      <button @click="login()">Prijavite se</button>
       <div class="form-group">
         <div class="left">
         <router-link class="link" to='/'>Nazad na glavnu</router-link>
@@ -24,25 +24,42 @@
 
 <script>
 import { RouterLink, RouterView } from 'vue-router'
+import axios from 'axios';
+
 export default {
   name: 'LoginForm',
   data() {
     return {
-      username: '',
-      password: ''
-    };
+      result:{},
+      user: {
+        password: '',
+        email:'',
+      }
+      
+    }
+  },
+  created(){
+
+  },
+  mounted(){
+    console.log("mounted() called...")
   },
   methods: {
     login() {
-      // Perform login logic here, e.g., send username and password to the server
-      // Ovde logika za dodavanje login cookie-a
-      console.log('Login clicked');
-      console.log('Username:', this.username);
-      console.log('Password:', this.password);
-      this.$router.push({ path: '/shopmain' })
-    }
+  axios.post('http://localhost:3000/user/login', this.user)
+    .then((response) => {
+      const data = response.data; // Access the data from the response
+      localStorage.setItem('token', data.accessToken);
+      // Redirect to the desired page after successful login
+      this.$router.push('/shopmain');
+    })
+    .catch((error) => {
+      console.log('Error:', error.response.data);
+    });
+},
+
+    },
   }
-};
 </script>
 
 <style scoped>

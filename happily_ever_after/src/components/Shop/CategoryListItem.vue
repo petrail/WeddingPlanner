@@ -2,7 +2,6 @@
     <div :class="open?'slika openImg':'slika'" :style="`background-image: url(${pred.url})`">
         <img class="srce" :src="likeImg" @click="like()"/>
         <img v-if="open" class="close" src="src/assets/close.png" @click="close()"/>
-        <img v-if="open" class="msg" src="src/assets/messages.png" @click="close()"/>
     </div>
     <div :class="open?'opis openText':'opis'" @click="otvori()">
         <h2 class="naslov">
@@ -11,8 +10,6 @@
         <p class="detalji">
             {{ pred.opis }}
         </p>
-        <div v-if="open" class="reserve">
-        </div>
     </div>
     <div v-if="open" class="ostatak">
         
@@ -105,24 +102,14 @@
     position: absolute;
     top:5%;
     right:5%;
-    height: 3vw;
-    max-height:40px;
+    height: 2vw;
     transition: all 0.5s ease;
 }
 .close{
     position: absolute;
     top:5%;
     left:5%;
-    height: 3vw;
-    max-height:40px;
-    transition: all 0.5s ease;
-}
-.msg{
-    position: absolute;
-    right:5%;
-    top:13%;
-    height: 3vw;
-    max-height:40px;
+    height: 2vw;
     transition: all 0.5s ease;
 }
 .naslov{
@@ -152,17 +139,8 @@
   }
 
   @media (width<1000px){
-      .srce, .close, .msg{
-        height:4vw; 
-      }
-      .msg{
-        top:30%;
-      }
-      
-    }
-    @media (width<700px){
-      .srce, .close, .msg{
-        height:6vw;
+      .srce, .close{
+        height:7vw;
       }
       
     }

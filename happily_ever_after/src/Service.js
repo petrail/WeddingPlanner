@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://localhost:3000/user/'
+const url = 'http://localhost:3000/users/username/:username'
 
 class UserService {
     //get uusers
@@ -14,10 +14,10 @@ class UserService {
                     data.map(post => ({
                         ...post,
                         name: post.name,
-                        lastName: post.lastName,
+                        username: post.username,
                         password: post.password,
-                        phoneNumber: post.phoneNumber,
                         email: post.email,
+                        picture: post.picture,
                         createdAt: new Date(post.createdAt),
 
                         
@@ -31,7 +31,7 @@ class UserService {
     }
 
     //create user
-    async created() {
+    static async created() {
         try {
             this.posts = await UserService.getUsers()
         } catch (error) {
