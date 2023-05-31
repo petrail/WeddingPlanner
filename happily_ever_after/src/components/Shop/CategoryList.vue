@@ -149,7 +149,6 @@ import CategoryListItem from './CategoryListItem.vue';
       max-height: 70vh;
       display: flex;
       flex-wrap: wrap;
-      justify-content:space-between;
       padding:2vw;
       padding-top: 0;
       overflow-y: auto;

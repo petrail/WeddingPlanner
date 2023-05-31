@@ -28,7 +28,7 @@
     </div>
     <div class="main">
       <div class="filter"><CategoryFilter/></div> 
-      <div class="list"><CategoryList/></div>
+      <div class="list"><CategoryList :predmeti="this.predmeti" :liked="this.liked" :reserved="this.reserved"/></div>
     </div>
   </div>
   </div>
@@ -64,6 +64,16 @@ export default({
               {url: 'src/assets/services/serv10.jpeg', opis:'Kozmetički saloni',route:'/shopmain'},
               {url: 'src/assets/services/serv11.jpg', opis:'Torte',route:'/shopmain'},
               {url: 'src/assets/services/serv12.jpg', opis:'Ostalo',route:'/shopmain'}],
+      predmeti: [
+                { id: 1, url: "src/assets/main_gallery/img2.webp", naslov: "Drugi", opis: "Neki opis" },
+                { id: 3, url: "src/assets/main_gallery/img4.jpg", naslov: "Cetvrti", opis: "Neki opis" },
+                { id: 6, url: "src/assets/main_gallery/img7.jpg", naslov: "Sedmi", opis: "Neki opis" },
+                { id: 9, url: "src/assets/main_gallery/img2.webp", naslov: "Drugi", opis: "Neki opis" },
+                { id: 11, url: "src/assets/main_gallery/img4.jpg", naslov: "Cetvrti", opis: "Neki opis" },
+                { id: 14, url: "src/assets/main_gallery/img7.jpg", naslov: "Sedmi", opis: "Neki opis" },
+      ],
+      liked:[1,3,6],
+      reserved:[1,9,11],
       clicked:false,
       selected:''
     } 
