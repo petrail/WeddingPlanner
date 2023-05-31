@@ -22,6 +22,7 @@ const PhotoStudioController = require("./controllers/photoStudio");
 const RegistrarController = require("./controllers/registrar");
 const RestaurantController = require("./controllers/restaurant");
 const UserController = require("./controllers/user");
+const ServiceController = require("./controllers/service");
 const User = require("./models/user");
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
@@ -132,6 +133,12 @@ app.get("/restaurant", RestaurantController.get_all_restaurants);
 //user
 app.get("/users", UserController.get_all_users);
 // end get all methods
+//service
+app.get("/service/get_display", ServiceController.get_services_display);
+app.get("/service/get_service_by_id/:id", ServiceController.get_service_by_id);
+app.get("/service/add_service_review", ServiceController.add_service_review);
+app.get("/service/add_reserve_date", ServiceController.add_reserve_date);
+//end service
 
 //----------------------------------------------------------------------------------------------------------------------------
 
