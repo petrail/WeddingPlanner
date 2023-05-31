@@ -20,10 +20,7 @@ const serviceSchema = mongoose.Schema(
         required: [true, "Upisite opis usluge"],
     },
     servicePrice:{
-        price:{
-            type:Number,
-            required: [true, "Unesite cenu"],
-        },
+        price:Number,
         unit:String
     },
     link: {
