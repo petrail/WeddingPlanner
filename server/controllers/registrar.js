@@ -37,7 +37,7 @@ exports.put_registrar = async (req, res) => {
 exports.delete_registrar = async (req, res) => {
   try {
     const { id } = req.params;
-    const registrar = await RegistrarService.findByIdAndUpdate(id);
+    const registrar = await RegistrarService.findByIdAndDelete(id);
     if (!registrar) {
       return res
         .status(404)
@@ -47,16 +47,6 @@ exports.delete_registrar = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: error.message });
-  }
-};
-
-exports.get_registrar_by_name = async (req, res) => {
-  try {
-    const registrar = await RegistrarService.find({ name: req.params.name });
-    res.send(registrar);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving registrars");
   }
 };
 

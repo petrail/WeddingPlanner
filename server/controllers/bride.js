@@ -9,7 +9,7 @@ exports.post_bride = async (req, res) => {
   }
 };
 
-exports.get_all_bride = async (req, res) => {
+exports.get_all_brides = async (req, res) => {
   try {
     const bride = await BrideService.find({type : 'Za mladu'});
     res.status(200).json(bride);
@@ -37,7 +37,7 @@ exports.put_bride = async (req, res) => {
 exports.delete_bride = async (req, res) => {
   try {
     const { id } = req.params;
-    const bride = await BrideService.findByIdAndUpdate(id);
+    const bride = await BrideService.findByIdAndDelete(id);
     if (!bride) {
       return res
         .status(404)
@@ -47,28 +47,5 @@ exports.delete_bride = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: error.message });
-  }
-};
-
-exports.get_bride_by_name = async (req, res) => {
-  try {
-    const bride = await BrideService.find({ name: req.params.name });
-    res.send(bride);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving bride");
-  }
-};
-
-
-
-/**/
-exports.get_bride_by_name = async (req, res) => {
-  try {
-    const brides = await BrideService.find({name: req.params.name});
-    res.send(brides);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error retrieving users');
   }
 };

@@ -47,26 +47,3 @@ exports.delete_cosmetic_salon = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-/* */
-exports.get_salon_by_name = async (req, res) => {
-  try {
-    const salon = await CosmeticSalonService.find({ name: req.params.name });
-    res.send(salon);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving salons");
-  }
-};
-
-exports.get_salon_by_service = async (req, res) => {
-  const typeOfService = req.params.typeOfService;
-  try {
-    const salons = await CosmeticSalon.find({
-      "service.typeOfService": typeOfService,
-    });
-    res.json(salons);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};

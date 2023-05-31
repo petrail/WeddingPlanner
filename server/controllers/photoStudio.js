@@ -36,7 +36,7 @@ exports.put_photo_studio = async (req, res) => {
 exports.delete_photo_studio = async (req, res) => {
   try {
     const { id } = req.params;
-    const photo = await PhotoStudioService.findByIdAndUpdate(id);
+    const photo = await PhotoStudioService.findByIdAndDelete(id);
     if (!photo) {
       return res
         .status(404)
@@ -46,28 +46,5 @@ exports.delete_photo_studio = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: error.message });
-  }
-};
-
-/**/
-exports.get_studio_by_name = async (req, res) => {
-  try {
-    const photoStudio = await PhotoStudioService.find({ name: req.params.name });
-    res.send(photoStudio);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving users");
-  }
-};
-
-exports.get_studio_when_reserved = async (req, res) => {
-  try {
-    const photoStudio = await PhotoStudioService.find({
-      dateReserved: req.params.dateReserved,
-    });
-    res.send(photoStudio);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving salons");
   }
 };

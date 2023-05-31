@@ -10,7 +10,7 @@ exports.post_music = async (req, res) => {
   }
 };
 
-exports.get_all_bands = async (req, res) => {
+exports.get_all_music = async (req, res) => {
   try {
     const music = await MusicService.find({type : 'Muzika'});
     res.status(200).json(music);
@@ -46,17 +46,5 @@ exports.delete_music = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: error.message });
-  }
-};
-
-/* */
-
-exports.get_band_by_name = async (req, res) => {
-  try {
-    const music = await MusicService.find({ nameOfTheBand: req.params.nameOfTheBand });
-    res.send(music);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving music");
   }
 };

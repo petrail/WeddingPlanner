@@ -2,7 +2,7 @@ const CakeService = require("../models/service");
 
 exports.get_all_cakes = async (req, res) => {
   try {
-    const cake = await CakeService.find({type : 'Maticari'});
+    const cake = await CakeService.find({type : 'Torte'});
     res.status(200).json(cake);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -47,13 +47,4 @@ exports.delete_cake = async (req, res) => {
   }
 };
 
-/**/
-exports.get_cake_by_name = async (req, res) => {
-  try {
-    const cake = await CakeService.find({ name: req.params.name });
-    res.send(cake);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving cakes");
-  }
-};
+

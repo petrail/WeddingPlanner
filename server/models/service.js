@@ -1,7 +1,6 @@
 const { default: mongoose } = require("mongoose");
-const mongose = require("mongoose");
 
-const serviceSchema = mongose.Schema(
+const serviceSchema = mongoose.Schema(
   {
     name: {
       type: String,
@@ -22,7 +21,7 @@ const serviceSchema = mongose.Schema(
     },
     servicePrice:{
         price:{
-            Number,
+            type:Number,
             required: [true, "Unesite cenu"],
         },
         unit:String
@@ -35,10 +34,10 @@ const serviceSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite broj telefona"],
     },
-    imgs: [{
+    img: {
         data: Buffer,
         contentType: String
-    }],
+    },
     reviews:[{
         comment:String,
         grade: Number,
@@ -68,6 +67,8 @@ const serviceSchema = mongose.Schema(
         }]
     }],
     max_guest_number:Number,
+    //Specific to cakes/clothes/decoration
+    store:String,
   },
   {
     timestamps: true,

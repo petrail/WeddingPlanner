@@ -49,39 +49,3 @@ exports.delete_restaurant = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-/**/
-exports.get_restaurant_by_name = async (req, res) => {
-  try {
-    const restaurant = await RestaurantService.find({ name: req.params.name });
-    res.send(restaurant);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving restaurants");
-  }
-};
-
-
-exports.get_restaurant_when_reserved = async (req, res) => {
-  try {
-    const restaurant = await RestaurantService.find({
-      dateReserved: req.params.dateReserved,
-    });
-    res.send(restaurant);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving salons");
-  }
-};
-
-exports.get_restaurant_by_guests_number = async (req, res) => {
-  try {
-    const restaurant = await RestaurantService.find({
-      maxNumberGuests: req.params.maxNumberGuests,
-    });
-    res.send(restaurant);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving salons");
-  }
-};

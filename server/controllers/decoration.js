@@ -54,7 +54,7 @@ exports.delete_decoration = async (req, res) => {
 exports.get_store_by_name = async (req, res) => {
   try {
     const decoration = await DecorationService.find({
-      nameOfTheStore: req.params.nameOfTheStore,
+      store: req.params.store,
     });
     res.send(decoration);
   } catch (err) {

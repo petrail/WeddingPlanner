@@ -76,7 +76,7 @@ app.post("/coordinator", CoordinatorController.post_coordinator);
 //cosmeticSalon
 app.post("/cosmeticSalon", CosmeticSalonController.post_salon);
 //danceLessons
-app.post("/danceLessons", DanceLessonsController.post_dance_lessons);
+app.post("/danceLessons", DanceLessonsController.post_dance_lesson);
 //decoration
 app.post("/decoration", DecorationController.post_decoration);
 //groom
@@ -120,9 +120,9 @@ app.get("/groom", GroomController.get_all_grooms);
 //jewellery
 app.get("/jewleryStore", JewelleryStoreController.get_all_jewellerys);
 //music
-app.get("/music", MusicController.get_all_bands);
+app.get("/music", MusicController.get_all_music);
 //other
-app.get("/other", OtherController.get_all_other);
+app.get("/other", OtherController.get_all_others);
 //photoStudio
 app.get("/photoStudio", PhotoStudioController.get_all_photoStudios);
 //registrar
@@ -147,7 +147,7 @@ app.put("/coordinator/:id", CoordinatorController.put_coordinator);
 //cosmeticSalon
 app.put("/cosmeticSalon/:id", CosmeticSalonController.put_salon);
 //dance lessons
-app.put("/danceLessons/:id", DanceLessonsController.put_dance_lessons);
+app.put("/danceLessons/:id", DanceLessonsController.put_dance_lesson);
 //decoration
 app.put("/decoration/:id", DecorationController.put_decoration);
 //groom
@@ -172,7 +172,7 @@ app.put("/user/id/:id", UserController.put_user);
 //admin
 app.delete("/admin/:id", AdminController.delete_admin);
 //bride
-app.delete("/brides/id/:id", BrideController.delete_bride_by_id );
+app.delete("/bride/:id", BrideController.delete_bride );
 //cake
 app.delete("/cake/:id", CakeController.delete_cake);
 //coordinator
@@ -207,167 +207,14 @@ app.delete("/user/:id", UserController.delete_user);
 //admin
 app.get("/admin/username/:username", AdminController.get_admin_by_username);
 //end admin
-//bride
-app.get("/brides/name/:name", BrideController.get_bride_by_boutique_name);
 
-app.get(
-  "/brides/location/:location",
-  BrideController.get_bride_boutiqe_by_location
-);
-app.get("/brides/:price", BrideController.get_bride_boutiqe_by_price);
-//end bride
-//cake
-app.get("/cake/:nameOfTheWafery", CakeController.get_wafery_by_name);
-//cake end
 //coordinator
 app.get(
   "/coordinator/:username",
   CoordinatorController.get_coordinator_by_username
 );
 //coordinator end
-//cosmeticSalon
-//testing in postman: http://localhost:3000/cosmeticSalon/Ivan
-app.get("/cosmeticSalon/:name", CosmeticSalonController.get_salon_by_name);
-//testing in postman: http://localhost:3000/cosmeticSalon/location/Berlin
-app.get(
-  "/cosmeticSalon/location/:location",
-  CosmeticSalonController.get_salon_by_location
-);
-//testing in postman: http://localhost:3000/cosmeticSalon/dateReserved/2023-12-04T23:00:00.000Z
-app.get(
-  "/cosmeticSalon/dateReserved/:dateReserved",
-  CosmeticSalonController.get_salon_when_reserved
-);
-/*app.get(
-  "/salons/typeOfService/:typeOfService",
-  CosmeticSalonController.get_salon_by_service
-);*/
-//cosmeticSalon end
 
-//dance lessons
-//testing in postman: http://localhost:3000/danceLessons/Plesni Klub Primavera
-app.get("/danceLessons/:name", DanceLessonsController.get_dance_studio_by_name);
-//testing in postman: http://localhost:3000/danceLessons/location/9. brigade 39a
-app.get(
-  "/danceLessons/location/:location",
-  DanceLessonsController.get_dance_studio_by_location
-);
-//dance lessons end
-
-//decoration
-//testing in postman: http://localhost:3000/decoration/Neven
-app.get("/decoration/:nameOfTheStore", DecorationController.get_store_by_name);
-//testing in postman: http://localhost:3000/decorations/300
-app.get("/decorations/:price", DecorationController.get_decoration_by_price);
-//testing in postman: http://localhost:3000/decoration/typeOfService/bidermajer
-app.get(
-  "/decoration/typeOfService/:typeOfService",
-  DecorationController.get_decoration_by_service
-);
-//decoration end
-
-//groom
-//testing in postman: http://localhost:3000/groom/Massimo Dutti
-app.get("/groom/:name", GroomController.get_groom_by_boutique_name);
-//testing in postman: http://localhost:3000/groom/location/Pobedina 3
-app.get(
-  "/groom/location/:location",
-  GroomController.get_groom_boutiqe_by_location
-);
-//testing in postman: http://localhost:3000/groom/price/2000
-app.get("/groom/price/:price", GroomController.get_groom_boutiqe_by_price);
-//groom end
-
-//jewellery
-//testing in postman:http://localhost:3000/jewleryStore/Zlatara Unca
-app.get(
-  "/jewleryStore/:name",
-  JewelleryStoreController.get_jewellery_store_by_name
-);
-//testing in postman: http://localhost:3000/jewellery/location/Delta Planet
-app.get(
-  "/jewellery/location/:location",
-  JewelleryStoreController.get_jewellery_shop_by_location
-);
-//testing in postman: http://localhost:3000/jewleryStore/typeOfJewlery/ogrlica
-app.get(
-  "/jewleryStore/typeOfJewlery/:typeOfJewlery",
-  JewelleryStoreController.get_jewellery_by_service
-);
-//jewellery end
-//music
-//testing in postman: http://localhost:3000/music/Blackerries Band
-app.get("/music/:nameOfTheBand", MusicController.get_band_by_name);
-//testing in postman: http://localhost:3000/music/dateReserved/2023-12-31T23:00:00.000Z
-app.get(
-  "/music/dateReserved/:dateReserved",
-  MusicController.get_band_when_reserved
-);
-//testing in postman:
-/*app.get(
-  "/music/typeOfService/:typeOfService",
-  MusicController.get_music_by_service
-);*/
-//music end
-//other
-//testing in postman: http://localhost:3000/other/Diskoteka
-app.get("/other/:nameOfTheStore", OtherController.get_store_by_name);
-//testing in postman: http://localhost:3000/other/typeOfService/baloni
-app.get(
-  "/other/typeOfService/:typeOfService",
-  OtherController.get_other_by_service
-);
-
-app.get("/other/location/:location", OtherController.get_other_by_location);
-//other end
-
-//photo studio
-//testing in postman: http://localhost:3000/photoStudio/FotoStudio Zivko
-app.get("/photoStudio/:name", PhotoStudioController.get_studio_by_name);
-app.get(
-  "/photoStudio/dateReserved/:dateReserved",
-  PhotoStudioController.get_studio_when_reserved
-);
-//photo studio end
-//registrar
-//testing in postman: http://localhost:3000/registrar/Milan
-app.get("/registrar/:name", RegistrarController.get_registrar_by_name);
-//testing in postman: http://localhost:3000/registrar/dateReserved/2023-12-04T23:00:00.000Z
-app.get(
-  "/registrar/dateReserved/:dateReserved",
-  RegistrarController.get_registrar_when_reserved
-);
-//testing in postman: http://localhost:3000/registrar/price/250
-app.get("/registrar/price/:price", RegistrarController.get_registrar_by_price);
-//testing in postman: http://localhost:3000/registrar/township/Pantelej
-app.get(
-  "/registrar/township/:township",
-  RegistrarController.get_registrar_by_township
-);
-//registrar end
-
-//restaurant
-//testing in postman:
-app.get("/restaurant/:name", RestaurantController.get_restaurant_by_name);
-//testing in postman: http://localhost:3000/restaurant/location/Novo selo
-app.get(
-  "/restaurant/location/:location",
-  RestaurantController.get_restaurant_by_location
-);
-app.get(
-  "/restaurant/dateReserved/:dateReserved",
-  RestaurantController.get_restaurant_when_reserved
-);
-app.get(
-  "/restaurant/maxNumberGuests/:maxNumberGuests",
-  RestaurantController.get_restaurant_by_guests_number
-);
-//testing in postman: http://localhost:3000/restaurants/15
-app.get(
-  "/restaurants/:priceMenu",
-  RestaurantController.get_restaurant_by_menu_price
-);
-//restaurant end
 //user
 app.get("/users/name/:name", UserController.get_user_by_name);
 app.get("/users/username/:username", UserController.get_user_by_username);
@@ -443,4 +290,3 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
-

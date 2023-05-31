@@ -1,5 +1,5 @@
 const DanceLessonsService = require("../models/service");
-exports.post_dance_lessons = async (req, res) => {
+exports.post_dance_lesson = async (req, res) => {
   try {
     const danceLessons = await DanceLessonsService.create(req.body);
     res.status(200).json(danceLessons);
@@ -18,7 +18,7 @@ exports.get_all_lessons = async (req, res) => {
   }
 };
 
-exports.put_dance_lessons = async (req, res) => {
+exports.put_dance_lesson = async (req, res) => {
   try {
     const { id } = req.params;
     const dance = await DanceLessonsService.findByIdAndUpdate(id, req.body);
@@ -47,17 +47,6 @@ exports.delete_dance_lesson = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: error.message });
-  }
-};
-
-/**/
-exports.get_dance_studio_by_name = async (req, res) => {
-  try {
-    const dance = await DanceLessonsService.find({ name: req.params.name });
-    res.send(dance);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving users");
   }
 };
 

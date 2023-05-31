@@ -46,15 +46,4 @@ exports.delete_groom = async (req, res) => {
   }
 };
 
-/* */
-exports.get_groom_by_boutique_name = async (req, res) => {
-  try {
-    const groom = await GroomService.find({ name: req.params.name });
-    res.send(groom);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving groom");
-  }
-};
-
 

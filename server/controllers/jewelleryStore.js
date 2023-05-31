@@ -50,13 +50,4 @@ exports.delete_jewellery = async (req, res) => {
   }
 };
 
-/**/
-exports.get_jewellery_store_by_name = async (req, res) => {
-  try {
-    const jewellery = await JewelleryStoreService.find({ name: req.params.name });
-    res.send(jewellery);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error retrieving jewellery");
-  }
-};
+
