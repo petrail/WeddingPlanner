@@ -13,7 +13,7 @@
   
   <script>
 import CategoryListItem from './CategoryListItem.vue';
-
+import axios from 'axios';
   export default{
     name: "CategoryList",
     components:{
@@ -64,8 +64,14 @@ import CategoryListItem from './CategoryListItem.vue';
             const index = this.liked.indexOf(id);
             this.liked.splice(index, 1);
         },
-        open(pred){
-            this.itemOpen = pred;
+        async open(pred){
+            try{
+                this.itemOpen = await axios.get('http://localhost:3000/service/get_service_by_id/'+pred._id);
+                this.itemOpen = this.itemOpen.data;
+            }
+            catch(error){
+                console.log(error);
+            }
         },
         closeItem(){
             this.itemOpen=null;

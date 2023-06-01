@@ -1,16 +1,15 @@
 <template>
-<!-- :style="`background-image: url(http://localhost/3000${pred.img})` -->
-    <div :class="open?'slika openImg':'slika'">
+    <div :class="this.open?'slika openImg':'slika'" :style="`background-image: url(http://localhost:3000${pred.img})`">
         <img class="srce" :src="likeImg" @click="like()"/>
         <img class="reserved" v-if="reserved" src="src/assets/reserved.png" @click="like()"/>
         <img v-if="open" class="close" src="src/assets/close.png" @click="close()"/>
     </div>
     <div :class="open?'opis openText':'opis'" @click="otvori()">
         <h2 class="naslov">
-            {{ locPred.name }}
+            {{ pred.name }}
         </h2>
         <p class="detalji">
-            {{ locPred.store }}
+            {{ pred.store }}
         </p>
     </div>
     <div v-if="open" class="ostatak">
@@ -20,7 +19,6 @@
 </template>
   
   <script>
-  import axios from 'axios';
   export default{
     name: "CategoryList",
     props:{
@@ -35,19 +33,21 @@
         reserved:{
             type:Boolean,
             default:false
+        },
+        open:{
+            type:Boolean,
+            default:false
         }
     },
     data(){
         return{
             localLiked:false,
-            open:false,
-            locPred:{
-                name:'',
-                store:'',
-            },
         }
     },
     mounted(){
+        if(this.open){
+            console.log(this.pred);
+        }
         this.localLiked=this.liked;
         this.locPred = this.pred;
     },
@@ -59,14 +59,8 @@
             else
                 this.$emit('remove',this.pred.id);
         },
-        async otvori(){
-            try{
-                this.open=true;
-                this.locPred = await axios.get('http://localhost:3000/service/get_service_by_id/'+this.locPred._id);
-                this.$emit('open',this.pred);
-            }catch (error) {
-                console.log('Error:', error);
-            }
+        otvori(){
+            this.$emit('open',this.pred);
         },
         close(){
             this.$emit('close');
@@ -151,13 +145,13 @@
       bottom:0;
       left:0;
       width:100%;
-      height: 50%;
+      height: 100%;
       color:white;
       background-color: var(--white-pink);
   }
   .slika{
     width:100%;
-    height: 50%;
+    height: 100%;
     background-size: cover;
     background-position: center center;
   }

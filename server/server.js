@@ -28,9 +28,8 @@ const User = require("./models/user");
 const app = express();
 const CosmeticSalonService = require("./models/service")
 const cors = require("cors");
-const http = require('http');
-const path = require('path');
-const { URL } = require('url');
+// const path = require('path');
+// const { URL } = require('url');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({
@@ -38,10 +37,11 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
-app.use(express.static("/img"));
+app.use(express.static('img'));
+app.use('/img', express.static('img'))
 app.use(errorHandler);
 app.use(cookieParser());
-const http = require("http").Server(app);
+// const http = require("http").Server(app);
 /*
 const passport = require("passport");
 const flash = require("express-flash")
@@ -350,43 +350,43 @@ mongoose
     console.log(error);
   });
   
-  http.createServer((req, res) => {
-    const request = new URL(req.url, `http://${req.headers.host}`);
-    const action = request.pathname;
+  // http.createServer((req, res) => {
+  //   const request = new URL(req.url, `http://${req.headers.host}`);
+  //   const action = request.pathname;
   
-    const filePath = path.join(__dirname, action);
+  //   const filePath = path.join(__dirname, action);
   
-    fs.exists(filePath, function (exists) {
-      if (!exists) {
-        res.writeHead(404, {
-          'Content-Type': 'text/plain'
-        });
-        res.end('404 Not Found');
-        return;
-      }
+  //   fs.exists(filePath, function (exists) {
+  //     if (!exists) {
+  //       res.writeHead(404, {
+  //         'Content-Type': 'text/plain'
+  //       });
+  //       res.end('404 Not Found');
+  //       return;
+  //     }
   
-      const ext = path.extname(action);
+  //     const ext = path.extname(action);
   
-      let contentType = 'text/plain';
+  //     let contentType = 'text/plain';
   
-      if (ext === '.png') {
-        contentType = 'image/png';
-      }
+  //     if (ext === '.png') {
+  //       contentType = 'image/png';
+  //     }
   
-      res.writeHead(200, {
-        'Content-Type': contentType
-      });
+  //     res.writeHead(200, {
+  //       'Content-Type': contentType
+  //     });
   
-      fs.readFile(filePath, function (err, content) {
-        if (err) {
-          res.writeHead(500);
-          res.end('Server Error');
-        } else {
-          res.end(content);
-        }
-      });
-    });
-  }).listen(3000, '127.0.0.1', () => {
-    console.log(__dirname);
-  });
+  //     fs.readFile(filePath, function (err, content) {
+  //       if (err) {
+  //         res.writeHead(500);
+  //         res.end('Server Error');
+  //       } else {
+  //         res.end(content);
+  //       }
+  //     });
+  //   });
+  // }).listen(3000, '127.0.0.1', () => {
+  //   console.log(__dirname);
+  // });
   
