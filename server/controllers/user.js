@@ -1,9 +1,6 @@
 const User = require("../models/user");
-const userService = require("../service/userService")
-//const userService = require("../service/userService")
 const asyncHandler = require("express-async-handler")
 const bcrypt = require("bcrypt");
-//const {createTokens} = require("../JWT");
 
 const post_user = async (req, res) => {
   try {
@@ -111,36 +108,6 @@ const post_picture_for_user = async(req, res) => {
   await user.save()
   res.redirect('/user')
 };
-
-/*const createUserController = async(req, res) => {
-  try {
-    console.log(req.body);
-    const status = await userService.createUserDBService(req.body);
-    console.log(status);
-    if(status) {
-      res.send({"status": true, "message": "User created succsessfully"});
-    } else {
-      res.send({"status": false, "message": "Error creating user"});
-    }
-    
-  } catch (error) {
-    console.log(error);
-  }
-};
-const loginUserController = async(req, res) => {
-  var result = null;
-  try {
-    result = await userService.loginUserDBService(req.body);
-    if(result.status) {
-      res.send({"status": true, "message": "User created succsessfully"});
-    } else {
-      res.send({"status": false, "message": "Error creating user"});
-    
-    } 
-   }catch (error) {
-    console.log(error);
-  }
-};*/
 
 //@desc Register a user
 //@route POST /api/users/register

@@ -1,12 +1,11 @@
 const errorHandler = require("./middleware/errorHandler");
 //const validateToken = require("./middleware/validateTokenHandler");
 const cookieParser = require("cookie-parser");
-const {createTokens, validateToken} = require("./JWT");
+const {createTokens, validateToken} = require("./config/JWT");
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 const multer = require("multer");
-//const bcrypt = require("bcrypt");
 const AdminController = require("./controllers/admin");
 const BrideController = require("./controllers/bride");
 const CakeController = require("./controllers/cake");
@@ -28,14 +27,20 @@ const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 const app = express();
 const cors = require("cors");
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+const { URL } = require('url');
 
 app.use(express.urlencoded({extended: false}));
-app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname + "/img"));
+app.use(express.static("/img"));
 app.use(errorHandler);
 app.use(cookieParser());
-
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 /*
 const passport = require("passport");
 const flash = require("express-flash")
@@ -134,7 +139,7 @@ app.get("/restaurant", RestaurantController.get_all_restaurants);
 app.get("/users", UserController.get_all_users);
 // end get all methods
 //service
-app.get("/service/get_display", ServiceController.get_services_display);
+app.get("/service/get_display/:type", ServiceController.get_services_display);
 app.get("/service/get_service_by_id/:id", ServiceController.get_service_by_id);
 app.get("/service/add_service_review", ServiceController.add_service_review);
 app.get("/service/add_reserve_date", ServiceController.add_reserve_date);
@@ -261,9 +266,9 @@ app.post("/user/login", async (req, res) => {
 
       res.cookie("access-token", accessToken, {
         maxAge: 60 * 60 * 24 * 30 * 1000,
-        //httpOnly: true,
+        httpOnly: true,
       });
-
+      req.user = user;
       res.json("LOGGED IN");
     }
   });
@@ -297,3 +302,44 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+  
+  http.createServer((req, res) => {
+    const request = new URL(req.url, `http://${req.headers.host}`);
+    const action = request.pathname;
+  
+    const filePath = path.join(__dirname, action);
+  
+    fs.exists(filePath, function (exists) {
+      if (!exists) {
+        res.writeHead(404, {
+          'Content-Type': 'text/plain'
+        });
+        res.end('404 Not Found');
+        return;
+      }
+  
+      const ext = path.extname(action);
+  
+      let contentType = 'text/plain';
+  
+      if (ext === '.png') {
+        contentType = 'image/png';
+      }
+  
+      res.writeHead(200, {
+        'Content-Type': contentType
+      });
+  
+      fs.readFile(filePath, function (err, content) {
+        if (err) {
+          res.writeHead(500);
+          res.end('Server Error');
+        } else {
+          res.end(content);
+        }
+      });
+    });
+  }).listen(3000, '127.0.0.1', () => {
+    console.log(__dirname);
+  });
+  

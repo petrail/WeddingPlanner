@@ -1,15 +1,15 @@
 const Service = require("../models/service");
 exports.get_services_display = async (req, res) => {
   try {
-    const { type } = req.body
+    const { type } = req.params
     const service = await Service.find({type:type});
     let to_return=[]
     service.forEach(item=>{
         to_return.push({
-            "_id":item._id,
+            "_id":item._id, 
             "name":item.name,
             "img":item.img,
-            "description":item.description
+            "store":item.store
         });
     });
     res.status(200).json(to_return);

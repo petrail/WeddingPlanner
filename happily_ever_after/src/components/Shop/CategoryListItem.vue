@@ -1,23 +1,26 @@
 <template>
-    <div :class="open?'slika openImg':'slika'" :style="`background-image: url(${pred.url})`">
+<!-- :style="`background-image: url(http://localhost/3000${pred.img})` -->
+    <div :class="open?'slika openImg':'slika'">
         <img class="srce" :src="likeImg" @click="like()"/>
         <img class="reserved" v-if="reserved" src="src/assets/reserved.png" @click="like()"/>
         <img v-if="open" class="close" src="src/assets/close.png" @click="close()"/>
     </div>
     <div :class="open?'opis openText':'opis'" @click="otvori()">
         <h2 class="naslov">
-            {{ pred.naslov }}
+            {{ locPred.name }}
         </h2>
         <p class="detalji">
-            {{ pred.opis }}
+            {{ locPred.store }}
         </p>
     </div>
     <div v-if="open" class="ostatak">
-        
+        <p class="desc">
+        </p>
     </div>
 </template>
   
   <script>
+  import axios from 'axios';
   export default{
     name: "CategoryList",
     props:{
@@ -32,25 +35,23 @@
         reserved:{
             type:Boolean,
             default:false
-        },
-        open:{
-            type:Boolean,
-            default:false
         }
     },
     data(){
         return{
             localLiked:false,
+            open:false,
+            locPred:{
+                name:'',
+                store:'',
+            },
         }
     },
     mounted(){
         this.localLiked=this.liked;
+        this.locPred = this.pred;
     },
     methods:{
-        selectItem(item){
-            //Kad kliknes otvori se prozor za item
-            console.log(item);
-        },
         like(){
             this.localLiked=!this.localLiked;
             if(this.localLiked)
@@ -58,8 +59,14 @@
             else
                 this.$emit('remove',this.pred.id);
         },
-        otvori(){
-            this.$emit('open',this.pred);
+        async otvori(){
+            try{
+                this.open=true;
+                this.locPred = await axios.get('http://localhost:3000/service/get_service_by_id/'+this.locPred._id);
+                this.$emit('open',this.pred);
+            }catch (error) {
+                console.log('Error:', error);
+            }
         },
         close(){
             this.$emit('close');
@@ -88,6 +95,8 @@
 }
 .openText{
     width:70% !important;
+    justify-content: flex-start !important;
+    padding:7vw !important;
 }
 @media (width<1000px) {
     .openImg{
@@ -125,9 +134,12 @@
     transition: all 0.5s ease;
 }
 .naslov{
+    font-size:max(1vw,12pt) !important;
+    font-weight:bold;
     color:var(--font-dark)
 }
 .detalji{
+    text-overflow:ellipsis;
     color:var(--dark-purple);
 }
   .opis{

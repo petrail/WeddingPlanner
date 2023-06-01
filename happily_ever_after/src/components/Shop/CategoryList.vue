@@ -137,7 +137,6 @@ import CategoryListItem from './CategoryListItem.vue';
   }
   .photo{
       transition: all 0.5s ease;
-      height:10vh;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
