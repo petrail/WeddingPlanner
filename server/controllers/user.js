@@ -1,5 +1,7 @@
 const User = require("../models/user");
-const asyncHandler = require("express-async-handler")
+const userService = require("../service/userService");
+//const userService = require("../service/userService")
+const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 
 const post_user = async (req, res) => {
@@ -12,7 +14,7 @@ const post_user = async (req, res) => {
   }
 };
 
- const get_all_users = async (req, res) => {
+const get_all_users = async (req, res) => {
   try {
     const users = await User.find({});
     res.status(200).json(users);
@@ -87,27 +89,94 @@ const get_user_by_username = async (req, res) => {
 /**/
 const get_user_by_id = async (req, res) => {
   try {
-    const users = await User.find({_id: req.params.id});
+    const users = await User.find({ _id: req.params.id });
     res.send(users);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error retrieving users');
+    res.status(500).send("Error retrieving users");
+  }
+};
+const get_user_by_email = async (req, res) => {
+  try {
+    const users = await User.find({ email: req.params.email });
+    res.send(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving users");
+  }
+};
+const post_picture_for_user = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    const userId = req.params.id; // Assuming you have a route parameter for the user ID
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    console.log("buffer je: ");
+    console.log(req.file.buffer);
+    //user.picture = {};
+    user.picture.type = req.file.buffer;
+    //user.picture.contentType = req.file.mimetype;
+
+    await user.save();
+
+    res.status(200).json({ message: "Picture updated successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
-
-
-const post_picture_for_user = async(req, res) => {
+/* const post_picture_for_user = async (req, res) => {
+  console.log("request is: ");
+  console.log(req);
+  console.log("file is: " + req.file);
   const user = new User({
-    picture:{
-      data:req.file.buffer,
-      contentType:req.file.mimetype
-    }
-  })
+    picture: {
+      data: req.file.buffer,
+      contentType: req.file.mimetype,
+    },
+  });
 
-  await user.save()
-  res.redirect('/user')
+  await user.save();
+  res.redirect("/user");
+}; */
+
+/*const createUserController = async(req, res) => {
+  try {
+    console.log(req.body);
+    const status = await userService.createUserDBService(req.body);
+    console.log(status);
+    if(status) {
+      res.send({"status": true, "message": "User created succsessfully"});
+    } else {
+      res.send({"status": false, "message": "Error creating user"});
+    }
+    
+  } catch (error) {
+    console.log(error);
+  }
 };
+const loginUserController = async(req, res) => {
+  var result = null;
+  try {
+    result = await userService.loginUserDBService(req.body);
+    if(result.status) {
+      res.send({"status": true, "message": "User created succsessfully"});
+    } else {
+      res.send({"status": false, "message": "Error creating user"});
+    
+    } 
+   }catch (error) {
+    console.log(error);
+  }
+};*/
 
 //@desc Register a user
 //@route POST /api/users/register
@@ -144,6 +213,16 @@ const registerUser = asyncHandler(async (req, res) => {
   res.json({ message: "Register the user" });
 });
 
-module.exports = { get_all_users, post_user,
-put_user, delete_user,get_user_by_id,get_user_by_name, get_user_by_username,
-delete_user_by_username,post_picture_for_user,registerUser };
+module.exports = {
+  get_all_users,
+  post_user,
+  put_user,
+  delete_user,
+  get_user_by_id,
+  get_user_by_name,
+  get_user_by_username,
+  delete_user_by_username,
+  post_picture_for_user,
+  registerUser,
+  get_user_by_email,
+};

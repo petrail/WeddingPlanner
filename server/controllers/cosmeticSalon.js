@@ -11,7 +11,7 @@ exports.post_salon = async (req, res) => {
 
 exports.get_all_salons = async (req, res) => {
   try {
-    const salon = await CosmeticSalonService.find({type : 'Kozmeticki salon'});
+    const salon = await CosmeticSalonService.find({type : 'Kozmeticki saloni'});
     res.status(200).json(salon);
   } catch (error) {
     res.status(500).json({ message: error.message });

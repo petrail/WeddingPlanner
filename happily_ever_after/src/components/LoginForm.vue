@@ -4,18 +4,24 @@
     <p>Unesite korisničko ime i šifru</p>
     <form @submit.prevent="login">
       <div class="form-group">
-        <input placeholder="Email" type="email" name="username" v-model="user.email" required>
+        <input placeholder="Email" type="email" name="username" v-model="user.email" required />
       </div>
       <div class="form-group">
-        <input  placeholder="Šifra" type="password" name="password" v-model="user.password" required>
+        <input
+          placeholder="Šifra"
+          type="password"
+          name="password"
+          v-model="user.password"
+          required
+        />
       </div>
       <button @click="login()">Prijavite se</button>
       <div class="form-group">
         <div class="left">
-        <router-link class="link" to='/'>Nazad na glavnu</router-link>
+          <router-link class="link" to="/">Nazad na glavnu</router-link>
         </div>
         <div class="right">
-        <router-link class="link" to='/register'>Registruj se</router-link>
+          <router-link class="link" to="/register">Registruj se</router-link>
         </div>
       </div>
     </form>
@@ -24,156 +30,159 @@
 
 <script>
 import { RouterLink, RouterView } from 'vue-router'
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   name: 'LoginForm',
   data() {
     return {
-      result:{},
+      result: {},
       user: {
         password: '',
-        email:'',
+        email: ''
       }
-      
     }
   },
-  created(){
-
-  },
-  mounted(){
-    console.log("mounted() called...")
+  created() {},
+  mounted() {
+    console.log('mounted() called...')
   },
   methods: {
     login() {
-  axios.post('http://localhost:3000/user/login', this.user)
-    .then((response) => {
-      const data = response.data; // Access the data from the response
-      localStorage.setItem('token', data.accessToken);
-      // Redirect to the desired page after successful login
-      this.$router.push('/shopmain');
-    })
-    .catch((error) => {
-      console.log('Error:', error.response.data);
-    });
-},
-
-    },
+      axios
+        .post('http://localhost:3000/user/login', this.user)
+        .then((response) => {
+          console.log(response)
+          console.log(response.data)
+          const data = response.data // Access the data from the response
+          localStorage.setItem('token', data)
+          // Redirect to the desired page after successful login
+          this.$router.push('/shopmain')
+        })
+        .catch((error) => {
+          console.log('Error:', error.response.data)
+        })
+    }
   }
+}
 </script>
 
 <style scoped>
 .login-page {
   display: flex;
   flex-direction: column;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   background: rgba(150, 150, 150, 0.5);
-  width:90%;
-  max-width:800px;
-  height:auto;
-  max-height:95%;
+  width: 90%;
+  max-width: 800px;
+  height: auto;
+  max-height: 95%;
 
-  padding:8%;
-  padding-top:3vh;
-  padding-bottom:3vh;
-  border:0;
-  border-radius:2vw;
+  padding: 8%;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  border: 0;
+  border-radius: 2vw;
   backdrop-filter: blur(8px);
-  overflow-y:auto;
+  overflow-y: auto;
 }
-form{
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    margin-top:3vh;
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3vh;
 }
-h1{
-    font-size:max(2vw,35pt);
-    color:white;
-    font-weight:600;
-    margin-bottom:3vh;
+h1 {
+  font-size: max(2vw, 35pt);
+  color: white;
+  font-weight: 600;
+  margin-bottom: 3vh;
 }
-p{
-    font-size:max(2vw,20pt);
-    color:white;
+p {
+  font-size: max(2vw, 20pt);
+  color: white;
 }
 .form-group {
   margin-bottom: 3vh;
-  width:100%;
-  display:flex;
-  justify-content:center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 label {
   display: block;
   margin-bottom: 5px;
 }
-input{
-    border-radius:1vw;
-    border:0;
-    height: 40px;
-    width:100%;
-    color: white !important;
-    font-size:max(1.25vw,16pt);
-    background: rgba(255, 255, 255, 0.3);
-    padding-left: 20px;
-    padding-right: 20px;
-    transition: all 0.5s ease;
+input {
+  border-radius: 1vw;
+  border: 0;
+  height: 40px;
+  width: 100%;
+  color: white !important;
+  font-size: max(1.25vw, 16pt);
+  background: rgba(255, 255, 255, 0.3);
+  padding-left: 20px;
+  padding-right: 20px;
+  transition: all 0.5s ease;
 }
-input::placeholder{
-    color:white;
+input::placeholder {
+  color: white;
 }
-.link{
-    color:white;
-    justify-self:left;
-    padding:5px;
-    font-size:max(1.25vw,16pt);
+.link {
+  color: white;
+  justify-self: left;
+  padding: 5px;
+  font-size: max(1.25vw, 16pt);
 }
-.link:hover{
-    background-color:var(--white-pink);
-    color:var(--font-dark);
-    border:0;
-    border-radius:1vw;
+.link:hover {
+  background-color: var(--white-pink);
+  color: var(--font-dark);
+  border: 0;
+  border-radius: 1vw;
 }
-.left, .right{
-    width:50%;
-    display:flex;
+.left,
+.right {
+  width: 50%;
+  display: flex;
 }
-.left{
-    justify-content:flex-start;
+.left {
+  justify-content: flex-start;
 }
-.right{
-    justify-content:flex-end;
+.right {
+  justify-content: flex-end;
 }
-input:hover{
-    border:1px solid white;
-    background: rgba(255, 255, 255, 0.08);
+input:hover {
+  border: 1px solid white;
+  background: rgba(255, 255, 255, 0.08);
 }
 
-button{
-    background: var(--light-pink) !important;
-    border:0;
-    color: var(--font-dark) !important;
-    width:50%;
-    border-radius:1vw;
-    height:50px;
-    font-size:max(1.25vw,16pt);
-    font-weight:bold;
-    margin-bottom:3vh;
+button {
+  background: var(--light-pink) !important;
+  border: 0;
+  color: var(--font-dark) !important;
+  width: 50%;
+  border-radius: 1vw;
+  height: 50px;
+  font-size: max(1.25vw, 16pt);
+  font-weight: bold;
+  margin-bottom: 3vh;
 }
-@media (width<700px){
-    button,input,.link,p{
-        font-size:12pt;
-    }
-    h1{
-        font-size:24pt;
-    }
+@media (width<700px) {
+  button,
+  input,
+  .link,
+  p {
+    font-size: 12pt;
+  }
+  h1 {
+    font-size: 24pt;
+  }
 }
-@media (width<1000px){
-    .register-page{
-       padding:18% !important;
-    }
+@media (width<1000px) {
+  .register-page {
+    padding: 18% !important;
+  }
 }
 </style>

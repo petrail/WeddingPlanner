@@ -1,11 +1,13 @@
 const errorHandler = require("./middleware/errorHandler");
 //const validateToken = require("./middleware/validateTokenHandler");
 const cookieParser = require("cookie-parser");
-const {createTokens, validateToken} = require("./config/JWT");
+const { createTokens, validateToken } = require("./config/JWT");
 const express = require("express");
 const mongoose = require("mongoose");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const multer = require("multer");
+//const bcrypt = require("bcrypt");
+const fs = require('fs');
 const AdminController = require("./controllers/admin");
 const BrideController = require("./controllers/bride");
 const CakeController = require("./controllers/cake");
@@ -23,24 +25,23 @@ const RestaurantController = require("./controllers/restaurant");
 const UserController = require("./controllers/user");
 const ServiceController = require("./controllers/service");
 const User = require("./models/user");
-const storage = multer.memoryStorage();
-const upload = multer({storage: storage});
 const app = express();
+const CosmeticSalonService = require("./models/service")
 const cors = require("cors");
 const http = require('http');
-const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
 
-app.use(express.urlencoded({extended: false}));
-app.use(express.json());
-app.use(express.static("/img"));
-app.use(errorHandler);
-app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true
 }));
+app.use(express.json());
+app.use(express.static("/img"));
+app.use(errorHandler);
+app.use(cookieParser());
+const http = require("http").Server(app);
 /*
 const passport = require("passport");
 const flash = require("express-flash")
@@ -64,11 +65,55 @@ inicializePassport(
   email =>users.find(user => user.email === email),
   id => users.find(user => user.id === id)
 );*/
+const storage = multer.diskStorage({
+  destination: 'img',
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
 
+const upload = multer({ storage }).single('img');
 
+app.put('/uploads/:id', (req, res) => {
+  upload(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ message: err.message });
+    }
 
+    try {
+      const { id } = req.params;
+      const salon = await CosmeticSalonService.findById(id);
 
+      if (!salon) {
+        return res
+          .status(404)
+          .json({ message: `Cosmetic salon with id ${id} not found` });
+      }
 
+      // Read the uploaded image file
+      const filePath = `img/${req.file.filename}`;
+      const imgData = fs.readFileSync(filePath);
+      const imgContentType = req.file.mimetype;
+
+      // Update the img field in the salon document
+      salon.img = {
+        data: imgData,
+        contentType: imgContentType,
+      };
+
+      // Save the updated salon document
+      await salon.save();
+
+      // Delete the temporary file from the server
+      fs.unlinkSync(filePath);
+
+      const updatedSalon = await CosmeticSalonService.findById(id);
+      res.status(200).json(updatedSalon);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+});
 //----------------------------------------------------------------------------------------------------------------------------
 //post methods
 //admin
@@ -85,7 +130,7 @@ app.post("/cosmeticSalon", CosmeticSalonController.post_salon);
 app.post("/danceLessons", DanceLessonsController.post_dance_lesson);
 //decoration
 app.post("/decoration", DecorationController.post_decoration);
-//groom
+//
 app.post("/groom", GroomController.post_groom);
 //jewellery
 app.post("/jewleryStore", JewelleryStoreController.post_jewellery);
@@ -184,7 +229,7 @@ app.put("/user/id/:id", UserController.put_user);
 //admin
 app.delete("/admin/:id", AdminController.delete_admin);
 //bride
-app.delete("/bride/:id", BrideController.delete_bride );
+app.delete("/bride/:id", BrideController.delete_bride);
 //cake
 app.delete("/cake/:id", CakeController.delete_cake);
 //coordinator
@@ -233,25 +278,29 @@ app.get("/users/username/:username", UserController.get_user_by_username);
 app.delete("/user/:username", UserController.delete_user_by_username);
 app.delete("/user/id/:id", UserController.delete_user);
 app.get("/users/id/:id", UserController.get_user_by_id);
-app.post(
-  "/user/upload",
-  upload.single("image"),
+//app.post("/user/picture", UserController.post_picture_for_user);
+/*app.put(
+  "/users/:id/picture",
+  upload.single("picture"),
   UserController.post_picture_for_user
-);
+);*/
+app.get("/user/email/:email", UserController.get_user_by_email);
+
 //user end
 //end additional methods
 //----------------------------------------------------------------------------------------------------------------------------
 
 //app.post('/user/login', UserController.loginUser)
 
-app.post('/user/register', UserController.registerUser);
-
+app.post("/user/register", UserController.registerUser);
 
 //app.get('/user/current', validateToken, UserController.currentUser);
 app.post("/user/login", async (req, res) => {
   const { email, password } = req.body;
+  console.log("user creds");
+  console.log(req.body);
 
-  const user = await User.findOne({email: email });
+  const user = await User.findOne({ email: email });
 
   if (!user) res.status(400).json({ error: "User Doesn't Exist" });
 
@@ -266,10 +315,10 @@ app.post("/user/login", async (req, res) => {
 
       res.cookie("access-token", accessToken, {
         maxAge: 60 * 60 * 24 * 30 * 1000,
-        httpOnly: true,
+        //httpOnly: true,
       });
       req.user = user;
-      res.json("LOGGED IN");
+      res.json(email);
     }
   });
 });
@@ -281,14 +330,12 @@ app.get("/user/current", validateToken, (req, res) => {
   }
   res.json(currentUser);
 });
-
-
-
 //route
 mongoose.set("strictQuery", false);
 mongoose
   .connect(
-    "mongodb+srv://admin:admin@happily.qmtoszu.mongodb.net/Node-API?retryWrites=true&w=majority",{
+    "mongodb+srv://admin:admin@happily.qmtoszu.mongodb.net/Node-API?retryWrites=true&w=majority",
+    {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }
