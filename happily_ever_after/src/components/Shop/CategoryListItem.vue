@@ -5,16 +5,20 @@
         <img v-if="open" class="close" src="src/assets/close.png" @click="close()"/>
     </div>
     <div :class="open?'opis openText':'opis'" @click="otvori()">
-        <h2 class="naslov">
-            {{ pred.name }}
-        </h2>
-        <p class="detalji">
-            {{ pred.store }}
-        </p>
-    </div>
-    <div v-if="open" class="ostatak">
-        <p class="desc">
-        </p>
+        <div :class="open?'levo':''">
+            <h2 :class="open?'naslov veliki':'naslov'">
+                {{ pred.name }}
+            </h2>
+            <p class="detalji">
+                {{ pred.store }}
+            </p>
+            <p v-if="open" class="desc">
+                {{ pred.description }}
+            </p>
+        </div>
+        <div v-if="open" class="desno">
+            
+        </div>
     </div>
 </template>
   
@@ -80,6 +84,13 @@
   </script>
   
 <style scoped>
+.veliki{
+    font-size:max(2vw,16pt) !important;
+}
+.desc{
+    margin-top:2vh;
+    color:var(--font-dark);
+}
 .openImg, .openText{
     height: 100% !important;
 }
@@ -90,7 +101,17 @@
 .openText{
     width:70% !important;
     justify-content: flex-start !important;
-    padding:7vw !important;
+    padding:4vw !important;
+    flex-direction: row !important;
+}
+.levo{
+    width:50%;
+}
+.desno{
+    width:48%;
+    margin-left: 2%;
+    padding:5vw;
+    background-color: red;
 }
 @media (width<1000px) {
     .openImg{
@@ -128,7 +149,7 @@
     transition: all 0.5s ease;
 }
 .naslov{
-    font-size:max(1vw,12pt) !important;
+    font-size:max(1vw,12pt);
     font-weight:bold;
     color:var(--font-dark)
 }
