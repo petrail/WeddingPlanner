@@ -6,22 +6,35 @@ const serviceSchema = mongoose.Schema(
       type: String,
       required: [true, "Unesite ime usluge"],
     },
-    type:{
-      type:String,
-      enum:['Muzika','Restorani','Burme','Dekoracija','Za mladu','Za mladozenju','Maticari','Fotografisanje','Casovi plesa','Kozmeticki salon', 'Torte', 'Ostalo'],
+    type: {
+      type: String,
+      enum: [
+        "Muzika",
+        "Restorani",
+        "Burme",
+        "Dekoracija",
+        "Za mladu",
+        "Za mladozenju",
+        "Maticari",
+        "Fotografisanje",
+        "Casovi plesa",
+        "Kozmeticki salon",
+        "Torte",
+        "Ostalo",
+      ],
       required: [true, "Podesite tip usluge"],
     },
     location: {
-        type: String,
-        required: [true, "Unesite lokaciju"],
+      type: String,
+      required: [true, "Unesite lokaciju"],
     },
-    description:{
-        type:String,
-        required: [true, "Upisite opis usluge"],
+    description: {
+      type: String,
+      required: [true, "Upisite opis usluge"],
     },
-    servicePrice:{
-        price:Number,
-        unit:String
+    servicePrice: {
+      price: Number,
+      unit: String,
     },
     link: {
       type: String,
@@ -32,40 +45,48 @@ const serviceSchema = mongoose.Schema(
       required: [true, "Unesite broj telefona"],
     },
     img: {
-        data: Buffer,
-        contentType: String
+      data: Buffer,
+      contentType: String,
     },
-    reviews:[{
-        comment:String,
+    reviews: [
+      {
+        comment: String,
         grade: Number,
         date: String,
         user: String,
-    }],
-    reserved_dates:[{
-        date:String,
-    }],
+      },
+    ],
+    reserved_dates: [
+      {
+        date: String,
+      },
+    ],
     //Specific to clothes
-    color:{
-        type:String,
+    color: {
+      type: String,
     },
-    size:{
-        type:String,
+    size: {
+      type: String,
     },
     //Specific to cosmetic salons, bride/groom
-    subservice:{
-        type:String,
+    subservice: {
+      type: String,
     },
     //Specific to restaurants
-    menus:[{
-        name:String,
-        price:Number,
-        items:[{
-            item_name:String
-        }]
-    }],
-    max_guest_number:Number,
+    menus: [
+      {
+        name: String,
+        price: Number,
+        items: [
+          {
+            item_name: String,
+          },
+        ],
+      },
+    ],
+    max_guest_number: Number,
     //Specific to cakes/clothes/decoration
-    store:String,
+    store: String,
   },
   {
     timestamps: true,

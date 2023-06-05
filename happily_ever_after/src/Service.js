@@ -1,43 +1,73 @@
-import axios from 'axios';
+import axios from 'axios'
 
-const url = 'http://localhost:3000/users/username/:julija'
+const url = 'http://localhost:3000/user/email/'
+const url1 = 'http://localhost:3000/user/id/'
 
 class UserService {
-    //get uusers
-    static getUsers(){
-        return new Promise(async(resolve, reject) =>
-        {
-            try {
-                const res = await axios.get(url);
-                const data = res.data;
-                resolve(
-                    data.map(post => ({
-                        ...post,
-                        name: post.name,
-                        username: post.username,
-                        password: post.password,
-                        email: post.email,
-                        picture: post.picture,
-                        createdAt: new Date(post.createdAt),
-
-                        
-                    }))
-                );
-            } catch (error) {
-                reject(error);
-                
-            }
-        })
+  static async getUsers(token) {
+    try {
+      const res = await axios.get(url + token)
+      const data = res.data
+      return data.map((post) => ({
+        ...post,
+        _id: post._id,
+        name: post.name,
+        username: post.username,
+        password: post.password,
+        email: post.email,
+        picture: post.picture,
+        createdAt: new Date(post.createdAt)
+      }))
+    } catch (error) {
+      throw new Error(error)
     }
-
-    //create user
-    static async created() {
-        try {
-            this.posts = await UserService.getUsers()
-        } catch (error) {
-            
-        }
+  }
+  static async saveUser(userId, userData) {
+    try {
+      // Make an API request to save user data
+      const response = await axios.put(url1 + userId, userData)
+      return response.data
+    } catch (error) {
+      throw new Error(error)
     }
+  }
 }
 
-export default UserService;
+export default UserService
+/*import axios from 'axios'
+const userEmail = localStorage.getItem('token')
+const url = 'http://localhost:3000/user/email/' + localStorage.getItem('token')
+
+class UserService {
+  //get uusers
+  static getUsers() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get(url)
+        const data = res.data
+        resolve(
+          data.map((post) => ({
+            ...post,
+            name: post.name,
+            username: post.username,
+            password: post.password,
+            email: post.email,
+            //picture: post.picture,
+            createdAt: new Date(post.createdAt)
+          }))
+        )
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
+  //create user
+  static created() {
+    try {
+      this.posts = UserService.getUsers()
+    } catch (error) {}
+  }
+}
+
+export default UserService*/

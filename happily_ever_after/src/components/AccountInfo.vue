@@ -3,6 +3,7 @@
     <div class="photo">
       <input class="file" type="file" accept="image/*" @change="handleFileUpload" />
       <button @click="uploadImage">Upload</button>
+      <img v-if="imageUrl" :src="imageUrl" alt="Uploaded Image" />
     </div>
     <div class="head row">
       <div class="title">
@@ -30,7 +31,11 @@
     </div>
     <div class="row">
       <label for="name">Šifra</label>
-      <input placeholder="Šifra" type="password" id="password" v-model="posts.password" required />
+      <input placeholder="Nova šifra" type="password" id="newPassword" v-model="newPassword" />
+    </div>
+    <div class="row">
+      <label for="name">Potvrdi novu sifru</label>
+      <input placeholder="Potvrdi šifru" type="password" id="confirmPassword" v-model="confirmPassword" />
     </div>
     <div class="row">
       <button @click="save">Sačuvaj izmene</button>
@@ -45,20 +50,14 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      posts: {
-        name: '',
-        email: '',
-        username: '',
-        password: '',
-        userId: '',
-        selectedFile: null
-      },
+      posts: {},
       error: ''
     }
   },
   async created() {
     try {
-      const users = await UserService.getUsers()
+      const token = localStorage.getItem('token')
+      const users = await UserService.getUsers(token)
       if (users.length > 0) {
         this.posts = users[0]
       }
@@ -68,16 +67,31 @@ export default {
   },
   methods: {
     async save() {
-      try {
-        // Make an API request to save user data
-        await UserService.saveUser(this.posts)
-        // Handle the save logic
-        console.log('Changes saved!')
-      } catch (error) {
-        console.log(error.message)
-        this.error = 'Error saving user data.'
-      }
-    },
+  try {
+    // Check if the new password and confirm password match
+    if (this.newPassword !== this.confirmPassword) {
+      throw new Error('Passwords do not match')
+    }
+
+    // Create a new object to save only the necessary data
+    const userData = {
+      _id: this.posts._id,
+      name: this.posts.name,
+      username: this.posts.username,
+      email: this.posts.email,
+      password: this.newPassword || this.posts.password // Use the new password if provided, otherwise use the existing password
+    }
+
+    // Make an API request to save user data
+    await UserService.saveUser(this.posts._id, userData)
+
+    console.log('Changes saved!')
+  } catch (error) {
+    console.log(error.message)
+    this.error = 'Error saving user data.'
+  }
+},
+
     handleFileUpload(event) {
       console.log(event)
       console.log('selected fajl kroz event: ' + event.target.files[0])
@@ -178,10 +192,10 @@ h3 {
 input {
   border-radius: 0.5vw;
   border: 2px solid var(--light-blue);
-  height: 32px;
+  height: 30px;
   width: 100%;
   color: #000 !important;
-  font-size: max(1.25vw, 16pt);
+  font-size: max(1.25vw, 14pt);
   background: rgba(255, 255, 255, 0.3);
   padding-left: 20px;
   padding-right: 20px;
@@ -201,7 +215,7 @@ button {
   border: 0;
   color: var(--font-dark) !important;
   border-radius: 0.5vw;
-  height: 40px;
+  height: 30px;
   font-size: max(1.25vw, 14pt);
 }
 button:hover {

@@ -22,7 +22,7 @@ const userSchema = mongose.Schema(
     },
     picture: {
       type: Buffer,
-      required: [false, "Unesite sliku"],
+      contentType: String,
 
     },
     usluge :{type:[Object]}

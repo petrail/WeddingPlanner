@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 //const bcrypt = require("bcrypt");
-const fs = require('fs');
+const fs = require("fs");
 const AdminController = require("./controllers/admin");
 const BrideController = require("./controllers/bride");
 const CakeController = require("./controllers/cake");
@@ -26,21 +26,33 @@ const UserController = require("./controllers/user");
 const ServiceController = require("./controllers/service");
 const User = require("./models/user");
 const app = express();
-const CosmeticSalonService = require("./models/service")
+const CosmeticSalonService = require("./models/service");
+const Music = require("./models/service");
+const CakeService = require("./models/service");
+const DanceLessonsService = require("./models/service");
+const DecorationService = require("./models/service");
+const OtherService = require("./models/service");
+const RestaurantService = require("./models/service");
 const cors = require("cors");
 // const path = require('path');
 // const { URL } = require('url');
 
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
-app.use(express.static('img'));
-app.use('/img', express.static('img'))
+app.use(express.static("img"));
+app.use("/img", express.static("img"));
 app.use(errorHandler);
 app.use(cookieParser());
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+
 // const http = require("http").Server(app);
 /*
 const passport = require("passport");
@@ -65,17 +77,21 @@ inicializePassport(
   email =>users.find(user => user.email === email),
   id => users.find(user => user.id === id)
 );*/
-const storage = multer.diskStorage({
-  destination: 'img',
+
+/*const storagee = multer.diskStorage({
+  destination: "img",
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
-});
+});*/
+//const uploads = multer({ storagee }).single("img");
 
-const upload = multer({ storage }).single('img');
 
-app.put('/uploads/:id', (req, res) => {
-  upload(req, res, async (err) => {
+const uploads = multer({ dest: "img/" }).single("img");
+
+
+app.put("/upload/:id", (req, res) => {
+  uploads(req, res, async (err) => {
     if (err) {
       return res.status(500).json({ message: err.message });
     }
@@ -104,11 +120,235 @@ app.put('/uploads/:id', (req, res) => {
       // Save the updated salon document
       await salon.save();
 
-      // Delete the temporary file from the server
-      fs.unlinkSync(filePath);
-
       const updatedSalon = await CosmeticSalonService.findById(id);
       res.status(200).json(updatedSalon);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+});
+app.put("/uploads/other/:id", (req, res) => {
+  uploads(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ message: err.message });
+    }
+
+    try {
+      const { id } = req.params;
+      const other = await OtherService.findById(id);
+
+      if (!other) {
+        return res
+          .status(404)
+          .json({ message: `Other with id ${id} not found` });
+      }
+
+      // Read the uploaded image file
+      const filePath = `img/${req.file.filename}`;
+      const imgData = fs.readFileSync(filePath);
+      const imgContentType = req.file.mimetype;
+
+      // Update the img field in the salon document
+      other.img = {
+        data: imgData,
+        contentType: imgContentType,
+      };
+
+      // Save the updated salon document
+      await other.save();
+
+      const updatedOther = await OtherService.findById(id);
+      res.status(200).json(updatedOther);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+});
+app.put("/uploads/music/:id", (req, res) => {
+  uploads(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ message: err.message });
+    }
+
+    try {
+      const { id } = req.params;
+      const music = await Music.findById(id);
+
+      if (!music) {
+        return res
+          .status(404)
+          .json({ message: `Music with id ${id} not found` });
+      }
+
+      // Read the uploaded image file
+      const filePath = `img/${req.file.filename}`;
+      const imgData = fs.readFileSync(filePath);
+      const imgContentType = req.file.mimetype;
+
+      // Update the img field in the salon document
+      music.img = {
+        data: imgData,
+        contentType: imgContentType,
+      };
+
+      // Save the updated salon document
+      await music.save();
+
+      const updatedMusic = await Music.findById(id);
+      res.status(200).json(updatedMusic);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+});
+
+app.put("/uploads/danceLessons/:id", (req, res) => {
+  uploads(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ message: err.message });
+    }
+
+    try {
+      const { id } = req.params;
+      const dance = await DanceLessonsService.findById(id);
+
+      if (!dance) {
+        return res
+          .status(404)
+          .json({ message: `Dance with id ${id} not found` });
+      }
+
+      // Read the uploaded image file
+      const filePath = `img/${req.file.filename}`;
+      const imgData = fs.readFileSync(filePath);
+      const imgContentType = req.file.mimetype;
+
+      // Update the img field in the salon document
+      dance.img = {
+        data: imgData,
+        contentType: imgContentType,
+      };
+
+      // Save the updated salon document
+      await dance.save();
+
+
+
+      const updatedDance = await DanceLessonsService.findById(id);
+      res.status(200).json(updatedDance);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+});
+
+app.put("/uploads/decoration/:id", (req, res) => {
+  uploads(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ message: err.message });
+    }
+
+    try {
+      const { id } = req.params;
+      const decoration = await DecorationService.findById(id);
+
+      if (!decoration) {
+        return res
+          .status(404)
+          .json({ message: `Decoration with id ${id} not found` });
+      }
+
+      const filePath = `img/${req.file.filename}`;
+      const imgData = fs.readFileSync(filePath);
+      const imgContentType = req.file.mimetype;
+
+      decoration.img = {
+        data: imgData,
+        contentType: imgContentType,
+      };
+
+      await decoration.save();
+
+
+      const updatedDecoration = await DecorationService.findById(id);
+      res.status(200).json(updatedDecoration);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+});
+
+app.put("/uploads/cake/:id", (req, res) => {
+  uploads(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ message: err.message });
+    }
+
+    try {
+      const { id } = req.params;
+      const cake = await CakeService.findById(id);
+
+      if (!cake) {
+        return res
+          .status(404)
+          .json({ message: `Cake with id ${id} not found` });
+      }
+
+      // Read the uploaded image file
+      const filePath = `img/${req.file.filename}`;
+      const imgData = fs.readFileSync(filePath);
+      const imgContentType = req.file.mimetype;
+
+      // Update the img field in the salon document
+      cake.img = {
+        data: imgData,
+        contentType: imgContentType,
+      };
+
+      // Save the updated salon document
+      await cake.save();
+
+
+      const updatedCake = await CakeService.findById(id);
+      res.status(200).json(updatedCake);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+});
+app.put("/upload/restaurant/:id", (req, res) => {
+  uploads(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ message: err.message });
+    }
+
+    try {
+      const { id } = req.params;
+      const restaurant = await RestaurantService.findById(id);
+
+      if (!restaurant) {
+        return res
+          .status(404)
+          .json({ message: `Restaurant with id ${id} not found` });
+      }
+
+      // Read the uploaded image file
+      const filePath = `img/${req.file.filename}`;
+      const imgData = fs.readFileSync(filePath);
+      const imgContentType = req.file.mimetype;
+
+      // Update the img field in the salon document
+      restaurant.img = {
+        data: imgData,
+        contentType: imgContentType,
+      };
+
+      // Save the updated salon document
+      await restaurant.save();
+
+
+      const updatedRestaurant = await RestaurantService.findById(id);
+      res.status(200).json(updatedRestaurant);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -215,10 +455,13 @@ app.put("/jewleryStore/:id", JewelleryStoreController.put_jewellery);
 app.put("/music/:id", MusicController.put_music);
 //photoStudio
 app.put("/photoStudio/:id", PhotoStudioController.put_photo_studio);
+//other
+app.put("/other/:id", OtherController.put_other);
 //registrar
 app.put("/registrar/:id", RegistrarController.put_registrar);
 //restaurant
 app.put("/restaurant/:id", RestaurantController.put_restaurant);
+app.put("/other/:id", OtherController.put_other);
 //user
 app.put("/user/id/:id", UserController.put_user);
 // end update/put methods
@@ -279,11 +522,11 @@ app.delete("/user/:username", UserController.delete_user_by_username);
 app.delete("/user/id/:id", UserController.delete_user);
 app.get("/users/id/:id", UserController.get_user_by_id);
 //app.post("/user/picture", UserController.post_picture_for_user);
-/*app.put(
+app.put(
   "/users/:id/picture",
   upload.single("picture"),
   UserController.post_picture_for_user
-);*/
+);
 app.get("/user/email/:email", UserController.get_user_by_email);
 
 //user end
@@ -349,44 +592,43 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
-  
-  // http.createServer((req, res) => {
-  //   const request = new URL(req.url, `http://${req.headers.host}`);
-  //   const action = request.pathname;
-  
-  //   const filePath = path.join(__dirname, action);
-  
-  //   fs.exists(filePath, function (exists) {
-  //     if (!exists) {
-  //       res.writeHead(404, {
-  //         'Content-Type': 'text/plain'
-  //       });
-  //       res.end('404 Not Found');
-  //       return;
-  //     }
-  
-  //     const ext = path.extname(action);
-  
-  //     let contentType = 'text/plain';
-  
-  //     if (ext === '.png') {
-  //       contentType = 'image/png';
-  //     }
-  
-  //     res.writeHead(200, {
-  //       'Content-Type': contentType
-  //     });
-  
-  //     fs.readFile(filePath, function (err, content) {
-  //       if (err) {
-  //         res.writeHead(500);
-  //         res.end('Server Error');
-  //       } else {
-  //         res.end(content);
-  //       }
-  //     });
-  //   });
-  // }).listen(3000, '127.0.0.1', () => {
-  //   console.log(__dirname);
-  // });
-  
+
+// http.createServer((req, res) => {
+//   const request = new URL(req.url, `http://${req.headers.host}`);
+//   const action = request.pathname;
+
+//   const filePath = path.join(__dirname, action);
+
+//   fs.exists(filePath, function (exists) {
+//     if (!exists) {
+//       res.writeHead(404, {
+//         'Content-Type': 'text/plain'
+//       });
+//       res.end('404 Not Found');
+//       return;
+//     }
+
+//     const ext = path.extname(action);
+
+//     let contentType = 'text/plain';
+
+//     if (ext === '.png') {
+//       contentType = 'image/png';
+//     }
+
+//     res.writeHead(200, {
+//       'Content-Type': contentType
+//     });
+
+//     fs.readFile(filePath, function (err, content) {
+//       if (err) {
+//         res.writeHead(500);
+//         res.end('Server Error');
+//       } else {
+//         res.end(content);
+//       }
+//     });
+//   });
+// }).listen(3000, '127.0.0.1', () => {
+//   console.log(__dirname);
+// });

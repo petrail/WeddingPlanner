@@ -11,7 +11,9 @@ exports.post_salon = async (req, res) => {
 
 exports.get_all_salons = async (req, res) => {
   try {
-    const salon = await CosmeticSalonService.find({type : 'Kozmeticki saloni'});
+    const salon = await CosmeticSalonService.find({
+      type: "Kozmeticki salon",
+    });
     res.status(200).json(salon);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -47,3 +49,4 @@ exports.delete_cosmetic_salon = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+

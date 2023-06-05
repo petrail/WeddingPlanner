@@ -34,7 +34,8 @@ export default({
   display: flex;
 }
 .content{
-  margin-top: 10vh;
+  margin-top: 20vh;
+  margin-bottom: 5vh ;
   width:60%;
 }
 .photo{

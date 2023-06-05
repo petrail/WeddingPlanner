@@ -26,16 +26,30 @@ const get_all_users = async (req, res) => {
 const put_user = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findByIdAndUpdate(id, req.body);
+    const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ message: `User with id ${id} not found` });
     }
+
+    // Check if the request body contains the password field
+    if (req.body.password) {
+      // Encrypt the new password
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      req.body.password = hashedPassword;
+    }
+
+    // Update the user with the request body
+    await User.findByIdAndUpdate(id, req.body);
+
+    // Fetch the updated user
     const updatedUser = await User.findById(id);
+
     res.status(200).json(updatedUser);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 const delete_user = async (req, res) => {
   try {
@@ -111,20 +125,20 @@ const post_picture_for_user = async (req, res) => {
       return res.status(400).json({ error: "No file uploaded" });
     }
 
-    const userId = req.params.id; // Assuming you have a route parameter for the user ID
+    const userId = req.params.id;
     const user = await User.findById(userId);
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    console.log("buffer je: ");
-    console.log(req.file.buffer);
-    //user.picture = {};
-    user.picture.type = req.file.buffer;
-    //user.picture.contentType = req.file.mimetype;
+    // Access the file buffer from the multer upload
+    const pictureBuffer = req.file.buffer;
 
+    // Save the picture buffer to the user's picture field in the database
+    user.picture = pictureBuffer;
     await user.save();
+    const imageUrl = `http://localhost:3000/images/${req.file.filename}`;
 
     res.status(200).json({ message: "Picture updated successfully" });
   } catch (error) {
@@ -132,21 +146,6 @@ const post_picture_for_user = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
-/* const post_picture_for_user = async (req, res) => {
-  console.log("request is: ");
-  console.log(req);
-  console.log("file is: " + req.file);
-  const user = new User({
-    picture: {
-      data: req.file.buffer,
-      contentType: req.file.mimetype,
-    },
-  });
-
-  await user.save();
-  res.redirect("/user");
-}; */
 
 /*const createUserController = async(req, res) => {
   try {
