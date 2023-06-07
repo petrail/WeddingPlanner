@@ -9,16 +9,56 @@
             <h2 :class="open?'naslov veliki':'naslov'">
                 {{ pred.name }}
             </h2>   
-            <p class="detalji">
+            <p v-if="open && pred.subservice" class="detalji">
+                {{ pred.subservice }}
+            </p>
+            <p v-if="pred.store" class="detalji">
                 {{ pred.store }}
             </p>
             <p v-if="open" class="desc">
                 {{ pred.description }}
             </p>
+            
+            <div v-if="open && pred.menus" class="menuList">
+                <div v-for="(menu,index) in pred.menus" :key="index" class="menu">
+                    <h2 class="naslov">{{ menu.name }}</h2>
+                    <p class="naslov">{{ menu.price }}</p>
+                    <p class="detalji" v-for="(item,index) in menu.items" :key="index">
+                        {{ item.item_name }}
+                    </p>
+                </div>
+            </div>
+            
+            <p v-if="open" class="detalji">
+                <b>Lokacija: </b> {{ pred.location }}
+            </p>
+            <p v-if="open" class="detalji">
+                <b>Broj telefona: </b> {{ pred.phoneNumber }}
+            </p>
+            <p v-if="open && pred.color" class="detalji">
+                <b>Boja: </b> {{ pred.color }}
+            </p>
+            <p v-if="open && pred.size" class="detalji">
+                <b>Veličina: </b> {{ pred.size }}
+            </p>
+            <p v-if="open && pred.max_guest_number" class="detalji">
+                <b>Maksimalan broj gostiju: </b> {{ pred.max_guest_number }}
+            </p>
+            <a v-if="open && pred.link" :href="pred.link">{{ pred.link }}</a>
+
+            <p v-if="open && pred.servicePrice" class="naslov">
+                {{ pred.servicePrice.price }} dinara {{ pred.servicePrice.unit }}
+            </p>
             <!--dodatni podaci-->
         </div>
         <div v-if="open" class="desno">
             <div class="list_review">
+                <div class="review" v-if="added_review">
+                    <h2>{{ this.review.user }}</h2>
+                    <h4>{{ this.review.date }}</h4>
+                    <p>{{ this.review.comment }}</p>
+                    <h2>{{ this.review.grade }}</h2>
+                </div>
                 <div class="review" v-for="(review,index) in pred.reviews" :key="index">
                     <h2>{{ review.user }}</h2>
                     <h4>{{ review.date }}</h4>
@@ -26,21 +66,46 @@
                     <h2>{{ review.grade }}</h2>
                 </div>
             </div>
-            <div class="add_review">
+            <div class="add_review" v-if="can_review && !added_review">
                 <div class="starPos">
-                    <Stars></Stars>
+                    <Stars @grade="grade"></Stars>
                 </div>
-                <textarea class="review_area"></textarea>
+                <textarea v-model="review.comment" class="review_area"></textarea>
                 <button class="send_review" @click="add_review">
                     <img src="src/assets/send.png"/>
                 </button>
             </div>
+        </div>
+
+        <div class="extra" v-if="open">
+            <h2 class="naslov">Rezervišite</h2>
+            <label for="godina">Godina </label>
+            <select name="godina" v-model="godina">
+                <option v-for="i in 10" :key="i">
+                    {{ i+2022 }}
+                </option>
+            </select>
+            <label for="mesec">Mesec </label>
+            <select @change="this.select_month()" name="mesec" v-model="mesec">
+                <option v-for="i in 12" :key="i">
+                    {{ i<10? "0"+i:i }}
+                </option>
+            </select>
+            <label v-if="mesec!=0" for="dan">Dan </label>
+            <select v-if="mesec!=0" name="dan" v-model="dan">
+                <option v-for="i in this.br_dana" :key="i">
+                    {{ i<10? "0"+i:i }}
+                </option>
+            </select>
+            <button class="reserve_btn" @click="reserve">Rezervišite</button>
         </div>
 </div>
 </template>
   
   <script>
   import Stars from './Stars.vue';
+  import axios from 'axios';
+  import UserService from '../../Service.js'
   export default{
     name: "CategoryList",
     components:{
@@ -62,22 +127,61 @@
         open:{
             type:Boolean,
             default:false
+        },
+        can_review:{
+            type:Boolean,
+            default:true
         }
     },
     data(){
         return{
             localLiked:false,
-            review:null,
+            review:{
+                comment:'',
+                grade:0,
+                user:'', //Gde trenutnog user-a da uzmem?
+                date:'',
+            },
+            mesec:0,
+            dan:0,
+            godina:0,
+            br_dana:0,
+            added_review:false,
         }
     },
     mounted(){
-        if(this.open){
-            console.log(this.pred);
-        }
         this.localLiked=this.liked;
         this.locPred = this.pred;
+        //this.added_review = ! username in pred.reviews - ne znam gde da nadjem username
+    },
+    watch: { 
+        open: function(newVal, oldVal) { // watch it
+          if(newVal && !oldVal){
+            console.log("CHANGE");
+            this.canReview();
+          }
+        }
     },
     methods:{
+        async canReview(){
+            try{
+                const token = localStorage.getItem('token')
+                const users = await UserService.getUsers(token)
+                let user = '';
+                if (users.length > 0) {
+                    user = users[0].name
+                }
+                this.pred.reviews.forEach(r=>{
+                    if(r.name == user){
+                        this.added_review=true;
+                        return;
+                    }
+                })
+            }
+            catch(error){
+                console.log(error);
+            }
+        },
         like(){
             this.localLiked=!this.localLiked;
             if(this.localLiked)
@@ -85,14 +189,45 @@
             else
                 this.$emit('remove',this.pred.id);
         },
+        select_month(){
+            switch(this.mesec){
+                case "01":case "03":case "05":case "07":case "08":case "10": case "12":
+                    this.br_dana=31;
+                    break;
+                case "04":case "06":case "09": case "11":
+                    this.br_dana=30;
+                    break;
+                case "02":
+                    if((godina%100!=0 && godina%4==0) || godina%400==0)
+                        this.br_dana=29
+                    else
+                        this.br_dana=28;
+                    break;
+            }
+        },
         otvori(){
             this.$emit('open',this.pred);
         },
         close(){
             this.$emit('close');
         },
+        grade(g){
+            this.review.grade=g;
+        },
+        reserve(){
+            console.log("TREBA DA SE UBACI!");
+        },
         add_review(){
-            this.$emit('review',this.pred.id,this.review);
+            //this.review.user = user?
+            let date = new Date();
+            let today = date.getDate();
+            if (today<10) today = "0"+today;
+            let month = date.getMonth()+1;
+            if (month<10) month = "0"+month;
+            let year = date.getFullYear();
+            this.review.date = today + "." + month + "." + year;
+            this.$emit('review',this.pred._id,this.review);
+            this.added_review=true;
         }
     },
     computed:{
@@ -109,6 +244,43 @@
   </script>
   
 <style scoped>
+.extra{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+}
+label{
+    color:var(--font-dark);
+    margin-right:1vw;
+}
+.reserve_btn{
+    max-width: 150px !important;
+    border-radius: 0.5vw !important;
+}
+select{
+    max-width:150px;
+    background-color: var(--light-pink);
+    border:0;
+    margin-bottom:1vh;
+    padding:.5vw;
+    border-radius: 0.5vw !important;
+}
+.menuList{
+    margin-top:1vh;
+    margin-bottom: 1vh;
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    max-height: 50vh;
+    overflow-y: scroll;
+}
+.menu{
+    width:100%;
+    border:1px solid var(--dark-purple);
+    border-radius:0.5vw;
+    margin-bottom: 1vh;
+    padding:1vw;
+}
 .starPos{
     position: absolute;
     top:-24px !important;
@@ -146,7 +318,6 @@ h2,h4,p{
     background: transparent;
     display:flex;
     justify-content: center;
-    box-shadow: 15px 50px 21px rgba(0, 0, 0, 0.01), 9px 28px 18px rgba(0, 0, 0, 0.03), 4px 12px 13px rgba(0, 0, 0, 0.04), 1px 3px 7px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05);
 }
 .veliki{
     font-size:max(2vw,16pt) !important;
@@ -167,6 +338,7 @@ h2,h4,p{
     justify-content: flex-start !important;
     padding:4vw !important;
     flex-direction: row !important;
+    flex-wrap: wrap;
     overflow-y:auto;
 }
 .review{
@@ -186,6 +358,9 @@ h2,h4,p{
     width:48%;
     margin-left: 2%;
     height:100%;
+}
+.levo, .desno{
+    margin-bottom:4vh;
 }
 @media (width<1000px) {
     .openImg{
@@ -239,6 +414,7 @@ h2,h4,p{
 .detalji{
     text-overflow:ellipsis;
     color:var(--dark-purple);
+    margin-top:1vh;
 }
   .opis{
     position: relative;
@@ -249,20 +425,20 @@ h2,h4,p{
     bottom:0;
     left:0;
     width:100%;
-    height: 100%;
+    height: 60%;
     color:white;
     background-color: var(--white-pink);
   }
   .slika{
     width:100%;
-    height: 100%;
+    height: 40%;
     background-size: cover;
     background-position: center center;
   }
 
   @media (width<1000px){
       .srce, .close, .reserved{
-        height:6vw;
+        height:4vw;
       }
       .reserved{
         height:4.5vw;

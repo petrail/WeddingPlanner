@@ -426,8 +426,8 @@ app.get("/users", UserController.get_all_users);
 //service
 app.get("/service/get_display/:type", ServiceController.get_services_display);
 app.get("/service/get_service_by_id/:id", ServiceController.get_service_by_id);
-app.get("/service/add_service_review", ServiceController.add_service_review);
-app.get("/service/add_reserve_date", ServiceController.add_reserve_date);
+app.put("/service/add_service_review", ServiceController.add_service_review);
+app.put("/service/add_reserve_date", ServiceController.add_reserve_date);
 //end service
 
 //----------------------------------------------------------------------------------------------------------------------------

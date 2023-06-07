@@ -6,14 +6,16 @@
     </div>
     <div v-if="itemOpen!=null" class="dark">
         <div class="openCard">
-            <CategoryListItem open @close="closeItem" @add="addToLiked" @remove="removeFromLiked" :liked="isLiked(itemOpen)" :reserved="isReserved(itemOpen)" :pred="itemOpen"/>
+            <CategoryListItem :can_review="can_review" @review="review" open @close="closeItem" @add="addToLiked" @remove="removeFromLiked" :liked="isLiked(itemOpen)" :reserved="isReserved(itemOpen)" :pred="itemOpen"/>
         </div>
     </div>
 </template>
   
   <script>
+import { toHandlers } from 'vue';
 import CategoryListItem from './CategoryListItem.vue';
 import axios from 'axios';
+import UserService from '../../Service.js'
   export default{
     name: "CategoryList",
     components:{
@@ -35,6 +37,7 @@ import axios from 'axios';
     data(){
         return{
             itemOpen:null,
+            can_review: true,
         }
     },
     mounted() {
@@ -66,8 +69,21 @@ import axios from 'axios';
         },
         async open(pred){
             try{
+                const token = localStorage.getItem('token')
+                const users = await UserService.getUsers(token)
+                let user='';
+                if (users.length > 0) {
+                    user = users[0].name
+                }
                 this.itemOpen = await axios.get('http://localhost:3000/service/get_service_by_id/'+pred._id);
                 this.itemOpen = this.itemOpen.data;
+                this.can_review=true;
+                this.itemOpen.reviews.forEach(r=>{
+                    if(r.user==user){
+                        this.can_review=false;
+                        return;
+                    }
+                });
             }
             catch(error){
                 console.log(error);
@@ -79,6 +95,23 @@ import axios from 'axios';
         isReserved(pred){
             if(this.reserved==null) return false;
             return this.reserved.includes(pred.id);
+        },
+        async review(id,rev){
+            try{
+                const token = localStorage.getItem('token')
+                const users = await UserService.getUsers(token)
+                if (users.length > 0) {
+                    rev.user = users[0].name
+                }
+                let body={
+                    _id: id,
+                    review:rev,
+                }
+                await axios.put('http://localhost:3000/service/add_service_review', body);
+            }
+            catch(error){
+                console.log(error);
+            }
         }
     }
 };
