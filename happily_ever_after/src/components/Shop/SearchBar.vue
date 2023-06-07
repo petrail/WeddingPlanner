@@ -6,10 +6,30 @@
   </template>
   
   <script>
-  export default{
-      name: "SearchBar",
-      
-      
+  export default {
+    name: "SearchBar",
+    data() {
+      return {
+        searchQuery: "",
+        searchResults: []
+      };
+    },
+    methods: {
+      async handleInput() {
+        // try {
+        //   const response = await fetch(`/service/search/${this.searchQuery}`);
+        //   if (response.ok) {
+        //     const services = await response.json();
+        //     console.log(result.name);
+        //     this.searchResults = services; // Assuming the server returns an array of service objects
+        //   } else {
+        //     this.searchResults = [];
+        //   }
+        // } catch (error) {
+        //   console.error(error);
+        // }
+      }
+    }
   };
   </script>
   

@@ -28,7 +28,9 @@
     </div>
     <div class="main">
       <div class="filter"><CategoryFilter/></div> 
-      <div class="list"><CategoryList :predmeti="this.predmeti.data" :liked="this.liked" :reserved="this.reserved"/></div>
+      <div class="list"> 
+        <CategoryList :predmeti="this.predmeti.data" :liked="this.liked" :reserved="this.reserved"/>
+      </div>
     </div>
   </div>
   </div>
@@ -48,7 +50,7 @@ import Footer from '../components/Footer.vue';
 export default({
   name:"ShopMainView",
   components:{
-    TopBar, Gallery, SearchBar, CategoryFilter,CategoryList, Footer
+    TopBar, Gallery, SearchBar, CategoryFilter, CategoryList, Footer
   },
   data(){
     return{
