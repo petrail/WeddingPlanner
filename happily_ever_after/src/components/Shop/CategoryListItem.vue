@@ -18,17 +18,10 @@
             <p v-if="open" class="desc">
                 {{ pred.description }}
             </p>
-            
-            <div v-if="open && pred.menus" class="menuList">
-                <div v-for="(menu,index) in pred.menus" :key="index" class="menu">
-                    <h2 class="naslov">{{ menu.name }}</h2>
-                    <p class="naslov">{{ menu.price }}</p>
-                    <p class="detalji" v-for="(item,index) in menu.items" :key="index">
-                        {{ item.item_name }}
-                    </p>
-                </div>
-            </div>
-            
+
+             <p v-if="open && pred.servicePrice" class="naslov">
+                {{ pred.servicePrice.price }} dinara {{ pred.servicePrice.unit }}
+            </p>             
             <p v-if="open" class="detalji">
                 <b>Lokacija: </b> {{ pred.location }}
             </p>
@@ -46,9 +39,38 @@
             </p>
             <a v-if="open && pred.link" :href="pred.link">{{ pred.link }}</a>
 
-            <p v-if="open && pred.servicePrice" class="naslov">
-                {{ pred.servicePrice.price }} dinara {{ pred.servicePrice.unit }}
-            </p>
+        <div class="extra" v-if="open">
+            <h2 class="naslov">Rezervišite</h2>
+            <label for="godina">Godina </label>
+            <select name="godina" v-model="godina">
+                <option v-for="i in 10" :key="i">
+                    {{ i+2022 }}
+                </option>
+            </select>
+            <label for="mesec">Mesec </label>
+            <select @change="this.select_month()" name="mesec" v-model="mesec">
+                <option v-for="i in 12" :key="i">
+                    {{ i<10? "0"+i:i }}
+                </option>
+            </select>
+            <label v-if="mesec!=0" for="dan">Dan </label>
+            <select v-if="mesec!=0" name="dan" v-model="dan">
+                <option v-for="i in this.br_dana" :key="i">
+                    {{ i<10? "0"+i:i }}
+                </option>
+            </select>
+            <button class="reserve_btn" @click="reserve">Rezervišite</button>
+        </div> 
+
+            <div v-if="open && pred.menus" class="menuList">
+                <div v-for="(menu,index) in pred.menus" :key="index" class="menu">
+                    <h2 class="naslov">{{ menu.name }}</h2>
+                    <p class="naslov">{{ menu.price }}</p>
+                    <p class="detalji" v-for="(item,index) in menu.items" :key="index">
+                        {{ item.item_name }}
+                    </p>
+                </div>
+            </div>
             <!--dodatni podaci-->
         </div>
         <div v-if="open" class="desno">
@@ -77,28 +99,6 @@
             </div>
         </div>
 
-        <div class="extra" v-if="open">
-            <h2 class="naslov">Rezervišite</h2>
-            <label for="godina">Godina </label>
-            <select name="godina" v-model="godina">
-                <option v-for="i in 10" :key="i">
-                    {{ i+2022 }}
-                </option>
-            </select>
-            <label for="mesec">Mesec </label>
-            <select @change="this.select_month()" name="mesec" v-model="mesec">
-                <option v-for="i in 12" :key="i">
-                    {{ i<10? "0"+i:i }}
-                </option>
-            </select>
-            <label v-if="mesec!=0" for="dan">Dan </label>
-            <select v-if="mesec!=0" name="dan" v-model="dan">
-                <option v-for="i in this.br_dana" :key="i">
-                    {{ i<10? "0"+i:i }}
-                </option>
-            </select>
-            <button class="reserve_btn" @click="reserve">Rezervišite</button>
-        </div>
 </div>
 </template>
   
@@ -416,6 +416,7 @@ h2,h4,p{
     color:var(--dark-purple);
     margin-top:1vh;
 }
+
   .opis{
     position: relative;
     display:flex;
