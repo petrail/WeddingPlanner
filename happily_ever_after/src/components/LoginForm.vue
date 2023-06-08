@@ -41,7 +41,8 @@ export default {
       result: {},
       user: {
         password: '',
-        email: ''
+        email: '',
+        userType: ''
       },
       error:false,
     }
@@ -62,14 +63,58 @@ export default {
           console.log(response.data)
           const data = response.data // Access the data from the response
           localStorage.setItem('token', data)
-          // Redirect to the desired page after successful login
-          this.$router.push('/shopmain')
+
+          // Fetch user type based on email
+          const token = localStorage.getItem('token')
+          axios
+            .get('http://localhost:3000/user/email/' + token)
+            .then((response) => {
+              console.log('Response from axios')
+              console.log(response)
+              console.log(response.data[0].userType)
+
+              const userType = response.data[0].userType
+              console.log(userType)
+              // Use userType in further logic
+              // For example, use if-else statements to determine redirection based on userType
+
+              if (userType === 'Koordinator') {
+                this.$router.push('/chat')
+              } else if (userType === 'Admin') {
+                this.$router.push('/shopcontact')
+              } else {
+                this.$router.push('/shopmain')
+              }
+            })
+            .catch((error) => {
+              console.log('Error:', error.response.data)
+            })
         })
         .catch((error) => {
           this.error=true;
           console.log('Error:', error.response.data)
         })
     }
+
+    /*login() {
+      axios
+        .post('http://localhost:3000/user/login', this.user)
+        .then((response) => {
+          console.log(response)
+          console.log(response.data)
+          const data = response.data // Access the data from the response
+          localStorage.setItem('token', data)
+          // Redirect to the desired page after successful login
+          if (this.user.email === 'andjela@gmail.com') {
+            this.$router.push('/chat')
+          } else {
+            this.$router.push('/shopmain')
+          }
+        })
+        .catch((error) => {
+          console.log('Error:', error.response.data)
+        })
+    }*/
   }
 }
 </script>

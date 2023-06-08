@@ -7,6 +7,10 @@ const userSchema = mongose.Schema(
       type: String,
       required: [true, "Unesite ime"],
     },
+    userType: {
+      type: String,
+      enum: ["Admin", "Koordinator"],
+    },
     username: {
       type: String,
       required: [true, "Unesite korisnicko ime"],
@@ -23,9 +27,8 @@ const userSchema = mongose.Schema(
     picture: {
       type: Buffer,
       contentType: String,
-
     },
-    usluge :{type:[Object]}
+    usluge: { type: [Object] },
   },
   {
     timestamps: true,

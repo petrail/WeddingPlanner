@@ -586,7 +586,7 @@ mongoose
   .then(() => {
     console.log("Connected");
     app.listen(3000, () => {
-      console.log("App is running");
+      console.log("is running");
     });
   })
   .catch((error) => {
