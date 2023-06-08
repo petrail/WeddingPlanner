@@ -61,7 +61,17 @@ exports.add_reserve_date = async (req, res) => {
         .status(404)
         .json({ message: `Service with id ${id} not found` });
     }
-    service.reserved_dates.push(req.body.reserved_date);
+    service.reserved_dates.forEach(r=>{
+      if(r.date==req.body.reserved_date){
+        return res
+        .status(404)
+        .json({ message: `Date taken!` });
+      }
+    })
+    let d = {
+      date: req.body.reserved_date
+    }
+    service.reserved_dates.push(d);
     await Service.findByIdAndUpdate(req.body._id, service);
     const updated = await Service.findById(req.body._id);
     res.status(200).json(updated);

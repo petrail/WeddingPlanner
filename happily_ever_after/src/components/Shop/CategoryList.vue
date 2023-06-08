@@ -6,7 +6,16 @@
     </div>
     <div v-if="itemOpen!=null" class="dark">
         <div class="openCard">
-            <CategoryListItem :can_review="can_review" @review="review" open @close="closeItem" @add="addToLiked" @remove="removeFromLiked" :liked="isLiked(itemOpen)" :reserved="isReserved(itemOpen)" :pred="itemOpen"/>
+            <CategoryListItem :can_review="can_review" 
+                              @review="review" open
+                              @reserve="reserve" 
+                              @close="closeItem" 
+                              @add="addToLiked" 
+                              @remove="removeFromLiked" 
+                              :liked="isLiked(itemOpen)" 
+                              :reserved="isReserved(itemOpen)" 
+                              :pred="itemOpen"
+                              :date_taken="date_taken"/>
         </div>
     </div>
 </template>
@@ -38,6 +47,7 @@ import UserService from '../../Service.js'
         return{
             itemOpen:null,
             can_review: true,
+            date_taken:false,
         }
     },
     mounted() {
@@ -95,6 +105,25 @@ import UserService from '../../Service.js'
         isReserved(pred){
             if(this.reserved==null) return false;
             return this.reserved.includes(pred.id);
+        },
+        async reserve(id,date){
+            try{
+                const token = localStorage.getItem('token')
+                const users = await UserService.getUsers(token)
+                let user=''
+                if (users.length > 0) {
+                    user = users[0]._id;
+                }
+                let body={
+                    _id: id,
+                    reserved_date:date,
+                }
+                await axios.put('http://localhost:3000/service/add_reserve_date', body);
+            }
+            catch(error){
+                this.date_taken=true;
+                console.log(error);
+            }
         },
         async review(id,rev){
             try{

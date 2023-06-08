@@ -4,10 +4,11 @@
     <p>Unesite korisničko ime i šifru</p>
     <form @submit.prevent="login">
       <div class="form-group">
-        <input placeholder="Email" type="email" name="username" v-model="user.email" required />
+        <input @change = "remove_error()" placeholder="Email" type="email" name="username" v-model="user.email" required />
       </div>
       <div class="form-group">
         <input
+          @change = "remove_error()"
           placeholder="Šifra"
           type="password"
           name="password"
@@ -15,6 +16,7 @@
           required
         />
       </div>
+      <p class="warning" v-if="error">Greška pri logovanju!</p>
       <button @click="login()">Prijavite se</button>
       <div class="form-group">
         <div class="left">
@@ -40,7 +42,8 @@ export default {
       user: {
         password: '',
         email: ''
-      }
+      },
+      error:false,
     }
   },
   created() {},
@@ -48,6 +51,9 @@ export default {
     console.log('mounted() called...')
   },
   methods: {
+    remove_error(){
+      this.error=false;
+    },
     login() {
       axios
         .post('http://localhost:3000/user/login', this.user)
@@ -60,6 +66,7 @@ export default {
           this.$router.push('/shopmain')
         })
         .catch((error) => {
+          this.error=true;
           console.log('Error:', error.response.data)
         })
     }
@@ -68,6 +75,12 @@ export default {
 </script>
 
 <style scoped>
+.warning{
+  color:var(--light-red);
+  font-size: max(1vw,12pt);
+  font-weight: bold;
+  margin-top:0;
+}
 .login-page {
   display: flex;
   flex-direction: column;

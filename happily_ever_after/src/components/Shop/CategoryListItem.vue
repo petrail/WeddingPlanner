@@ -59,6 +59,7 @@
                     {{ i<10? "0"+i:i }}
                 </option>
             </select>
+            <p v-if="date_taken">Datum zauzet!</p>
             <button class="reserve_btn" @click="reserve">Rezervišite</button>
         </div> 
 
@@ -124,6 +125,10 @@
             type:Boolean,
             default:false
         },
+        date_taken:{
+            type:Boolean,
+            default:false
+        },
         open:{
             type:Boolean,
             default:false
@@ -154,34 +159,7 @@
         this.locPred = this.pred;
         //this.added_review = ! username in pred.reviews - ne znam gde da nadjem username
     },
-    watch: { 
-        open: function(newVal, oldVal) { // watch it
-          if(newVal && !oldVal){
-            console.log("CHANGE");
-            this.canReview();
-          }
-        }
-    },
     methods:{
-        async canReview(){
-            try{
-                const token = localStorage.getItem('token')
-                const users = await UserService.getUsers(token)
-                let user = '';
-                if (users.length > 0) {
-                    user = users[0].name
-                }
-                this.pred.reviews.forEach(r=>{
-                    if(r.name == user){
-                        this.added_review=true;
-                        return;
-                    }
-                })
-            }
-            catch(error){
-                console.log(error);
-            }
-        },
         like(){
             this.localLiked=!this.localLiked;
             if(this.localLiked)
@@ -198,7 +176,7 @@
                     this.br_dana=30;
                     break;
                 case "02":
-                    if((godina%100!=0 && godina%4==0) || godina%400==0)
+                    if((this.godina%100!=0 && this.godina%4==0) || this.godina%400==0)
                         this.br_dana=29
                     else
                         this.br_dana=28;
@@ -215,7 +193,11 @@
             this.review.grade=g;
         },
         reserve(){
-            console.log("TREBA DA SE UBACI!");
+            let today = this.dan;
+            let month = this.mesec;
+            let year = this.godina
+            let date = today + "." + month + "." + year;
+            this.$emit('reserve', this.pred._id, date);
         },
         add_review(){
             //this.review.user = user?
@@ -238,7 +220,7 @@
                 return 'src/assets/not-liked.png'
         }
     },
-    emits:['add','remove','open','close','review'],
+    emits:['add','remove','open','close','review','reserve'],
       
   };
   </script>
