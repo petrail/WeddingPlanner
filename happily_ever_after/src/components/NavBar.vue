@@ -89,8 +89,7 @@ export default{
     },
     methods: {
         logout(){
-            console.log("HEJ");
-            //Ovde logika za brisanje login cookie-a
+            localStorage.removeItem('token');
             this.$router.push('/');
         },
         onScreenResize() {

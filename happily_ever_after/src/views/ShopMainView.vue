@@ -227,6 +227,7 @@ h2{
   margin-bottom: 5vh;
 }
 .link{
+  width:100%;
   font-size:min(5vw,17pt);
   color:var(--font-dark);
   border:0;
@@ -235,7 +236,7 @@ h2{
   padding:.5vw;
   display:flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .link:hover{
     color:var(--font-dark); 

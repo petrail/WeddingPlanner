@@ -60,7 +60,7 @@
                 </option>
             </select>
             <p v-if="tried_reserve && date_taken">Datum zauzet!</p>
-            <p v-if="tried_reserve && !date_taken">Datum zauzet!</p>
+            <p v-if="tried_reserve && !date_taken">Rezervisano!</p>
             <button class="reserve_btn" @click="reserve">Rezervišite</button>
         </div> 
 

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router'
 import App from '../App.vue'
 import AboutUsView from '../views/AboutUsView.vue'
 import ServiceView from '../views/ServiceView.vue'
@@ -18,58 +19,124 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      beforeEnter:(to,from,next)=>{
+        if(localStorage.getItem('token'))
+           router.push('/shopmain');
+        else
+          next()
+      }
     },
     {
       path: '/about',
       name: 'about',
-      component: AboutUsView
+      component: AboutUsView,
+      beforeEnter:(to,from,next)=>{
+        if(localStorage.getItem('token'))
+           router.push('/shopmain');
+        else
+          next()
+      }
     },
     {
       path: '/services',
       name: 'services',
-      component: ServiceView
+      component: ServiceView,
+      beforeEnter:(to,from,next)=>{
+        if(localStorage.getItem('token'))
+           router.push('/shopmain');
+        else
+          next()
+      }
     },
     {
       path: '/contact',
       name: 'contact',
-      component: ContactView
+      component: ContactView,
+      beforeEnter:(to,from,next)=>{
+        if(localStorage.getItem('token'))
+           router.push('/shopmain');
+        else
+          next()
+      }
     },
     {
       path: '/login',
       name: 'login',
       component: LoginView,
+      beforeEnter:(to,from,next)=>{
+        if(localStorage.getItem('token'))
+           router.push('/shopmain');
+        else
+          next()
+      }
     }
     ,
     {
       path: '/register',
       name: 'register',
       component: RegisterView,
+      beforeEnter:(to,from,next)=>{
+        if(localStorage.getItem('token'))
+           router.push('/shopmain');
+        else
+          next()
+      }
     },
     {
       path: '/shopmain',
       name: 'shopmain',
-      component: ShopMainView
+      component: ShopMainView,
+      beforeEnter:(to, from, next)=>{
+        if(localStorage.getItem('token'))
+          next();
+        else
+        router.push('/');
+      }
     },
     {
       path: '/account',
       name: 'account',
-      component: AccountView
+      component: AccountView,
+      beforeEnter:(to, from, next)=>{
+        if(localStorage.getItem('token'))
+          next();
+        else
+        router.push('/');
+      }
     },
     {
       path: '/cart',
       name: 'cart',
-      component: CartView
+      component: CartView,
+      beforeEnter:(to, from, next)=>{
+        if(localStorage.getItem('token'))
+          next();
+        else
+        router.push('/');
+      }
     },
     {
       path: '/shopcontact',
       name: 'shopcontact',
-      component: ShopContactView
+      component: ShopContactView,
+      beforeEnter:(to, from, next)=>{
+        if(localStorage.getItem('token'))
+          next();
+        else
+        router.push('/');
+      }
     },
     {
       path: '/chat',
       name: 'chat',
-      component: ChatView
+      component: ChatView,
+      beforeEnter:(to, from, next)=>{
+        if(localStorage.getItem('token'))
+          next();
+        else
+        router.push('/');
+      }
     },
   ]
 })
