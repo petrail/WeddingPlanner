@@ -61,13 +61,19 @@ exports.add_reserve_date = async (req, res) => {
         .status(404)
         .json({ message: `Service with id ${id} not found` });
     }
+
+    let date_taken= false;
     service.reserved_dates.forEach(r=>{
       if(r.date==req.body.reserved_date){
-        return res
+        date_taken=true;
+      }
+    });
+    if(date_taken){
+      return res
         .status(404)
         .json({ message: `Date taken!` });
-      }
-    })
+    }
+
     let d = {
       date: req.body.reserved_date
     }

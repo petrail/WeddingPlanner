@@ -110,7 +110,7 @@ import UserService from '../../Service.js'
             try{
                 const token = localStorage.getItem('token')
                 const users = await UserService.getUsers(token)
-                let user=''
+                let user='';
                 if (users.length > 0) {
                     user = users[0]._id;
                 }
@@ -119,6 +119,7 @@ import UserService from '../../Service.js'
                     reserved_date:date,
                 }
                 await axios.put('http://localhost:3000/service/add_reserve_date', body);
+                this.date_taken=false;
             }
             catch(error){
                 this.date_taken=true;

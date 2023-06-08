@@ -59,7 +59,8 @@
                     {{ i<10? "0"+i:i }}
                 </option>
             </select>
-            <p v-if="date_taken">Datum zauzet!</p>
+            <p v-if="tried_reserve && date_taken">Datum zauzet!</p>
+            <p v-if="tried_reserve && !date_taken">Datum zauzet!</p>
             <button class="reserve_btn" @click="reserve">Rezervišite</button>
         </div> 
 
@@ -152,6 +153,7 @@
             godina:0,
             br_dana:0,
             added_review:false,
+            tried_reserve:false,
         }
     },
     mounted(){
@@ -197,6 +199,7 @@
             let month = this.mesec;
             let year = this.godina
             let date = today + "." + month + "." + year;
+            this.tried_reserve = true;
             this.$emit('reserve', this.pred._id, date);
         },
         add_review(){
@@ -237,6 +240,7 @@ label{
 }
 .reserve_btn{
     max-width: 150px !important;
+    min-width: 150px !important;
     border-radius: 0.5vw !important;
 }
 select{
