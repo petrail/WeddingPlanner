@@ -19,9 +19,25 @@ exports.get_services_display = async (req, res) => {
   }
 };
 
+exports.get_all_subcategories = async (req, res) => {
+  try {
+    const { type } = req.body;
+    const service = await Service.find({ type: type });
+    let to_return = [];
+    service.forEach((item) => {
+      if(!to_return.includes(item.subservice))
+          to_return.push(item.subservice);
+    });
+    res.status(200).json(to_return);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.get_service_filtered = async (req, res) => {
   try {
-    const { name, minPrice, maxPrice, type, subservice, startIndex, count } = req.query;
+    const { name, minPrice, maxPrice, type, subservice, startIndex, count, sort } = req.body;
 
     // Constructing the filter object
     const filter = {};
@@ -29,11 +45,11 @@ exports.get_service_filtered = async (req, res) => {
       filter.name = { $regex: name, $options: 'i' }; // Case-insensitive name search
     }
     if (minPrice && maxPrice) {
-      filter.price = { $gte: minPrice, $lte: maxPrice };
+      filter['servicePrice.price'] = { $gte: minPrice, $lte: maxPrice };
     } else if (minPrice) {
-      filter.price = { $gte: minPrice };
+      filter['servicePrice.price'] = { $gte: minPrice };
     } else if (maxPrice) {
-      filter.price = { $lte: maxPrice };
+      filter['servicePrice.price'] = { $lte: maxPrice };
     }
     if (type) {
       filter.type = type;
@@ -41,10 +57,28 @@ exports.get_service_filtered = async (req, res) => {
     if (subservice) {
       filter.subservice = subservice;
     }
+    const sortOpt={};
+    if(sort==='asc'){
+      sortOpt['servicePrice.price'] = 1;
+    }
+    else if(sort=='desc'){
+      sortOpt['servicePrice.price']=-1;
+    }
     const items = await Service.find(filter)
+      .sort(sortOpt)
       .skip(Number(startIndex))
       .limit(Number(count));
-    res.json(items);
+    let to_return = [];
+    items.forEach((item) => {
+      to_return.push({
+        _id: item._id,
+        name: item.name,
+        img: item.img,
+        store: item.store,
+        price: item.servicePrice
+      });
+    });
+    res.status(200).json(to_return);
   } catch (error) {
     res.status(500).json({ error: 'An error occurred while fetching items.' });
   }
