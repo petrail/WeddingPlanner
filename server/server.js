@@ -435,6 +435,7 @@ app.get("/user", async (req, res) => {
 app.get("/service/get_display/:type", ServiceController.get_services_display);
 app.get("/service/get_service_by_id/:id", ServiceController.get_service_by_id);
 app.put("/service/add_service_review", ServiceController.add_service_review);
+app.put("/service/get_service_filtered", ServiceController.get_service_filtered);
 app.put("/service/add_reserve_date", ServiceController.add_reserve_date);
 //end service
 
