@@ -73,18 +73,15 @@ export default {
               console.log(response)
               console.log(response.data[0].userType)
 
-              const userType = response.data[0].userType
-              console.log(userType)
+             // const userType = response.data[0].userType
+              localStorage.setItem('isCoord',response.data[0].userType!=undefined)
+              console.log(response.data[0].userType)
               // Use userType in further logic
               // For example, use if-else statements to determine redirection based on userType
 
-              if (userType === 'Koordinator') {
-                this.$router.push('/chat')
-              } else if (userType === 'Admin') {
-                this.$router.push('/shopcontact')
-              } else {
-                this.$router.push('/shopmain')
-              }
+              
+              this.$router.push('/shopmain')
+              
             })
             .catch((error) => {
               console.log('Error:', error.response.data)

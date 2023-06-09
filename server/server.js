@@ -422,6 +422,14 @@ app.get("/registrar", RegistrarController.get_all_registrars);
 app.get("/restaurant", RestaurantController.get_all_restaurants);
 //user
 app.get("/users", UserController.get_all_users);
+app.get("/user", async (req, res) => {
+  try {
+    const user = await User.find({});
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 // end get all methods
 //service
 app.get("/service/get_display/:type", ServiceController.get_services_display);
@@ -532,6 +540,33 @@ app.get("/user/email/:email", UserController.get_user_by_email);
 //user end
 //end additional methods
 //----------------------------------------------------------------------------------------------------------------------------
+app.get( "/search/filter/:price", async (req, res) => {
+  const { price } = req.params;
+
+  try {
+    const filteredServices = await Service.find({ 'servicePrice.price': { $lte: parseInt(price) } });
+    res.json(filteredServices);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while fetching the services.' });
+  }
+})
+app.get("/user/logout", async(req, res) => {
+  res.cookie('jwt', '', { maxAge: 1 });
+  res.redirect('/');
+});
+app.get("/search/:key",async (req,resp)=>{
+    let data = await Service.find(
+        {
+            "$or":[
+                {name:{$regex:req.params.key}},
+                {store:{$regex:req.params.key}}
+            ]
+        }
+    )
+    resp.send(data);
+
+})
 
 //app.post('/user/login', UserController.loginUser)
 

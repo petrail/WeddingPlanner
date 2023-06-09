@@ -2,6 +2,8 @@ import axios from 'axios'
 
 const url = 'http://localhost:3000/user/email/'
 const url1 = 'http://localhost:3000/user/id/'
+const url2 = 'http://localhost:3000/user/'
+const url3 = 'http://localhost:3000/user/'
 
 class UserService {
   static async getUsers(token) {
@@ -31,6 +33,45 @@ class UserService {
       throw new Error(error)
     }
   }
+  static getAllUsers() {
+    return new Promise(async(resolve, reject) =>
+    {
+        try {
+            const res = await axios.get(url2);
+            const data = res.data;
+            resolve(
+                data.map(post => ({
+                    ...post,
+                    _id: post._id,
+                    name: post.name,
+                    username: post.username,
+                    password: post.password,
+                    email: post.email,
+                    picture: post.picture,                   
+                }))
+            );
+        } catch (error) {
+            reject(error);
+            
+        }
+    })
+  }
+  async created() {
+    try {
+        this.posts = await UserService.getAllUsers()
+    } catch (error) {
+        
+    }
+}
+static async deleteUser(userId) {
+  try {
+    const response = await axios.delete(url3 + userId);
+    return response.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 }
 
 export default UserService

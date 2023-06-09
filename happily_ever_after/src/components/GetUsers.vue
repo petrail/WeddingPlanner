@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Service from '../Service';
+/*import Service from '../Service';
 
 export default {
     name: 'Service',
@@ -40,7 +40,7 @@ export default {
         }
     }
 }
-</script>
+</script>*/
 
 <style scoped>
  div.container {

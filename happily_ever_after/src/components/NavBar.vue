@@ -32,6 +32,8 @@
                 <li><router-link to="/cart">Korpa</router-link></li>
                 <li><router-link to="/chat">Poruke</router-link></li>
                 <li><router-link to="/shopcontact">Kontakt</router-link></li>
+                <li><router-link v-if="visible" to="/adminPage">Admin</router-link></li>
+                
             </ul>
             <!--DROPDOWN MENU-->
 
@@ -40,6 +42,8 @@
                 <li><router-link to="/about">O nama</router-link></li>
                 <li><router-link to="/services">Usluge</router-link></li>
                 <li><router-link to="/contact">Kontakt</router-link></li>
+                <li><router-link v-if="visible" to="/adminPage">Admin</router-link></li>
+                
             </ul>
 
             <div @click="toggleDropdown" class="dropdownBtn" v-if="screenWidth<=700">
@@ -53,6 +57,8 @@
             <router-link to="/cart">Korpa</router-link>
             <router-link to="/chat">Poruke</router-link>
             <router-link to="/shopcontact">Kontakt</router-link>
+            <router-link v-if="visible" to="/adminPage">Admin</router-link>
+            
         </div>
             <!--DROPDOWN MENU-->
         <div v-else-if="dropdownopen" class="dropdownMenu">
@@ -83,6 +89,11 @@ export default{
             default:true
         }
     },
+    computed:{
+        visible(){
+            return localStorage.getItem('isCoord') ==="true";
+        }
+    },
     mounted() {
         this.updateScreenWidth();
         this.onScreenResize();
@@ -90,6 +101,7 @@ export default{
     methods: {
         logout(){
             localStorage.removeItem('token');
+            localStorage.removeItem('isCoord');
             this.$router.push('/');
         },
         onScreenResize() {
