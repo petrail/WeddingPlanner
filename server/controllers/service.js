@@ -19,6 +19,36 @@ exports.get_services_display = async (req, res) => {
   }
 };
 
+exports.get_service_filtered = async (req, res) => {
+  try {
+    const { name, minPrice, maxPrice, type, subservice, startIndex, count } = req.query;
+
+    // Constructing the filter object
+    const filter = {};
+    if (name) {
+      filter.name = { $regex: name, $options: 'i' }; // Case-insensitive name search
+    }
+    if (minPrice && maxPrice) {
+      filter.price = { $gte: minPrice, $lte: maxPrice };
+    } else if (minPrice) {
+      filter.price = { $gte: minPrice };
+    } else if (maxPrice) {
+      filter.price = { $lte: maxPrice };
+    }
+    if (type) {
+      filter.type = type;
+    }
+    if (subservice) {
+      filter.subservice = subservice;
+    }
+    const items = await Service.find(filter)
+      .skip(Number(startIndex))
+      .limit(Number(count));
+    res.json(items);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while fetching items.' });
+  }
+}
 exports.get_service_by_id = async (req, res) => {
   try {
     const { id } = req.params;
