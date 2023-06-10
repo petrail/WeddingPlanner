@@ -23,11 +23,11 @@
         <img class="backImg" src="../assets/search.png"/>
         <h3>Pretražite usluge</h3>
         </div>
-        <SearchBar/>
+        <SearchBar @search="search"/>
       </div>
     </div>
     <div class="main">
-      <div class="filter"><CategoryFilter/></div> 
+      <div class="filter"><CategoryFilter :subservices="allSubservices" @filter="filter"/></div> 
       <div class="list"> 
         <CategoryList @back="back()" @next="next()" :can_go_back="this.can_go_back" :can_go_next="this.can_go_next" :predmeti="this.predmeti" :liked="this.liked" :reserved="this.reserved"/>
       </div>
@@ -73,9 +73,16 @@ export default({
       selected:'',
       type:'',
       curr_page:0,
-      per_page:10,
+      per_page:12,
       can_go_back:false,
       can_go_next:true,
+      searchQuery:'',
+      sort:'',
+      minPrice:null,
+      maxPrice:null,
+      subservice:null,
+      allSubservices:[],
+
     } 
   },
   async created() {
@@ -94,34 +101,45 @@ export default({
     window.scrollTo(0, 0)
   },
   methods:{
+    async fetchItems(){
+      try{
+        let body={};
+        body.type=this.type;
+        body.startIndex = this.curr_page*this.per_page;
+        body.count=this.per_page;
+        if(this.searchQuery) body.name = this.searchQuery;
+        if(this.sort) body.sort = this.sort;
+        if(this.minPrice) body.minPrice = this.minPrice;
+        if(this.maxPrice) body.maxPrice = this.maxPrice;
+        if(this.subservice) body.subservice = this.subservice;
+
+        this.predmeti = await axios.put('http://localhost:3000/service/get_service_filtered',body);
+        this.can_go_back=this.curr_page>0;
+        this.can_go_next = this.predmeti.data.has_more;
+        this.predmeti = this.predmeti.data.predmeti;
+      }
+      catch(error){
+        console.log(error);
+      }
+    },
     async next(){
       this.curr_page+=1;
-      try {
-        this.predmeti = await axios.put('http://localhost:3000/service/get_service_filtered',{
-            type:this.type,
-            startIndex: this.curr_page*this.per_page,
-            count:this.per_page,
-          });
-          this.can_go_back=true;
-          this.can_go_next = this.predmeti.data.has_more;
-          this.predmeti = this.predmeti.data.predmeti;
-      } catch (error) {
-        console.log('Error:', error.response.data);
-      }
+      this.fetchItems();
     },
     async back(){
       this.curr_page-=1;
-      try {
-        this.predmeti = await axios.put('http://localhost:3000/service/get_service_filtered',{
-            type:this.type,
-            startIndex: this.curr_page*this.per_page,
-            count:this.per_page,
-          });
-          this.can_go_back=false;
-          this.can_go_next = this.predmeti.data.has_more;
-          this.predmeti = this.predmeti.data.predmeti;
-      } catch (error) {
-        console.log('Error:', error.response.data);
+      this.fetchItems();
+    },
+    async getSubservices(){
+      try{
+        this.allSubservices = await axios.put('http://localhost:3000/service/get_all_subcategories',{
+          type:this.type
+        });
+        this.allSubservices=this.allSubservices.data;
+        console.log(this.allSubservices);
+      }
+      catch(error){
+        console.log(error);
       }
     },
     async onClick(img){
@@ -142,17 +160,24 @@ export default({
         else if(this.type=='Kozmetički saloni'){
           this.type="Kozmeticki salon"
         }
-        this.predmeti = await axios.put('http://localhost:3000/service/get_service_filtered',{
-          type:this.type,
-          startIndex: this.curr_page*this.per_page,
-          count:this.per_page,
-        });
-        this.can_go_back=false;
-        this.can_go_next = this.predmeti.data.has_more;
-        this.predmeti = this.predmeti.data.predmeti;
+        this.fetchItems();
+        this.getSubservices();
       }catch (error) {
         console.log('Error:', error.response.data);
       }
+    },
+    async search(searchQuery){
+      this.searchQuery=searchQuery;
+      this.curr_page=0;
+      this.fetchItems();
+    },
+    async filter(sort, minPrice, maxPrice, subservice){
+      this.sort=sort;
+      this.minPrice = minPrice;
+      this.maxPrice=maxPrice;
+      this.subservice=subservice;
+      console.log(this.sort);
+      this.fetchItems();
     },
     backToCateg(){
       this.clicked=false;
@@ -228,7 +253,7 @@ P{
   width:100%;
   height:5vh;
   margin-top:2vh;
-  margin-bottom:10vh;
+  margin-bottom:7vh;
 }
 .bar{
   width:50%;
@@ -242,13 +267,14 @@ P{
 .main{
   width:100%;
   display:flex;
-  height:70vh;
+  flex-direction: column;
+  min-height: 70vh;
 }
 .list{
-  width:65%;
+  width:100%;
 }
 .filter{
-  width:30%;
+  width:100%;
   margin-right:5%;
 }
 .content{
