@@ -29,7 +29,7 @@
     <div class="main">
       <div class="filter"><CategoryFilter/></div> 
       <div class="list"> 
-        <CategoryList :predmeti="this.predmeti.data" :liked="this.liked" :reserved="this.reserved"/>
+        <CategoryList @back="back()" @next="next()" :can_go_back="this.can_go_back" :can_go_next="this.can_go_next" :predmeti="this.predmeti" :liked="this.liked" :reserved="this.reserved"/>
       </div>
     </div>
   </div>
@@ -71,26 +71,59 @@ export default({
       reserved:[],
       clicked:false,
       selected:'',
-      type:''
+      type:'',
+      curr_page:0,
+      per_page:10,
+      can_go_back:false,
+      can_go_next:true,
     } 
   },
   async created() {
-  try {
-    const response = await axios.get('http://localhost:3000/user/current', {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
-      }
-    });
-    console.log(response.data);
-  } catch (error) {
-    console.log('Error:', error.response.data);
-  }
-},
-
+    try {
+      const response = await axios.get('http://localhost:3000/user/current', {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.log('Error:', error.response.data);
+    }
+  },
   mounted () {
     window.scrollTo(0, 0)
   },
   methods:{
+    async next(){
+      this.curr_page+=1;
+      try {
+        this.predmeti = await axios.put('http://localhost:3000/service/get_service_filtered',{
+            type:this.type,
+            startIndex: this.curr_page*this.per_page,
+            count:this.per_page,
+          });
+          this.can_go_back=true;
+          this.can_go_next = this.predmeti.data.has_more;
+          this.predmeti = this.predmeti.data.predmeti;
+      } catch (error) {
+        console.log('Error:', error.response.data);
+      }
+    },
+    async back(){
+      this.curr_page-=1;
+      try {
+        this.predmeti = await axios.put('http://localhost:3000/service/get_service_filtered',{
+            type:this.type,
+            startIndex: this.curr_page*this.per_page,
+            count:this.per_page,
+          });
+          this.can_go_back=false;
+          this.can_go_next = this.predmeti.data.has_more;
+          this.predmeti = this.predmeti.data.predmeti;
+      } catch (error) {
+        console.log('Error:', error.response.data);
+      }
+    },
     async onClick(img){
       try{
         this.clicked=true;
@@ -109,7 +142,14 @@ export default({
         else if(this.type=='Kozmetički saloni'){
           this.type="Kozmeticki salon"
         }
-        this.predmeti = await axios.get('http://localhost:3000/service/get_display/'+this.type);
+        this.predmeti = await axios.put('http://localhost:3000/service/get_service_filtered',{
+          type:this.type,
+          startIndex: this.curr_page*this.per_page,
+          count:this.per_page,
+        });
+        this.can_go_back=false;
+        this.can_go_next = this.predmeti.data.has_more;
+        this.predmeti = this.predmeti.data.predmeti;
       }catch (error) {
         console.log('Error:', error.response.data);
       }

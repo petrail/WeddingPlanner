@@ -1,4 +1,8 @@
 <template>
+    <div class="buttons">
+        <button v-if="can_go_back" @click="back">B</button>
+        <button v-if="can_go_next" @click="next">N</button>
+    </div>
     <div class="listContainer" v-if="itemOpen==null">
         <div class="photo" v-for="(pred,index) in predmeti" :key="index">
             <CategoryListItem @open="open" @add="addToLiked" @remove="removeFromLiked" :pred="pred" :liked="isLiked(pred)" :reserved="isReserved(pred)"/>
@@ -41,6 +45,14 @@ import UserService from '../../Service.js'
         reserved:{
             type: Array,
             default:[]
+        },
+        can_go_back:{
+            type:Boolean,
+            default:false,
+        },
+        can_go_next:{
+            type:Boolean,
+            default:true,
         }
     },
     data(){
@@ -48,6 +60,8 @@ import UserService from '../../Service.js'
             itemOpen:null,
             can_review: true,
             date_taken:false,
+            page:0,
+            per_page:10,
         }
     },
     mounted() {
@@ -66,6 +80,12 @@ import UserService from '../../Service.js'
         isLiked(pred) {
             if(this.liked==null) return false;
             return this.liked.includes(pred.id);
+        },
+        back(){
+          this.$emit('back');  
+        },
+        next(){
+          this.$emit('next'); 
         },
         //Ove dve funkcije treba da se povezu sa bazom da bi se znalo sta si likeovao
         //Mozda nije najbolje da se pamti sta je likeovano po ID-u, s obzirom da su velike sanse da ce npr restoran i bend da imaju isti ID
@@ -143,7 +163,8 @@ import UserService from '../../Service.js'
                 console.log(error);
             }
         }
-    }
+    },
+    emits:['next','back'],
 };
   </script>
   

@@ -38,6 +38,7 @@ exports.get_all_subcategories = async (req, res) => {
 exports.get_service_filtered = async (req, res) => {
   try {
     const { name, minPrice, maxPrice, type, subservice, startIndex, count, sort } = req.body;
+    console.log(startIndex);
 
     // Constructing the filter object
     const filter = {};
@@ -64,13 +65,19 @@ exports.get_service_filtered = async (req, res) => {
     else if(sort=='desc'){
       sortOpt['servicePrice.price']=-1;
     }
-    const items = await Service.find(filter)
+    let items = await Service.find(filter);
+    const has_more = items.length > (startIndex+count);
+    items = await Service.find(filter)
       .sort(sortOpt)
       .skip(Number(startIndex))
       .limit(Number(count));
-    let to_return = [];
+    let to_return = {
+      has_more:has_more,
+      predmeti:[]
+    };
+
     items.forEach((item) => {
-      to_return.push({
+      to_return.predmeti.push({
         _id: item._id,
         name: item.name,
         img: item.img,
@@ -78,6 +85,7 @@ exports.get_service_filtered = async (req, res) => {
         price: item.servicePrice
       });
     });
+    console.log(to_return);
     res.status(200).json(to_return);
   } catch (error) {
     res.status(500).json({ error: 'An error occurred while fetching items.' });

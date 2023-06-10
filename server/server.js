@@ -582,8 +582,10 @@ app.post("/user/login", async (req, res) => {
 
   const user = await User.findOne({ email: email });
 
-  if (!user) res.status(400).json({ error: "User Doesn't Exist" });
-
+  if (!user) {
+    res.status(400).json({ error: "User Doesn't Exist" });
+    return;
+  }
   const dbPassword = user.password;
   bcrypt.compare(password, dbPassword).then((match) => {
     if (!match) {
