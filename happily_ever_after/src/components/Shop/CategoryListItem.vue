@@ -8,12 +8,11 @@
         <div :class="open?'levo':''">
             <h2 :class="open?'naslov veliki':'naslov'">
                 {{ pred.name }}
-            </h2>
-            <p v-if="!open">{{ pred.servicePrice.price }} {{ pred.servicePrice.unit }}</p>
+            </h2>   
             <p v-if="open && pred.subservice" class="detalji">
                 {{ pred.subservice }}
             </p>
-            <p v-if="open && pred.store" class="detalji">
+            <p v-if="pred.store" class="detalji">
                 {{ pred.store }}
             </p>
             <p v-if="open" class="desc">
@@ -271,7 +270,7 @@ select{
 .starPos{
     position: absolute;
     top:-24px !important;
-    right:-12px !important;
+    right:-24px !important;
     z-index: 999;
     top:0;
     right:0;
@@ -300,7 +299,7 @@ h2,h4,p{
 .send_review{
     position: absolute;
     bottom:-24px;
-    right:-8px;
+    right:-24px;
     border-radius:100%;
     background: transparent;
     display:flex;
@@ -327,7 +326,6 @@ h2,h4,p{
     flex-direction: row !important;
     flex-wrap: wrap;
     overflow-y:auto;
-    overflow-x:hidden;
 }
 .review{
     width:100%;
@@ -359,6 +357,7 @@ h2,h4,p{
     .openText{
         width:100% !important;
         height:70% !important;
+        flex-direction: column !important;
     }
     .levo{
         width:100% !important;
@@ -409,23 +408,24 @@ h2,h4,p{
     display:flex;
     flex-direction: column;
     padding:1vw;
+    justify-content: center;
     bottom:0;
     left:0;
     width:100%;
-    height: 40%;
+    height: 60%;
     color:white;
     background-color: var(--white-pink);
   }
   .slika{
     width:100%;
-    height: 60%;
+    height: 40%;
     background-size: cover;
     background-position: center center;
   }
 
   @media (width<1000px){
       .srce, .close, .reserved{
-        height:6vw;
+        height:4vw;
       }
       .reserved{
         height:4.5vw;

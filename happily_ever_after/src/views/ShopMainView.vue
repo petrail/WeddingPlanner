@@ -23,13 +23,13 @@
         <img class="backImg" src="../assets/search.png"/>
         <h3>Pretražite usluge</h3>
         </div>
-        <SearchBar @search="search"/>
+        <SearchBar/>
       </div>
     </div>
     <div class="main">
-      <div class="filter"><CategoryFilter :subservices="allSubservices" @filter="filter"/></div> 
+      <div class="filter"><CategoryFilter/></div> 
       <div class="list"> 
-        <CategoryList @back="back()" @next="next()" :can_go_back="this.can_go_back" :can_go_next="this.can_go_next" :predmeti="this.predmeti" :liked="this.liked" :reserved="this.reserved"/>
+        <CategoryList :predmeti="this.predmeti.data" :liked="this.liked" :reserved="this.reserved"/>
       </div>
     </div>
   </div>
@@ -71,77 +71,26 @@ export default({
       reserved:[],
       clicked:false,
       selected:'',
-      type:'',
-      curr_page:0,
-      per_page:12,
-      can_go_back:false,
-      can_go_next:true,
-      searchQuery:'',
-      sort:'',
-      minPrice:null,
-      maxPrice:null,
-      subservice:null,
-      allSubservices:[],
-
+      type:''
     } 
   },
   async created() {
-    try {
-      const response = await axios.get('http://localhost:3000/user/current', {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token')
-        }
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.log('Error:', error.response.data);
-    }
-  },
+  try {
+    const response = await axios.get('http://localhost:3000/user/current', {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.log('Error:', error.response.data);
+  }
+},
+
   mounted () {
     window.scrollTo(0, 0)
   },
   methods:{
-    async fetchItems(){
-      try{
-        let body={};
-        body.type=this.type;
-        body.startIndex = this.curr_page*this.per_page;
-        body.count=this.per_page;
-        if(this.searchQuery) body.name = this.searchQuery;
-        if(this.sort) body.sort = this.sort;
-        if(this.minPrice) body.minPrice = this.minPrice;
-        if(this.maxPrice) body.maxPrice = this.maxPrice;
-        if(this.subservice) body.subservice = this.subservice;
-
-        this.predmeti = await axios.put('http://localhost:3000/service/get_service_filtered',body);
-        this.can_go_back=this.curr_page>0;
-        this.can_go_next = this.predmeti.data.has_more;
-        this.predmeti = this.predmeti.data.predmeti;
-      }
-      catch(error){
-        console.log(error);
-      }
-    },
-    async next(){
-      this.curr_page+=1;
-      this.fetchItems();
-    },
-    async back(){
-      this.curr_page-=1;
-      this.fetchItems();
-    },
-    async getSubservices(){
-      try{
-        this.allSubservices = await axios.put('http://localhost:3000/service/get_all_subcategories',{
-          type:this.type
-        });
-        this.allSubservices=this.allSubservices.data;
-        console.log(this.allSubservices);
-      }
-      catch(error){
-        console.log(error);
-      }
-    },
     async onClick(img){
       try{
         this.clicked=true;
@@ -160,25 +109,10 @@ export default({
         else if(this.type=='Kozmetički saloni'){
           this.type="Kozmeticki salon"
         }
-        this.fetchItems();
-        this.getSubservices();
+        this.predmeti = await axios.get('http://localhost:3000/service/get_display/'+this.type);
       }catch (error) {
         console.log('Error:', error.response.data);
       }
-    },
-    async search(searchQuery){
-      this.searchQuery=searchQuery;
-      this.curr_page=0;
-      this.fetchItems();
-    },
-    async filter(sort, minPrice, maxPrice, subservice){
-      this.curr_page=0;
-      this.sort=sort;
-      this.minPrice = minPrice;
-      this.maxPrice=maxPrice;
-      this.subservice=subservice;
-      console.log(this.sort);
-      this.fetchItems();
     },
     backToCateg(){
       this.clicked=false;
@@ -191,10 +125,10 @@ export default({
 
 <style scoped>
 .uputstvo{
-  margin-left:5vw;
-  margin-top: 2vh;
-  margin-bottom: 2vh;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
   font-weight: 600; 
+  text-align: center;
 }
 .text{
   display: flex;
@@ -254,22 +188,13 @@ P{
   width:100%;
   height:5vh;
   margin-top:2vh;
-  margin-bottom:7vh;
+  margin-bottom:10vh;
 }
-
 .bar{
   width:50%;
   height:100%;
 }
-@media (width<1000px) {
-  .search{
-    margin-bottom: 3vh !important;
-  }
-}
 @media (width<700px) {
-  .search{
-    margin-bottom: 5vh !important;
-  }
   .bar{
     width:100%;
   }
@@ -277,14 +202,13 @@ P{
 .main{
   width:100%;
   display:flex;
-  flex-direction: column;
-  min-height: 70vh;
+  height:70vh;
 }
 .list{
-  width:100%;
+  width:65%;
 }
 .filter{
-  width:100%;
+  width:30%;
   margin-right:5%;
 }
 .content{

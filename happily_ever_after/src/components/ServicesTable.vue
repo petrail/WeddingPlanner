@@ -1,27 +1,38 @@
 <template>
   <div class="container">
-    <h1>Korisnici</h1>
+    <h1>Usluge</h1>
     <hr />
     <p class="error" v-if="error">{{ error }}</p>
+    <div class="button-container">
+      <router-link to="/addServicePage" class="add-button">Dodaj uslugu</router-link>
+    </div>
     <div class="table-container">
       <table class="users-table">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Ime i prezime</th>
-            <th>Korsinicko ime</th>
-            <th>Email</th>
+            <th>Naziv</th>
+            <th>Tip</th>
+            <th>Prodavnica</th>
+            <th>Lokacija</th>
+            <th>Broj telefona</th>
             <th>Obrisi</th>
+            <th>Izmeni</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user._id">
-            <td>{{ user._id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
+          <tr v-for="service in services" :key="service._id">
+            <td>{{ service._id }}</td>
+            <td>{{ service.name }}</td>
+            <td>{{ service.type }}</td>
+            <td>{{ service.store }}</td>
+            <td>{{ service.location }}</td>
+            <td>{{ service.phoneNumber }}</td>
             <td>
-              <button @click="deleteUser(user._id)" class="delete-button">Obrisi</button>
+              <button @click="deleteService(service._id)" class="delete-button">Obrisi</button>
+            </td>
+            <td>
+              <button @click="changeService(service._id)" class="delete-button">Izmeni</button>
             </td>
           </tr>
         </tbody>
@@ -37,22 +48,22 @@ export default {
   name: 'Service',
   data() {
     return {
-      users: [],
+      services: [],
       error: ''
     }
   },
   async created() {
     try {
-      this.users = await Service.getAllUsers()
+      this.services = await Service.getAllServices()
     } catch (error) {
       this.error = error.message
     }
   },
   methods: {
-    async deleteUser(userId) {
+    async deleteService(serviceId) {
       try {
-        await Service.deleteUser(userId)
-        this.users = this.users.filter((user) => user._id !== userId)
+        await Service.deleteService(serviceId)
+        this.services = this.services.filter((service) => service._id !== serviceId)
       } catch (error) {
         console.error(error)
       }
@@ -63,7 +74,7 @@ export default {
 
 <style scoped>
 div.container {
-  max-width: 800px;
+  max-width: 1315px; /* Increased max-width value */
   margin: 0 auto;
   padding-bottom: 5%;
 }
@@ -85,7 +96,7 @@ table.users-table {
 }
 button {
   height: 30px;
-  width: 80%;
+  width: 100px;
 }
 table.users-table th,
 table.users-table td {
@@ -117,5 +128,23 @@ table.users-table th {
 .delete-button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgb(228, 87, 199);
+}
+
+div.button-container {
+  margin-bottom: 15px;
+}
+
+button.add-button {
+  background-color: #c38a77; /* Updated to pink color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+button.add-button:hover {
+  background-color: rgb(208, 77, 182); /* Updated hover color */
 }
 </style>

@@ -1,40 +1,26 @@
 <template>
-  <TopBar short inStore :barText="'KONTAKT'" />
+  <TopBar inStore :barText="'KONTAKT'" />
   <div class="content">
-    <Contact />
-    <div class="kontakt">
-      <div class="img">
-        <img src="../assets/contact.jpg" />
-      </div>
-      <div class="info">
-        <p class="sub">Povežite se s nama i iskusite vrhunsku uslugu!</p>
-        <p>Adresa: Bulevar Nemanjića 15, Niš</p>
-        <p>Telefon: +381649974169</p>
-        <p>Email: theappangels@gmail.com</p>
-        <p>Otvoreno: Pon - Sub: 8h-20h</p>
-      </div>
-    </div>
+    <Services />
   </div>
-  <Footer inStore />
+  <Footer />
 </template>
 
 <script>
 import { RouterLink, RouterView } from 'vue-router'
+import Services from '../components/ServicesTable.vue'
+import Service from '../components/AdminPage.vue'
 import TopBar from '../components/TopBar.vue'
 import Contact from '../components/Contact.vue'
 import Footer from '../components/Footer.vue'
 export default {
-  name: 'ShopContactView',
+  name: 'ServicesTableView',
   components: {
     TopBar,
     Contact,
-    Footer
-  },
-  props: {
-    inStore: {
-      type: Boolean,
-      default: false
-    }
+    Footer,
+    Service,
+    Services
   },
   mounted() {
     window.scrollTo(0, 0)
@@ -73,7 +59,7 @@ img {
   padding: 3vw;
 }
 .content {
-  margin-top: 40vh;
+  margin-top: 80vh;
 }
 @media (width<700px) {
   .kontakt {
