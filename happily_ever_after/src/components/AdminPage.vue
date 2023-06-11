@@ -1,27 +1,25 @@
 <template>
   <div class="container">
-    <h1>Users</h1>
-    <hr>
+    <h1>Korisnici</h1>
+    <hr />
     <p class="error" v-if="error">{{ error }}</p>
     <div class="table-container">
       <table class="users-table">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Username</th>
+            <th>Ime i prezime</th>
+            <th>Korsinicko ime</th>
             <th>Email</th>
-            <th>Phone Number</th>
-            <th>Action</th>
+            <th>Obrisi</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(user, index) in users" :key="user._id">
+          <tr v-for="user in users" :key="user._id">
             <td>{{ user._id }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.username }}</td>
             <td>{{ user.email }}</td>
-            <td>{{ user.phoneNumber }}</td>
             <td>
               <button @click="deleteUser(user._id)" class="delete-button">Obrisi</button>
             </td>
@@ -32,38 +30,36 @@
   </div>
 </template>
 
-
 <script>
-import Service from '../Service';
+import Service from '../Service'
 
 export default {
   name: 'Service',
   data() {
     return {
       users: [],
-      error: '',
-    };
+      error: ''
+    }
   },
   async created() {
     try {
-      this.users = await Service.getAllUsers();
+      this.users = await Service.getAllUsers()
     } catch (error) {
-      this.error = error.message;
+      this.error = error.message
     }
   },
   methods: {
     async deleteUser(userId) {
       try {
-        await Service.deleteUser(userId);
-        this.users = this.users.filter((user) => user._id !== userId);
+        await Service.deleteUser(userId)
+        this.users = this.users.filter((user) => user._id !== userId)
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
-
 
 <style scoped>
 div.container {
@@ -88,8 +84,8 @@ table.users-table {
   border-collapse: collapse;
 }
 button {
-  height:30px;
-  width:80%;
+  height: 30px;
+  width: 80%;
 }
 table.users-table th,
 table.users-table td {
@@ -106,7 +102,7 @@ table.users-table th {
 }
 
 .delete-button {
-  background-color:#c38a77;
+  background-color: #c38a77;
   color: white;
   border: none;
   padding: 0px 20px;
@@ -122,5 +118,4 @@ table.users-table th {
   outline: none;
   box-shadow: 0 0 0 2px rgb(228, 87, 199);
 }
-
 </style>

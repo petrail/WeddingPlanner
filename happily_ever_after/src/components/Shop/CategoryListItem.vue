@@ -9,7 +9,7 @@
             <h2 :class="open?'naslov veliki':'naslov'">
                 {{ pred.name }}
             </h2>
-            <p v-if="!open">{{ pred.servicePrice.price }} {{ pred.servicePrice.unit }}</p>
+            <p v-if="!open && pred.servicePrice">{{ pred.servicePrice.price }} {{ pred.servicePrice.unit }}</p>
             <p v-if="open && pred.subservice" class="detalji">
                 {{ pred.subservice }}
             </p>

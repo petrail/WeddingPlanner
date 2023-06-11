@@ -7,7 +7,7 @@
           Vrati se na sve ponude 
         </button>
     </div>
-    <div class="heading">
+    <div v-if="!clicked"  class="heading">
       <h1 class="title">Naše usluge</h1>
       <img class="divide" src="../assets/Divider.png"/>
       <p> Naš stručni tim organizatora venčanja je tu da vam pruži svoje znanje i iskustvo kako biste imali bezbrižno iskustvo planiranja venčanja. Pomažemo vam da definišete vašu viziju venčanja i pretvorimo je u stvarnost. Bez obzira da li želite romantičnu ceremoniju na otvorenom, elegantnu svečanost u dvorcu ili tematsko venčanje koje odskače od svih drugih, mi ćemo vam pomoći da sve to ostvarite.</p>
@@ -17,10 +17,10 @@
   <Gallery v-if="!clicked" hiddenBar clickable tall :imgs="imgs" @clicked="onClick"/>
   <div class="container" v-else>
     <h2>{{this.selected}}</h2>
+    <img class="divide" src="../assets/Divider.png"/>
     <div class="search">
       <div class="bar">
         <div class="text">
-        <img class="backImg" src="../assets/search.png"/>
         <h3>Pretražite usluge</h3>
         </div>
         <SearchBar @search="search"/>
@@ -191,9 +191,9 @@ export default({
 
 <style scoped>
 .uputstvo{
-  margin-left:5vw;
-  margin-top: 2vh;
-  margin-bottom: 2vh;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  text-align:center;
   font-weight: 600; 
 }
 .text{
@@ -240,6 +240,7 @@ P{
   width:15%;
   min-width:150px;
   opacity: 0.5;
+  margin-bottom: 5vh;
 }
 .container{
   width:100vw;
@@ -247,7 +248,7 @@ P{
   flex-direction:column;
   align-items: center;
   padding:5vw;
-  padding-top:1vw;
+  padding-top:0;
 
 }
 .search{
@@ -292,15 +293,14 @@ P{
 }
 h2{
   text-align: center;
-  text-transform: uppercase;
-  font-size: max(2.5vw,28pt); 
+  font-size: max(5vw,36pt); 
   font-weight: bold;
   color:var(--font-dark);
   padding:3vw;
-  padding-bottom:1vh;
+  padding-bottom:0;
+  padding-top:0;
   width:30%;
-  border-bottom: 3px solid var(--light-red);
-  margin-bottom: 5vh;
+  font-family:"HHoney"
 }
 .link{
   width:100%;
@@ -324,8 +324,6 @@ h2{
 @media (width<700px){
     h2{
         text-align: center;
-        text-transform: uppercase;
-        font-size:30px;
         width:50%;
         font-weight: bold;
       }

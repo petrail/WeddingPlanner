@@ -67,6 +67,9 @@ export default {
       } catch (error) {
         console.error(error)
       }
+    },
+    changeService(id) {
+      this.$router.push({ path: `/changeServicePage/${id}` })
     }
   }
 }

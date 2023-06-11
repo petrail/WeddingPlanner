@@ -28,7 +28,7 @@
             </select>
         </div>
 
-            <button @click="filter">Primeni filtere</button>
+        <button @click="filter">Primeni filtere</button>
     </div>
   </template>
   
@@ -43,7 +43,7 @@
       },
       computed:{
         showSubservice:function(){
-            return this.subservices.length>1;
+            return this.subservices.length>2;
         }
       },
       data(){
@@ -85,17 +85,20 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
-select, input, button{
+select, input{
     max-height:40px !important;
     border-radius: 0.5vw;
     border:0;
     width:90%;
 }
 button{
-    width: 30% !important;
+    max-height:40px !important;
+    border-radius: 0.5vw;
+    border:0;
+    width: 20.7% !important;
     padding:.5vw !important;
     height:40px !important;
-    margin-top:1vh;
+    margin-top:2.5vh;
 }
 input[type=radio]{
     width:10%;

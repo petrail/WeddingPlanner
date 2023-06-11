@@ -1,4 +1,121 @@
 const Service = require("../models/service");
+exports.get_all_services = async (req, res) => {
+  try {
+    const service = await Service.find({});
+    res.status(200).json(service);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.post_service = async (req, res) => {
+  try {
+    const service = await Service.create(req.body);
+    res.status(200).json(service);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.delete_service_by_id = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const service = await Service.findByIdAndDelete(id);
+    if (!service) {
+      return res.status(404).json({ message: `User with id ${id} not found` });
+    }
+    res.status(200).json(service);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.get_service_by_id = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const service = await Service.findById(id);
+    res.status(200).json(service);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.put_service = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const service = await Service.findById(id);
+    if (!service) {
+      return res
+        .status(404)
+        .json({ message: `Service with id ${id} not found` });
+    }
+
+    // Update the user with the request body
+    await Service.findByIdAndUpdate(id, req.body);
+
+    // Fetch the updated user
+    const updatedService = await Service.findById(id);
+
+    res.status(200).json(updatedService);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.add_service_review = async (req, res) => {
+  try {
+    let service = await Service.findById(req.body._id);
+    if (req.body.review == null) {
+      return res.status(404).json({ message: `No review found!` });
+    }
+
+    if (!service) {
+      return res
+        .status(404)
+        .json({ message: `Service with id ${id} not found` });
+    }
+    service.reviews.push(req.body.review);
+    await Service.findByIdAndUpdate(req.body._id, service);
+    const updated = await Service.findById(req.body._id);
+    res.status(200).json(updated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.add_reserve_date = async (req, res) => {
+  try {
+    if (req.body.reserved_date == null) {
+      return res.status(404).json({ message: `No reserve date found!` });
+    }
+
+    let service = await Service.findById(req.body._id);
+    if (!service) {
+      return res
+        .status(404)
+        .json({ message: `Service with id ${id} not found` });
+    }
+
+    let date_taken = false;
+    service.reserved_dates.forEach((r) => {
+      if (r.date == req.body.reserved_date) {
+        date_taken = true;
+      }
+    });
+    if (date_taken) {
+      return res.status(404).json({ message: `Date taken!` });
+    }
+
+    let d = {
+      date: req.body.reserved_date,
+    };
+    service.reserved_dates.push(d);
+    await Service.findByIdAndUpdate(req.body._id, service);
+    const updated = await Service.findById(req.body._id);
+    res.status(200).json(updated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.get_services_display = async (req, res) => {
   try {
     const { type } = req.params;
@@ -86,71 +203,5 @@ exports.get_service_filtered = async (req, res) => {
     res.status(200).json(to_return);
   } catch (error) {
     res.status(500).json({ error: 'An error occurred while fetching items.' });
-  }
-}
-exports.get_service_by_id = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const service = await Service.findById(id);
-    res.status(200).json(service);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-exports.add_service_review = async (req, res) => {
-  try {
-    let service = await Service.findById(req.body._id);
-    if (req.body.review == null) {
-      return res.status(404).json({ message: `No review found!` });
-    }
-
-    if (!service) {
-      return res
-        .status(404)
-        .json({ message: `Service with id ${id} not found` });
-    }
-    service.reviews.push(req.body.review);
-    await Service.findByIdAndUpdate(req.body._id, service);
-    const updated = await Service.findById(req.body._id);
-    res.status(200).json(updated);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-exports.add_reserve_date = async (req, res) => {
-  try {
-    if (req.body.reserved_date == null) {
-      return res.status(404).json({ message: `No reserve date found!` });
-    }
-
-    let service = await Service.findById(req.body._id);
-    if (!service) {
-      return res
-        .status(404)
-        .json({ message: `Service with id ${id} not found` });
-    }
-
-    let date_taken= false;
-    service.reserved_dates.forEach(r=>{
-      if(r.date==req.body.reserved_date){
-        date_taken=true;
-      }
-    });
-    if(date_taken){
-      return res
-        .status(404)
-        .json({ message: `Date taken!` });
-    }
-
-    let d = {
-      date: req.body.reserved_date
-    }
-    service.reserved_dates.push(d);
-    await Service.findByIdAndUpdate(req.body._id, service);
-    const updated = await Service.findById(req.body._id);
-    res.status(200).json(updated);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
   }
 };
