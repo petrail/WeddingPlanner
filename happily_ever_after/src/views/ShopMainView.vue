@@ -172,6 +172,7 @@ export default({
       this.fetchItems();
     },
     async filter(sort, minPrice, maxPrice, subservice){
+      this.curr_page=0;
       this.sort=sort;
       this.minPrice = minPrice;
       this.maxPrice=maxPrice;
@@ -255,11 +256,20 @@ P{
   margin-top:2vh;
   margin-bottom:7vh;
 }
+
 .bar{
   width:50%;
   height:100%;
 }
+@media (width<1000px) {
+  .search{
+    margin-bottom: 3vh !important;
+  }
+}
 @media (width<700px) {
+  .search{
+    margin-bottom: 5vh !important;
+  }
   .bar{
     width:100%;
   }

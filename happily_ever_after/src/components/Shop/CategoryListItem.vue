@@ -271,7 +271,7 @@ select{
 .starPos{
     position: absolute;
     top:-24px !important;
-    right:-24px !important;
+    right:-12px !important;
     z-index: 999;
     top:0;
     right:0;
@@ -300,7 +300,7 @@ h2,h4,p{
 .send_review{
     position: absolute;
     bottom:-24px;
-    right:-24px;
+    right:-8px;
     border-radius:100%;
     background: transparent;
     display:flex;
@@ -327,6 +327,7 @@ h2,h4,p{
     flex-direction: row !important;
     flex-wrap: wrap;
     overflow-y:auto;
+    overflow-x:hidden;
 }
 .review{
     width:100%;
@@ -358,7 +359,6 @@ h2,h4,p{
     .openText{
         width:100% !important;
         height:70% !important;
-        flex-direction: column !important;
     }
     .levo{
         width:100% !important;

@@ -1,24 +1,34 @@
 <template>
     <div class="categoryContainer">
-        <label for="sort">Sortiranje</label>
-        <select name="sort" v-model="sort">
-            <option value="" selected>Standardno</option>
-            <option value="asc">Prvo najniža cena</option>
-            <option value="desc">Prvo najviša cena</option>
-        </select>
+        <div class="in">
+            <label for="sort">Sortiranje</label>
+            <select name="sort" v-model="sort">
+                <option value="" selected>Standardno</option>
+                <option value="asc">Prvo najniža cena</option>
+                <option value="desc">Prvo najviša cena</option>
+            </select>
+        </div>
 
-        <label for="minPrice">Cena od</label>
-        <input name="minPrice" v-model="minPrice" type="number"/>
+        <div class="in">
+            <label for="minPrice">Cena od</label>
+            <input name="minPrice" v-model="minPrice" type="number"/>
+        </div>
 
-        <label for="maxPrice">Cena do</label>
-        <input name="maxPrice" v-model="maxPrice" type="number"/>
+        <div class="in">
+            <label for="maxPrice">Cena do</label>
+            <input name="maxPrice" v-model="maxPrice" type="number"/>
+        </div>
 
-        <button @click="filter">Primeni filtere</button>
+        <div v-if="showSubservice" class="in">
+            <label for="subservice">Podkategorija</label>
+            <select name="subservice" v-model="subservice">
+                <option v-for="(sub, index) in subservices" :key="index" :value="sub">
+                    {{sub}}
+                </option>
+            </select>
+        </div>
 
-        <label class="sub" v-for="(sub, index) in subservices" :key="index">
-            <input type="radio" :value="sub" @change="updateSelection(sub)" name="rb"/>
-            {{ sub }}
-        </label>
+            <button @click="filter">Primeni filtere</button>
     </div>
   </template>
   
@@ -29,6 +39,11 @@
         subservices:{
             type:Array,
             default:[],
+        }
+      },
+      computed:{
+        showSubservice:function(){
+            return this.subservices.length>1;
         }
       },
       data(){
@@ -55,18 +70,32 @@
   </script>
   
 <style scoped>  
+.in{
+    display:flex;
+    flex-direction: column;
+    width:23%;
+    margin-right:2%;
+    justify-content: center;
+}
+
 .categoryContainer{
     width:100%;
     height:100%;
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 select, input, button{
-    max-height:40px;
+    max-height:40px !important;
     border-radius: 0.5vw;
-    margin-bottom: 1vh;
     border:0;
-    min-width:200px;  
+    width:90%;
+}
+button{
+    width: 30% !important;
+    padding:.5vw !important;
+    height:40px !important;
+    margin-top:1vh;
 }
 input[type=radio]{
     width:10%;
@@ -77,7 +106,6 @@ input[type=radio]{
 }
 select, input{
     background-color: var(--light-pink);
-    width:33vw;
-    padding:1vw;
+    padding:.5vw;
 }
 </style>
