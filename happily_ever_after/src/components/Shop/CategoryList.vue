@@ -1,4 +1,12 @@
 <template>
+    <div class="buttons">
+        <button :class="!can_go_back?'disabled':''" :disabled="!can_go_back" @click="back">
+            <img src="src/assets/prev.png"/>
+        </button>
+        <button :class="!can_go_next?'disabled':''" :disabled="!can_go_next" @click="next">
+            <img src="src/assets/next.png"/>
+        </button>
+    </div>
     <div class="listContainer" v-if="itemOpen==null">
         <div class="photo" v-for="(pred,index) in predmeti" :key="index">
             <CategoryListItem @open="open" @add="addToLiked" @remove="removeFromLiked" :pred="pred" :liked="isLiked(pred)" :reserved="isReserved(pred)"/>
@@ -41,6 +49,14 @@ import UserService from '../../Service.js'
         reserved:{
             type: Array,
             default:[]
+        },
+        can_go_back:{
+            type:Boolean,
+            default:false,
+        },
+        can_go_next:{
+            type:Boolean,
+            default:true,
         }
     },
     data(){
@@ -66,6 +82,12 @@ import UserService from '../../Service.js'
         isLiked(pred) {
             if(this.liked==null) return false;
             return this.liked.includes(pred.id);
+        },
+        back(){
+          this.$emit('back');  
+        },
+        next(){
+          this.$emit('next'); 
         },
         //Ove dve funkcije treba da se povezu sa bazom da bi se znalo sta si likeovao
         //Mozda nije najbolje da se pamti sta je likeovano po ID-u, s obzirom da su velike sanse da ce npr restoran i bend da imaju isti ID
@@ -143,11 +165,30 @@ import UserService from '../../Service.js'
                 console.log(error);
             }
         }
-    }
+    },
+    emits:['next','back'],
 };
   </script>
   
 <style scoped>
+.disabled{
+    opacity:0.2;
+}
+button{
+    width:40px;
+    height:40px;
+    box-shadow: 15px 50px 21px rgba(0, 0, 0, 0.01), 9px 28px 18px rgba(0, 0, 0, 0.03), 4px 12px 13px rgba(0, 0, 0, 0.04), 1px 3px 7px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    padding:0;
+    background: transparent;
+    margin:1vw;
+    margin-left:0;
+}
+img{
+    width:40px;
+    height:40px;
+    margin:0;
+}
 .dark{
     background-color: #00000094;
     backdrop-filter: blur(5px);
@@ -210,14 +251,14 @@ import UserService from '../../Service.js'
       flex-direction: column;
       align-items: flex-end;
       aspect-ratio: 1 / 1;
+      height:10vh;
       box-shadow: 15px 50px 21px rgba(0, 0, 0, 0.01), 9px 28px 18px rgba(0, 0, 0, 0.03), 4px 12px 13px rgba(0, 0, 0, 0.04), 1px 3px 7px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05);
   }
   .listContainer{
       width:100%;
-      max-height: 70vh;
+      max-height: 75vh;
       display: flex;
       flex-wrap: wrap;
-      padding:2vw;
       padding-top: 0;
       overflow-y: auto;
   }
@@ -228,7 +269,7 @@ import UserService from '../../Service.js'
       .photo{
           width:23%;
           margin-right: 2%;
-          height:20vh;
+          height:40vh;
           margin-bottom: 5vh;
       }
   }
@@ -236,7 +277,7 @@ import UserService from '../../Service.js'
       .photo{
           width:31.3%;
           margin-right: 2%;
-          height:15vh;
+          height:20vh;
           margin-bottom: 2vh;
       }
       .srce{
@@ -247,7 +288,7 @@ import UserService from '../../Service.js'
       .photo{
           width:48%;
           margin-right: 2%;
-          height:20vh;
+          height:32vh;
           margin-bottom: 2vh;
       }
   }

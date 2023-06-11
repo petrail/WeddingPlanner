@@ -1,6 +1,9 @@
 <template>
     <div>
-    <input class="bar" type="text" v-model="searchQuery" @input="handleInput" placeholder="Pretraži...">
+    <input class="bar" type="text" v-model="searchQuery" placeholder="Pretraži...">
+    <button class="search" @click="handleInput">
+      <img src="src/assets/search.png"/>
+    </button>
     </div>
     
   </template>
@@ -11,34 +14,41 @@
     data() {
       return {
         searchQuery: "",
-        searchResults: []
       };
     },
     methods: {
-      async handleInput() {
-        // try {
-        //   const response = await fetch(`/service/search/${this.searchQuery}`);
-        //   if (response.ok) {
-        //     const services = await response.json();
-        //     console.log(result.name);
-        //     this.searchResults = services; // Assuming the server returns an array of service objects
-        //   } else {
-        //     this.searchResults = [];
-        //   }
-        // } catch (error) {
-        //   console.error(error);
-        // }
+      handleInput() {
+        this.$emit('search',this.searchQuery);
       }
-    }
+    },
+    emits:['search']
   };
   </script>
   
 <style scoped>  
+div{
+  display:flex;
+  width:100%;
+}
 .bar {
     padding: 8px;
-    width: 100%;
+    width: 70%;
     border: 2px solid #ccc;
     border-radius: .7vw;
+}
+.search{
+  width:40px;
+  height:40px;
+  border-radius:.5vw;
+  padding:0;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin-left:1vw;
+}
+img{
+  width:25px;
+  height:25px;
 }
 @media (width<700px){
     .bar{

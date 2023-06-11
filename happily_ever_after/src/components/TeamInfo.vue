@@ -11,7 +11,7 @@
                 <div class="opis">
                     <h2>Ana Petrović</h2>
                     <h3>Koordinator venčanja</h3>
-                    <p>Ana je iskusna organizatorka događaja s višegodišnjim iskustvom u planiranju i koordiniranju različitih vrsta događaja. Takođe, završila je diplomske studije poslovne administracije na Fakultetu organizacionih nauka, što joj daje snažnu pozadinu u poslovnom upravljanju i menadžmentu. Pohađala je i kurseve vezane za planiranje venčanja i dizajniranje prostora, te ima iskustva u organizaciji i koordinaciji svih aspekata venčanja, uključujući izbor lokacija, muzike, ketering, dekoraciju i fotografiju.</p>
+                    <p>Ana je iskusna organizatorica događaja s višegodišnjim iskustvom u planiranju i koordiniranju različitih vrsta događaja. Također, završila je diplomski studij poslovne administracije na Fakultetu organizacionih nauka, što joj daje snažnu pozadinu u poslovnom upravljanju i menadžmentu. Pohađala je i kurseve vezane za planiranje venčanja i dizajniranje prostora, te ima iskustva u organizaciji i koordinaciji svih aspekata venčanja, uključujući izbor lokacija, glazbu, catering, dekor i fotografiju.</p>
                 </div>
             </div>
              <div class="member">
@@ -21,7 +21,7 @@
                 <div class="opis">
                     <h2>Jovana Janković</h2>
                     <h3>Koordinator venčanja</h3>
-                    <p>Jovana je iskusna koordinatorka događaja s višegodišnjim iskustvom u organizaciji različitih vrsta događaja, uključujući venčanja, korporativne događaje i koncerte. Diplomirala je na Fakultetu za turistički i hotelijerski menadžment, što joj daje snažnu pozadinu u upravljanju turističkim događajima. Također, pohađala je kurseve vezane za planiranje venčanja i imala je priliku raditi s različitim dobavljačima kako bi stekla duboko razumijevanje svih aspekata venčanja.</p>
+                    <p>Jovana je iskusna koordinatorica događaja s višegodišnjim iskustvom u organizaciji različitih vrsta događaja, uključujući venčanja, korporativne događaje i koncerte. Diplomirala je na Fakultetu za turistički i hotelijerski menadžment, što joj daje snažnu pozadinu u upravljanju turističkim događajima. Također, pohađala je kurseve vezane za planiranje venčanja i imala je priliku raditi s različitim dobavljačima kako bi stekla duboko razumijevanje svih aspekata venčanja.</p>
                 </div>
             </div>
              <div class="member">
@@ -31,7 +31,7 @@
                 <div class="opis">
                     <h2>Milica Nikolić</h2>
                     <h3>Koordinator venčanja</h3>
-                    <p>Milica je kreativna organizatorka događaja s iskustvom u planiranju venčanja i drugih posebnih događaja. Završila je kurs za organizatore venčanja, te ima iskustva u planiranju i koordinaciji različitih aspekata venčanja, uključujući izbor lokacije, dekoraciju, catering, muziku i fotografiju. Također, ima iskustva u radu s venčanim dizajnerima i cvećarima kako bi stvorila nezaboravne događaje.</p>
+                    <p>Milica je kreativna organizatorka događaja s iskustvom u planiranju venčanja i drugih posebnih događaja. Završila je kurs za organizatore venčanja, te ima iskustva u planiranju i koordinaciji različitih aspekata venčanja, uključujući izbor lokacije, dekoraciju, catering, muziku i fotografiju. Također, ima iskustva u radu s vjenčanim dizajnerima i floristima kako bi stvorila nezaboravne događaje.</p>
                 </div>
             </div>
              <div class="member">
@@ -41,7 +41,7 @@
                 <div class="opis">
                     <h2>Marija Simić</h2>
                     <h3>Koordinator venčanja</h3>
-                    <p>Marija je iskusna organizatorka događaja s višegodišnjim iskustvom u planiranju i koordiniranju različitih vrsta događaja, uključujući venčanja, korporativne događaje i dobrotvorne priredbe. Diplomirala je na Fakultetu dramskih umetnosti, što joj daje snažnu pozadinu u upravljanju scenskim događajima. Takođe je završila kurseve vezane za planiranje venčanja i ima iskustva u radu s venčanim dizajnerima, cvećarima.</p>
+                    <p>Marija je iskusna organizatorka događaja s višegodišnjim iskustvom u planiranju i koordiniranju različitih vrsta događaja, uključujući venčanja, korporativne događaje i dobrotvorne priredbe. Diplomirala je na Fakultetu dramskih umjetnosti, što joj daje snažnu pozadinu u upravljanju scenskim događajima. Također je završila kurseve vezane za planiranje venčanja i ima iskustva u radu s vjenčanim dizajnerima, cvjećarima.</p>
                 </div>
             </div>
         </div>
