@@ -52,3 +52,20 @@ exports.add_message = async (req, res) => {
     }
   };
   
+exports.get_chat_by_id = async (req, res) => {
+  try {
+    const {id} = req.body;
+    let chat = await Chat.findById(id);
+    if(!chat){
+      return res.status(404).json({ message: `Chat with id ${id} not found` });
+    }
+    let resp = {
+        id:chat._id,
+        messages:chat.messages
+    }
+    res.status(200).json(resp);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};

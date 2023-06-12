@@ -82,13 +82,26 @@ export default {
       if(!this.me) return;
       if(!user) return;
       this.chat = await axios.put('http://localhost:3000/chat/get_chat', 
-        { first_id:this.me._id,
+        { 
+          first_id:this.me._id,
           second_id:user._id
         });
       this.otherUser =user.name;
       this.messages=this.chat.data.messages;
       this.chat_id = this.chat.data.id;
       this.getMe();
+      setInterval(this.getNewMsgs, 200);
+    },
+    async getNewMsgs(){
+      try{
+        await axios.put('http://localhost:3000/chat/get_chat_by_id', 
+        { id:this.chat_id,}).then(v=>{
+          this.messages = v.data.messages;
+        });
+      }
+      catch(error){
+        console.log(error);
+      }
     },
     async send(msg){
       msg.user={
