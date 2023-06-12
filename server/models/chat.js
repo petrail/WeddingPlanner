@@ -3,17 +3,15 @@ const mongose = require("mongoose");
 
 const chatSchema = mongose.Schema(
   {
-    user_id:{
-      type:String,
-      required:true
+    member_ids:{
+      type:[String]
     },
-    coord_user_id:{
-      type:String,
-      required:true,
-    },
-    message: [{
+    messages: [{
       content:String,
-      user: String,
+      user: {
+        name: String,
+        id: String,
+      },
       date:String,
     }],
   },

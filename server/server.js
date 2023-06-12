@@ -11,6 +11,7 @@ const fs = require("fs");
 const AdminController = require("./controllers/admin");
 const BrideController = require("./controllers/bride");
 const CakeController = require("./controllers/cake");
+const ChatController = require("./controllers/chat");
 const CoordinatorController = require("./controllers/coordinator");
 const CosmeticSalonController = require("./controllers/cosmeticSalon");
 const DanceLessonsController = require("./controllers/danceLessons");
@@ -537,6 +538,9 @@ app.put("/other/:id", OtherController.put_other);
 //srvice
 app.put("/service/:id", ServiceController.put_service);
 app.post("/service/get_services_by_ids", ServiceController.get_services_by_ids);
+//chat
+app.put("/chat/get_chat", ChatController.get_chat);
+app.put("/chat/add_message", ChatController.add_message);
 //user
 app.put("/user/id/:id", UserController.put_user);
 app.put("/user/add_liked", UserController.add_liked);

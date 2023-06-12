@@ -50,7 +50,7 @@ export default {
     },
     openChat(contact){
       this.clicked=contact;
-      this.$emit('openChat',contact._id);
+      this.$emit('openChat',contact);
     },
     emits:['openChat','search','back']
   }

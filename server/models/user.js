@@ -29,9 +29,6 @@ const userSchema = mongose.Schema(
       contentType: String,
     },
     usluge: { type: [Object] },
-    chatted_with:{
-      type:[String],
-    },
     chats:{
       type:[String],
     },

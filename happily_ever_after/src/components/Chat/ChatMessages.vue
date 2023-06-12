@@ -1,12 +1,13 @@
 <template>
   <div class="chatContainer">
-  <h2>{{ currentActiveChat.otherUser }}</h2>
+  <h2>{{ otherUser }}</h2>
   <div class="chat-messages">
-    <div v-for="(message,index) in currentActiveChat.messages" :key="index" :class="message.me?'messageRow me':'messageRow other'">
+    <div v-for="(message,index) in currentActiveChat" :key="index" :class="isMyMessage(message)?'messageRow me':'messageRow other'">
       <div :class="message.me?'message myMsg':'message otherMsg'">
-        <h4 class="person" v-if="!message.me">{{ currentActiveChat.otherUser }} :</h4>
+        <h4 class="person" v-if="isMyMessage(message)">{{ message.user.name }} :</h4>
         <h4 class="person" v-else>Ja:</h4>
-        <h4 class="text">{{ message.message }}</h4>
+        <p>{{ message.date }}</p>
+        <h4 class="text">{{ message.content }}</h4>
       </div>
     </div>
   </div>
@@ -24,6 +25,14 @@ export default {
     currentActiveChat: {
       type: Object,
       default:null
+    },
+    otherUser:{
+      type:String,
+      default:''
+    },
+    myID:{
+      type:String,
+      default:''
     }
   },
   data(){
@@ -32,8 +41,23 @@ export default {
     }
   },
   methods:{
+    isMyMessage(msg){
+      return msg.user.id===this.myID;
+    },
+    formatDateTime(date) {
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear().toString();
+        const hour = date.getHours().toString().padStart(2, '0');
+        const minute = date.getMinutes().toString().padStart(2, '0');
+
+        const formattedDateTime = `${day}.${month}.${year} ${hour}:${minute}`;
+        return formattedDateTime;
+    },
     send(){
-      const newMsg = {message:this.msg, me:true}
+      let date = new Date();
+      date = this.formatDateTime(date);
+      const newMsg = {content:this.msg, date: date}
       this.msg='';
       this.$emit('send',newMsg);
     }

@@ -6,7 +6,7 @@
       <ChatContactList @back="back" @search = "search" :contacts="contacts" @openChat="openChat"/>
     </div>
     <div class="messages">
-      <ChatMessages @send="send" :currentActiveChat="currentActiveChat"/>
+      <ChatMessages v-if= "selected" @send="send" :otherUser="this.otherUser" :myID="this.myID" :currentActiveChat="this.messages"/>
     </div>
   </div>
     <Footer inStore/>
@@ -20,6 +20,7 @@ import ChatMessages from "../components/Chat/ChatMessages.vue";
 import Footer from '../components/Footer.vue';
 import axios from 'axios'
 import UserService from '../Service.js'
+import { registerRuntimeCompiler, toHandlers } from 'vue';
 
 export default {
     name: 'ChatView',
@@ -33,10 +34,11 @@ export default {
     return {
         messages: [],
         contacts: [],
-        currentActiveChat:{
-          messages:[{message:'Hej', me:true},{message:'Hej',me:false},{message:'Hej',me:false},{message:'Hej',me:true}],
-          otherUser:"Neko",
-        }
+        me:null,
+        myID:'',
+        otherUser:'',
+        selected:false,
+        chat_id:'',
     };
   },
   props:{
@@ -45,7 +47,13 @@ export default {
       default:true
     }
   },
-  mounted () {
+  async mounted () {
+    const token = localStorage.getItem('token')
+    const users = await UserService.getUsers(token)
+    if (users.length > 0) {
+      this.me = users[0];
+      this.myID = this.me._id;
+    }
     window.scrollTo(0, 0)
     this.getContacts();
   },
@@ -64,28 +72,35 @@ export default {
         console.log(error);
       }
     },
-    async openChat(id){
-      const token = localStorage.getItem('token')
-      const users = await UserService.getUsers(token)
-      let user='';
-      if (users.length > 0) {
-          user = users[0].name
-      }
-      console.log(contact);
+    async openChat(user){
+      this.selected=true;
+      if(!this.me) return;
+      if(!user) return;
+      this.chat = await axios.put('http://localhost:3000/chat/get_chat', 
+        { first_id:this.me._id,
+          second_id:user._id
+        });
+      this.otherUser =user.name;
+      this.messages=this.chat.data.messages;
+      this.chat_id = this.chat.data.id;
     },
-    send(msg){
-      this.currentActiveChat.messages.push(msg);
+    async send(msg){
+      msg.user={
+        name:this.me.name,
+        id:this.me._id,
+      }
+      if(!this.messages) this.messages=[];
+      this.messages.push(msg);
+      await axios.put('http://localhost:3000/chat/add_message', 
+        { 
+          id:this.chat_id,
+          msg:msg
+        });
     },
     async getContacts(){
       try{
-        const token = localStorage.getItem('token')
-        const users = await UserService.getUsers(token)
-        let chats=[];
-        if (users.length > 0) {
-          chats = users[0].chats;
-        }
         this.contacts = await axios.put('http://localhost:3000/user/get_users_with_ids', 
-          { ids:chats });
+          { ids:this.me.chats });
         this.contacts=this.contacts.data;
         }
       catch(error){
