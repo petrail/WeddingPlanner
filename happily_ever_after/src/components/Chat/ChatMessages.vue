@@ -4,7 +4,7 @@
   <div class="chat-messages">
     <div v-for="(message,index) in currentActiveChat" :key="index" :class="isMyMessage(message)?'messageRow me':'messageRow other'">
       <div :class="message.me?'message myMsg':'message otherMsg'">
-        <h4 class="person" v-if="isMyMessage(message)">{{ message.user.name }} :</h4>
+        <h4 class="person" v-if="!isMyMessage(message)">{{ message.user.name }} :</h4>
         <h4 class="person" v-else>Ja:</h4>
         <p>{{ message.date }}</p>
         <h4 class="text">{{ message.content }}</h4>

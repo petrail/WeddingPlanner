@@ -1,5 +1,6 @@
 <template>
   <TopBar short inStore :barText="'Otkrijte beskrajne mogućnosti za vaše venčanje'"/>
+  <img v-if="!loaded" class="rings" src="src/assets/navbar/wedding.png" />
   <div class="content">
     <div class="container">
       <h2>Lajkovane usluge</h2>
@@ -52,7 +53,8 @@ export default({
       per_page:12,
       can_go_back:false,
       can_go_next:true,
-      user_id:''
+      user_id:'',
+      loaded:false,
     } 
   },
   async mounted () {
@@ -125,9 +127,12 @@ export default({
     },
     async fetchItems(){
       try{
-        this.predmeti = await axios.post('http://localhost:3000/service/get_services_by_ids', 
-        { ids:this.liked });
-        this.predmeti = this.predmeti.data;
+        this.loaded=false;
+        await axios.post('http://localhost:3000/service/get_services_by_ids', 
+        { ids:this.liked }).then(v=>{
+          this.predmeti = v.data;
+          this.loaded=true;
+        });
       }
       catch(error){
         console.log(error.response.data);
@@ -139,6 +144,22 @@ export default({
 
 
 <style scoped>
+.rings{
+  animation:rotate 2s linear infinite;
+  position:absolute;
+  top:50%;
+  left:48%;
+  width:50px;
+  height:50px;
+}
+@keyframes rotate{
+  0%{
+    transform:rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
 .uputstvo{
   margin-top: 5vh;
   margin-bottom: 5vh;

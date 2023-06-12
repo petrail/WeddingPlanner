@@ -1,9 +1,10 @@
 <template>
     <TopBar short inStore :barText="'PORUKE'"/>
+    <img v-if="!loaded" class="rings" src="src/assets/navbar/wedding.png" />
 <div class="app">
   <!-- <h1>Chat App</h1> -->
     <div class="contacts">
-      <ChatContactList @back="back" @search = "search" :contacts="contacts" @openChat="openChat"/>
+      <ChatContactList v-if="loaded" @back="back" @search = "search" :contacts="contacts" @openChat="openChat"/>
     </div>
     <div class="messages">
       <ChatMessages v-if= "selected" @send="send" :otherUser="this.otherUser" :myID="this.myID" :currentActiveChat="this.messages"/>
@@ -39,6 +40,7 @@ export default {
         otherUser:'',
         selected:false,
         chat_id:'',
+        loaded:false,
     };
   },
   props:{
@@ -48,7 +50,6 @@ export default {
     }
   },
   async mounted () {
-    this.getMe();
     window.scrollTo(0, 0)
     this.getContacts();
   },
@@ -104,9 +105,19 @@ export default {
     },
     async getContacts(){
       try{
-        this.contacts = await axios.put('http://localhost:3000/user/get_users_with_ids', 
-          { ids:this.me.chats });
-        this.contacts=this.contacts.data;
+        this.loaded=false;
+        const token = localStorage.getItem('token')
+        const users = await UserService.getUsers(token)
+        if (users.length > 0) {
+          this.me = users[0];
+          this.myID = this.me._id;
+        }
+        await axios.put('http://localhost:3000/user/get_users_with_ids', 
+          { ids:this.me.chats }).then(v=>{
+            this.loaded=true;
+            this.contacts=v.data;
+            
+          });
         }
       catch(error){
         console.log(error)
@@ -116,6 +127,22 @@ export default {
 };
 </script>
 <style scoped>
+.rings{
+  animation:rotate 2s linear infinite;
+  position:absolute;
+  top:40%;
+  left:50%;
+  width:50px;
+  height:50px;
+}
+@keyframes rotate{
+  0%{
+    transform:rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
 .app {
   margin-top:40vh;
   width:100vw;

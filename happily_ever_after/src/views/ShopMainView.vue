@@ -1,5 +1,6 @@
 <template>
   <TopBar short inStore :barText="'Otkrijte beskrajne mogućnosti za vaše venčanje'"/>
+  <img v-if="!loaded" class="rings" src="src/assets/navbar/wedding.png" />
   <div class="content">
     <div v-if="clicked" class="back">
         <button class="link" @click="backToCateg"> 
@@ -93,7 +94,8 @@ export default({
       maxPrice:null,
       subservice:null,
       allSubservices:[],
-      user_id:''
+      user_id:'',
+      loaded:true,
 
     } 
   },
@@ -172,6 +174,7 @@ export default({
     },
     async fetchItems(){
       try{
+        this.loaded=false;
         let body={};
         body.type=this.type;
         body.startIndex = this.curr_page*this.per_page;
@@ -182,10 +185,12 @@ export default({
         if(this.maxPrice) body.maxPrice = this.maxPrice;
         if(this.subservice) body.subservice = this.subservice;
 
-        this.predmeti = await axios.put('http://localhost:3000/service/get_service_filtered',body);
-        this.can_go_back=this.curr_page>0;
-        this.can_go_next = this.predmeti.data.has_more;
-        this.predmeti = this.predmeti.data.predmeti;
+        await axios.put('http://localhost:3000/service/get_service_filtered',body).then(v=>{
+          this.predmeti = v.data.predmeti;
+          this.can_go_back = this.curr_page>0;
+          this.can_go_next = v.data.has_more;
+          this.loaded=true;
+        });
       }
       catch(error){
         console.log(error);
@@ -265,6 +270,22 @@ export default({
 
 
 <style scoped>
+.rings{
+  animation:rotate 2s linear infinite;
+  position:absolute;
+  top:70%;
+  left:50%;
+  width:50px;
+  height:50px;
+}
+@keyframes rotate{
+  0%{
+    transform:rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
 .uputstvo{
   margin-top: 5vh;
   margin-bottom: 5vh;
