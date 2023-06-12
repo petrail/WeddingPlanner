@@ -1,5 +1,5 @@
 <template>
-    <div class="buttons">
+    <div v-if="has_pagination" class="buttons">
         <button :class="!can_go_back?'disabled':''" :disabled="!can_go_back" @click="back">
             <img src="src/assets/prev.png"/>
         </button>
@@ -9,7 +9,7 @@
     </div>
     <div class="listContainer" v-if="itemOpen==null">
         <div class="photo" v-for="(pred,index) in predmeti" :key="index">
-            <CategoryListItem @open="open" @add="addToLiked" @remove="removeFromLiked" :pred="pred" :liked="isLiked(pred)" :reserved="isReserved(pred)"/>
+            <CategoryListItem @open="open" @like="addToLiked" @unlike="removeFromLiked" :pred="pred" :liked="isLiked(pred)" :reserved="isReserved(pred)"/>
         </div>
     </div>
     <div v-if="itemOpen!=null" class="dark">
@@ -18,8 +18,8 @@
                               @review="review" open
                               @reserve="reserve" 
                               @close="closeItem" 
-                              @add="addToLiked" 
-                              @remove="removeFromLiked" 
+                              @like="addToLiked" 
+                              @unlike="removeFromLiked" 
                               :liked="isLiked(itemOpen)" 
                               :reserved="isReserved(itemOpen)" 
                               :pred="itemOpen"
@@ -57,6 +57,10 @@ import UserService from '../../Service.js'
         can_go_next:{
             type:Boolean,
             default:true,
+        },
+        has_pagination:{
+            type:Boolean,
+            default:true,
         }
     },
     data(){
@@ -81,7 +85,7 @@ import UserService from '../../Service.js'
         },
         isLiked(pred) {
             if(this.liked==null) return false;
-            return this.liked.includes(pred.id);
+            return this.liked.includes(pred._id);
         },
         back(){
           this.$emit('back');  
@@ -93,11 +97,10 @@ import UserService from '../../Service.js'
         //Mozda nije najbolje da se pamti sta je likeovano po ID-u, s obzirom da su velike sanse da ce npr restoran i bend da imaju isti ID
         //Mozda bolje po imenu
         addToLiked(id){
-            this.liked.push(id);
+            this.$emit('like',id);
         },
         removeFromLiked(id){
-            const index = this.liked.indexOf(id);
-            this.liked.splice(index, 1);
+            this.$emit('unlike',id);
         },
         async open(pred){
             try{
@@ -126,7 +129,7 @@ import UserService from '../../Service.js'
         },
         isReserved(pred){
             if(this.reserved==null) return false;
-            return this.reserved.includes(pred.id);
+            return this.reserved.includes(pred._id);
         },
         async reserve(id,date){
             try{
@@ -141,6 +144,7 @@ import UserService from '../../Service.js'
                     reserved_date:date,
                 }
                 await axios.put('http://localhost:3000/service/add_reserve_date', body);
+                this.$emit('reserve',id);
                 this.date_taken=false;
             }
             catch(error){
@@ -166,7 +170,7 @@ import UserService from '../../Service.js'
             }
         }
     },
-    emits:['next','back'],
+    emits:['next','back','like','unlike','reserve'],
 };
   </script>
   

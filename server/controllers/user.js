@@ -50,6 +50,76 @@ const put_user = async (req, res) => {
   }
 };
 
+const add_liked = async (req, res) => {
+  try {
+    const { user_id, service_id } = req.body;
+    const user = await User.findById(user_id);
+    if (!user) {
+      return res.status(404).json({ message: `User with id ${user_id} not found` });
+    }
+    if(user.liked.includes(service_id)){
+      return res.status(404).json({ message: `Service already liked!` });
+    }
+    let updated = user;
+    if(updated.liked==null)
+      updated.liked=[];
+    updated.liked.push(service_id);
+
+    await User.findByIdAndUpdate(user_id, updated);
+
+    const updatedUser = await User.findById(user_id);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const add_reserved = async (req, res) => {
+  try {
+    const { user_id, service_id } = req.body;
+    const user = await User.findById(user_id);
+    if (!user) {
+      return res.status(404).json({ message: `User with id ${user_id} not found` });
+    }
+    if(user.reserved.includes(service_id)){
+      return res.status(404).json({ message: `Service already reserved!` });
+    }
+    let updated = user;
+    if(updated.reserved==null)
+      updated.reserved=[];
+    updated.reserved.push(service_id);
+
+    await User.findByIdAndUpdate(user_id, updated);
+
+    const updatedUser = await User.findById(user_id);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const remove_liked = async (req, res) => {
+  try {
+    const { user_id,service_id } = req.body;
+    const user = await User.findById(user_id);
+    if (!user) {
+      return res.status(404).json({ message: `User with id ${user_id} not found` });
+    }
+    if(!user.liked.includes(service_id)){
+      return res.status(404).json({ message: `Service not liked!` });
+    }
+    let updated = user;
+    const index = updated.liked.indexOf(service_id);
+    updated.liked.splice(index, 1);
+
+    await User.findByIdAndUpdate(user_id, updated);
+
+    const updatedUser = await User.findById(user_id);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 const delete_user = async (req, res) => {
   try {
@@ -224,4 +294,7 @@ module.exports = {
   post_picture_for_user,
   registerUser,
   get_user_by_email,
+  add_liked,
+  add_reserved,
+  remove_liked
 };

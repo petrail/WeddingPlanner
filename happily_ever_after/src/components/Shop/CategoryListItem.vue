@@ -142,7 +142,6 @@
     },
     data(){
         return{
-            localLiked:false,
             review:{
                 comment:'',
                 grade:0,
@@ -158,17 +157,16 @@
         }
     },
     mounted(){
-        this.localLiked=this.liked;
         this.locPred = this.pred;
         //this.added_review = ! username in pred.reviews - ne znam gde da nadjem username
     },
     methods:{
         like(){
-            this.localLiked=!this.localLiked;
-            if(this.localLiked)
-                this.$emit('add',this.pred.id);
+            console.log(this.pred._id);
+            if(!this.liked)
+                this.$emit('like',this.pred._id);
             else
-                this.$emit('remove',this.pred.id);
+                this.$emit('unlike',this.pred._id);
         },
         select_month(){
             switch(this.mesec){
@@ -218,13 +216,13 @@
     },
     computed:{
         likeImg:function(){
-            if (this.localLiked)
+            if (this.liked)
                 return 'src/assets/liked.png';
             else 
                 return 'src/assets/not-liked.png'
         }
     },
-    emits:['add','remove','open','close','review','reserve'],
+    emits:['like','unlike','open','close','review'],
       
   };
   </script>

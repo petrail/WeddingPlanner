@@ -536,8 +536,12 @@ app.put("/restaurant/:id", RestaurantController.put_restaurant);
 app.put("/other/:id", OtherController.put_other);
 //srvice
 app.put("/service/:id", ServiceController.put_service);
+app.post("/service/get_services_by_ids", ServiceController.get_services_by_ids);
 //user
 app.put("/user/id/:id", UserController.put_user);
+app.put("/user/add_liked", UserController.add_liked);
+app.put("/user/add_reserved", UserController.add_reserved);
+app.put("/user/remove_liked", UserController.remove_liked);
 // end update/put methods
 
 //----------------------------------------------------------------------------------------------------------------------------

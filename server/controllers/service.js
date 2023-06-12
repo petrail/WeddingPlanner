@@ -29,6 +29,26 @@ exports.delete_service_by_id = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.get_services_by_ids = async (req, res) => {
+  try {
+    const { ids } = req.body;
+    const services = await Service.find({ _id: { $in: ids } });
+    let to_return = [];
+    services.forEach((item) => {
+      to_return.push({
+        _id: item._id,
+        name: item.name,
+        img: item.img,
+        servicePrice: item.servicePrice
+      });
+    });
+    res.status(200).json(to_return);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.get_service_by_id = async (req, res) => {
   try {
     const { id } = req.params;

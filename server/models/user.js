@@ -31,7 +31,13 @@ const userSchema = mongose.Schema(
     usluge: { type: [Object] },
     chats:[{
       chat_id:String,
-    }]
+    }],
+    liked:{
+      type:[String],
+    },
+    reserved:{
+      type:[String],
+    },
   },
   {
     timestamps: true,

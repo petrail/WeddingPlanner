@@ -2,7 +2,7 @@
   <TopBar short inStore :barText="'Otkrijte beskrajne mogućnosti za vaše venčanje'"/>
   <div class="content">
     <div class="container">
-      <h2>Lajkovane usluge</h2>
+      <h2>Rezervisane usluge</h2>
       <img class="divide" src="../assets/Divider.png"/>
       <div class="main">
         <div class="list"> 
@@ -36,7 +36,7 @@ import Footer from '../components/Footer.vue';
 import UserService from '../Service.js'
 
 export default({
-  name:"LikedView",
+  name:"ReservedView",
   components:{
     TopBar, Gallery, SearchBar, CategoryFilter, CategoryList, Footer
   },
@@ -126,7 +126,7 @@ export default({
     async fetchItems(){
       try{
         this.predmeti = await axios.post('http://localhost:3000/service/get_services_by_ids', 
-        { ids:this.liked });
+        { ids:this.reserved });
         this.predmeti = this.predmeti.data;
       }
       catch(error){

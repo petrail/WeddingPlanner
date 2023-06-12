@@ -29,7 +29,17 @@
     <div class="main">
       <div class="filter"><CategoryFilter :subservices="allSubservices" @filter="filter"/></div> 
       <div class="list"> 
-        <CategoryList @back="back()" @next="next()" :can_go_back="this.can_go_back" :can_go_next="this.can_go_next" :predmeti="this.predmeti" :liked="this.liked" :reserved="this.reserved"/>
+        <CategoryList 
+            @back="back()" 
+            @next="next()" 
+            @like="addToLiked"
+            @unlike="removeFromLiked"
+            @reserve="addToReserved"
+            :can_go_back="this.can_go_back" 
+            :can_go_next="this.can_go_next" 
+            :predmeti="this.predmeti" 
+            :liked="this.liked" 
+            :reserved="this.reserved"/>
       </div>
     </div>
   </div>
@@ -47,6 +57,7 @@ import SearchBar from '../components/Shop/SearchBar.vue'
 import CategoryFilter from '../components/Shop/CategoryFilter.vue'
 import CategoryList from '../components/Shop/CategoryList.vue'
 import Footer from '../components/Footer.vue';
+import UserService from '../Service.js'
 export default({
   name:"ShopMainView",
   components:{
@@ -82,6 +93,7 @@ export default({
       maxPrice:null,
       subservice:null,
       allSubservices:[],
+      user_id:''
 
     } 
   },
@@ -97,10 +109,67 @@ export default({
       console.log('Error:', error.response.data);
     }
   },
-  mounted () {
-    window.scrollTo(0, 0)
+  async mounted () {
+    window.scrollTo(0, 0);
   },
   methods:{
+    async addToLiked(id){
+      const token = localStorage.getItem('token')
+      const users = await UserService.getUsers(token)
+      let user='';
+      if (users.length > 0) {
+          user = users[0]._id;
+      }
+      if(this.liked.includes(id)) return;
+      this.liked.push(id);
+      try {
+        await axios.put('http://localhost:3000/user/add_liked', {
+          user_id:user,
+          service_id:id,
+        });
+      } catch (error) {
+        console.log('Error:', error.response.data);
+      }
+    },
+    async addToReserved(id){
+      const token = localStorage.getItem('token')
+      const users = await UserService.getUsers(token)
+      
+      let user='';
+      if (users.length > 0) {
+          user = users[0]._id;
+      }
+      if(this.reserved.includes(id)) return;
+      this.reserved.push(id);
+      try {
+        await axios.put('http://localhost:3000/user/add_reserved', {
+          user_id: user,
+          service_id:id,
+        });
+      } catch (error) {
+        console.log('Error:', error.response.data);
+      }
+    },
+    async removeFromLiked(id){
+      const token = localStorage.getItem('token')
+      const users = await UserService.getUsers(token)
+      let user='';
+      if (users.length > 0) {
+          user = users[0]._id;
+      }
+      if(!this.liked.includes(id)) return;
+      const index = this.liked.indexOf(id);
+      this.liked.splice(index, 1);
+      try {
+        const resp = await axios.put('http://localhost:3000/user/remove_liked', {
+          user_id:user,
+          service_id:id,
+        });
+        console.log(resp);
+      } catch (error) {
+        console.log('Error:', error.response.data);
+      }
+    },
     async fetchItems(){
       try{
         let body={};
@@ -162,6 +231,12 @@ export default({
         }
         this.fetchItems();
         this.getSubservices();
+        const token = localStorage.getItem('token')
+        const users = await UserService.getUsers(token)
+        if (users.length > 0) {
+            this.liked = users[0].liked;
+            this.reserved = users[0].reserved;
+        }
       }catch (error) {
         console.log('Error:', error.response.data);
       }
