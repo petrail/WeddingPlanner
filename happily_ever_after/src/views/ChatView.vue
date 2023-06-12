@@ -48,16 +48,20 @@ export default {
     }
   },
   async mounted () {
-    const token = localStorage.getItem('token')
-    const users = await UserService.getUsers(token)
-    if (users.length > 0) {
-      this.me = users[0];
-      this.myID = this.me._id;
-    }
+    this.getMe();
     window.scrollTo(0, 0)
     this.getContacts();
   },
+
   methods: {
+    async getMe(){
+      const token = localStorage.getItem('token')
+      const users = await UserService.getUsers(token)
+      if (users.length > 0) {
+        this.me = users[0];
+        this.myID = this.me._id;
+      }
+    },
     back(){
       this.getContacts();
     },
@@ -83,6 +87,7 @@ export default {
       this.otherUser =user.name;
       this.messages=this.chat.data.messages;
       this.chat_id = this.chat.data.id;
+      this.getMe();
     },
     async send(msg){
       msg.user={
