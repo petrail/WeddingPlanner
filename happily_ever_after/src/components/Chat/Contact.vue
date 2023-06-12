@@ -1,10 +1,9 @@
 <template>
     <div @click="openChat()" :class="clicked===contact?'contactContainer clicked':'contactContainer'">
-        <div class="img" v-bind:style="{ backgroundImage: 'url(' + contact.contactImg + ')' }">
+        <div class="img" :style="`background-image: url(http://localhost:3000${contact.img})`">
         </div>
         <div v-if="!this.isSmall" class="podaci">
-            <h2>{{contact.contactName}}</h2>
-            <p>{{contact.lastMsg}}</p>
+            <h2>{{contact.name}}</h2>
         </div>
     </div>
     

@@ -1,8 +1,11 @@
 <template>
   <div class="chatListContainer">
     <h1>Kontakti</h1>
-    <SearchBar/>
-    <div class="contact" v-for="(contact,index) in this.contactList" :key="index">
+    <button class="link" @click="back" v-if="this.searched"> 
+        <img class="backImg" src="src/assets/back.png"/>
+    </button>
+    <SearchBar @search="search"/>
+    <div class="contact" v-for="(contact,index) in contacts" :key="index">
         <Contact :clicked="this.clicked" @openChat="openChat(contact)" :contact="contact"/>
     </div>
   </div>
@@ -13,38 +16,62 @@ import Contact from './Contact.vue'
 import SearchBar from '../Shop/SearchBar.vue'
 export default {
     name:'ContactList',
-components:{
-    Contact, SearchBar
-},
+  components:{
+      Contact, SearchBar
+  },
+  props:{
+    contacts:{
+      type:Array,
+      default:[],
+    }
+  },
   data() {
     return {
       newMessage: "",
-      contactList:[
-        {contactImg:'src/assets/services/serv1.jpeg',contactName:'Neko Nekic',lastMsg:'Hej!'},
-        {contactImg:'src/assets/services/serv1.jpeg',contactName:'Neko Nekic',lastMsg:'Hej!'},
-        {contactImg:'src/assets/services/serv1.jpeg',contactName:'Neko Nekic',lastMsg:'Hej!'},
-        {contactImg:'src/assets/services/serv1.jpeg',contactName:'Neko Nekic',lastMsg:'Hej!'},],
-      clicked:null
+      clicked:null,
+      searched:false,
     };
   },
   created(){
-    this.clicked=this.contactList[0];
+    this.clicked=this.contacts[0];
   },
   methods: {
+    back(){
+      this.searched=false;
+      this.$emit('back');
+    },
+    search(searchQuery){
+      this.searched=true;
+      this.$emit('search',searchQuery);
+    },
     sendMessage() {
       this.$emit("new-message", this.newMessage);
       this.newMessage = "";
     },
     openChat(contact){
       this.clicked=contact;
-      this.$emit('openChat',contact);
+      this.$emit('openChat',contact._id);
     },
-    emits:['openChat']
+    emits:['openChat','search','back']
   }
 };
 </script>
 
 <style>
+.backImg{
+  color:var(--dark-purple);
+  height: 30px;
+}
+.link{
+  width:100%;
+  color:var(--font-dark);
+  border:0;
+  background-color: transparent;
+  transition: all 1s ease;
+  display:flex;
+  align-items: center;
+  justify-content: flex-start;
+}
 .chatListContainer{
     max-height:80vh;
     width:100%;

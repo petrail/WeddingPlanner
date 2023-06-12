@@ -23,6 +23,42 @@ const get_all_users = async (req, res) => {
   }
 };
 
+const filter_users_name = async (req, res) => {
+  try {
+    const { name } = req.body;
+    const users = await User.find({ name: { $regex: name, $options: 'i' } });
+    let to_return = [];
+    users.forEach((user) => {
+      to_return.push({
+        _id: user._id,
+        name: user.name,
+        img: user.picture
+      });
+    });
+    res.status(200).json(to_return);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const get_users_with_ids = async (req, res) => {
+  try {
+    const { ids } = req.body;
+    const users = await User.find({ _id: { $in: ids } });
+    let to_return = [];
+    users.forEach((user) => {
+      to_return.push({
+        _id: user._id,
+        name: user.name,
+        img: user.picture
+      });
+    });
+    res.status(200).json(to_return);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const put_user = async (req, res) => {
   try {
     const { id } = req.params;
@@ -287,6 +323,7 @@ module.exports = {
   post_user,
   put_user,
   delete_user,
+  get_users_with_ids,
   get_user_by_id,
   get_user_by_name,
   get_user_by_username,
@@ -296,5 +333,6 @@ module.exports = {
   get_user_by_email,
   add_liked,
   add_reserved,
-  remove_liked
+  remove_liked,
+  filter_users_name
 };

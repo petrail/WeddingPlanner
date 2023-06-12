@@ -29,10 +29,10 @@ const userSchema = mongose.Schema(
       contentType: String,
     },
     usluge: { type: [Object] },
-    chats:[{
-      chat_id:String,
-    }],
-    liked:{
+    chatted_with:{
+      type:[String],
+    },
+    chats:{
       type:[String],
     },
     reserved:{

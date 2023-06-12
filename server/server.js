@@ -542,6 +542,8 @@ app.put("/user/id/:id", UserController.put_user);
 app.put("/user/add_liked", UserController.add_liked);
 app.put("/user/add_reserved", UserController.add_reserved);
 app.put("/user/remove_liked", UserController.remove_liked);
+app.put("/user/get_users_with_ids", UserController.get_users_with_ids);
+app.put("/user/filter_users_name", UserController.filter_users_name);
 // end update/put methods
 
 //----------------------------------------------------------------------------------------------------------------------------

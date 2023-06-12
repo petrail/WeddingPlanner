@@ -3,7 +3,7 @@
 <div class="app">
   <!-- <h1>Chat App</h1> -->
     <div class="contacts">
-      <ChatContactList @openChat="openChat"/>
+      <ChatContactList @back="back" @search = "search" :contacts="contacts" @openChat="openChat"/>
     </div>
     <div class="messages">
       <ChatMessages @send="send" :currentActiveChat="currentActiveChat"/>
@@ -18,6 +18,8 @@ import TopBar from '../components/TopBar.vue'
 import ChatContactList from "../components/Chat/ChatContactList.vue";
 import ChatMessages from "../components/Chat/ChatMessages.vue";
 import Footer from '../components/Footer.vue';
+import axios from 'axios'
+import UserService from '../Service.js'
 
 export default {
     name: 'ChatView',
@@ -30,7 +32,7 @@ export default {
   data() {
     return {
         messages: [],
-        users: [],
+        contacts: [],
         currentActiveChat:{
           messages:[{message:'Hej', me:true},{message:'Hej',me:false},{message:'Hej',me:false},{message:'Hej',me:true}],
           otherUser:"Neko",
@@ -45,15 +47,50 @@ export default {
   },
   mounted () {
     window.scrollTo(0, 0)
+    this.getContacts();
   },
   methods: {
-    openChat(contact){
-      //Na osnovu contacta pribavi chat sa baze i stavi
-      //currentActiveChat = getChat();
+    back(){
+      this.getContacts();
+    },
+    async search(searchQuery){
+      try{
+        if(searchQuery==="") return;
+        this.contacts = await axios.put('http://localhost:3000/user/filter_users_name', 
+            { name:searchQuery });
+        this.contacts=this.contacts.data;
+      }
+      catch(error){
+        console.log(error);
+      }
+    },
+    async openChat(id){
+      const token = localStorage.getItem('token')
+      const users = await UserService.getUsers(token)
+      let user='';
+      if (users.length > 0) {
+          user = users[0].name
+      }
       console.log(contact);
     },
     send(msg){
       this.currentActiveChat.messages.push(msg);
+    },
+    async getContacts(){
+      try{
+        const token = localStorage.getItem('token')
+        const users = await UserService.getUsers(token)
+        let chats=[];
+        if (users.length > 0) {
+          chats = users[0].chats;
+        }
+        this.contacts = await axios.put('http://localhost:3000/user/get_users_with_ids', 
+          { ids:chats });
+        this.contacts=this.contacts.data;
+        }
+      catch(error){
+        console.log(error)
+      }
     }
   }
 };

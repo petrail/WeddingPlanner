@@ -176,10 +176,9 @@ exports.get_service_filtered = async (req, res) => {
   try {
     const { name, minPrice, maxPrice, type, subservice, startIndex, count, sort } = req.body;
 
-    // Constructing the filter object
     const filter = {};
     if (name) {
-      filter.name = { $regex: name, $options: 'i' }; // Case-insensitive name search
+      filter.name = { $regex: name, $options: 'i' };
     }
     if (minPrice && maxPrice) {
       filter['servicePrice.price'] = { $gte: minPrice, $lte: maxPrice };
