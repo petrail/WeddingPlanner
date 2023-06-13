@@ -241,15 +241,9 @@ const post_picture_for_user = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-
-    // Access the file buffer from the multer upload
-    const pictureBuffer = req.file.buffer;
-
-    // Save the picture buffer to the user's picture field in the database
-    user.picture = pictureBuffer;
+    console.log(req.file.filename);
+    user.picture = req.file.filename;
     await user.save();
-    const imageUrl = `http://localhost:3000/images/${req.file.filename}`;
-
     res.status(200).json({ message: "Picture updated successfully" });
   } catch (error) {
     console.log(error);

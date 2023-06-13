@@ -133,8 +133,7 @@ export default {
           })
           .then((response) => {
             // Handle the response after successful upload
-            console.log('Image uploaded successfully')
-            console.log(this.posts.userId)
+            console.log(response.data);
           })
           .catch((error) => {
             // Handle the error if the upload fails
