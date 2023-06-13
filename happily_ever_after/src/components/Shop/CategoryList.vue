@@ -281,7 +281,7 @@ img{
       .photo{
           width:31.3%;
           margin-right: 2%;
-          height:20vh;
+          height:25vh;
           margin-bottom: 2vh;
       }
       .srce{

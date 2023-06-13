@@ -171,6 +171,7 @@ app.put("/service/:id", ServiceController.put_service);
 app.post("/service/get_services_by_ids", ServiceController.get_services_by_ids);
 //chat
 app.put("/chat/get_chat", ChatController.get_chat);
+app.put("/chat/get_chat_by_id", ChatController.get_chat_by_id);
 app.put("/chat/add_message", ChatController.add_message);
 //user
 app.put("/user/id/:id", UserController.put_user);

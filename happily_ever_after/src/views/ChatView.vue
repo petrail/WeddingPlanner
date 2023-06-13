@@ -41,6 +41,7 @@ export default {
         selected:false,
         chat_id:'',
         loaded:false,
+        interval_set:false,
     };
   },
   props:{
@@ -66,6 +67,17 @@ export default {
     back(){
       this.getContacts();
     },
+    async getNewMsgs(){
+      try{
+        await axios.put('http://localhost:3000/chat/get_chat_by_id', 
+        { id:this.chat_id,}).then(v=>{
+          this.messages = v.data.messages;
+        });
+      }
+      catch(error){
+        console.log(error);
+      }
+    },
     async search(searchQuery){
       try{
         if(searchQuery==="") return;
@@ -89,6 +101,10 @@ export default {
       this.messages=this.chat.data.messages;
       this.chat_id = this.chat.data.id;
       this.getMe();
+      if(!this.interval_set) {
+        setInterval(this.getNewMsgs, 200);
+        this.interval_set=true;
+      }
     },
     async send(msg){
       msg.user={
