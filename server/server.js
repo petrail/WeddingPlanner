@@ -22,7 +22,7 @@ const RestaurantController = require("./controllers/restaurant");
 const UserController = require("./controllers/user");
 const ServiceController = require("./controllers/service");
 const User = require("./models/user");
-const app = express();
+const app = express();  
 const CosmeticSalonService = require("./models/service");
 const Service = require("./models/service");
 const cors = require("cors");
@@ -226,11 +226,26 @@ app.get("/users/username/:username", UserController.get_user_by_username);
 app.delete("/user/:username", UserController.delete_user_by_username);
 app.delete("/user/id/:id", UserController.delete_user);
 app.get("/users/id/:id", UserController.get_user_by_id);
+
+const imgStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../img/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+const imgUpload = multer({ imgStorage });
+
 app.put(
   "/users/:id/picture",
-  upload.single("picture"),
-  UserController.post_picture_for_user
-);
+  imgUpload.single('file'), async (req, res) => {
+  try {
+    await UserController.post_picture_for_user(req,res);
+  } catch (error) {
+    console.error('Error uploading file:', error);
+  }
+});
 app.get("/user/email/:email", UserController.get_user_by_email);
 
 //user end

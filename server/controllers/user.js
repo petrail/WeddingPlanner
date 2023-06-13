@@ -241,10 +241,9 @@ const post_picture_for_user = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    console.log(req.file.filename);
-    user.picture = req.file.filename;
+    user.picture = req.file.buffer;
     await user.save();
-    res.status(200).json({ message: "Picture updated successfully" });
+    res.status(200).json({ img: user.picture });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });

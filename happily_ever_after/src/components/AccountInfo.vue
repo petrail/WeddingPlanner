@@ -1,10 +1,10 @@
 <template>
   <div class="acccontainer">
-    <div class="photo">
-      <input class="file" type="file" accept="image/*" @change="handleFileUpload" />
-      <button @click="uploadImage">Upload</button>
-      <img v-if="imageUrl" :src="imageUrl" alt="Uploaded Image" />
-    </div>
+    <form class="photo"  enctype="multipart/form-data" >
+      <input name="file" class="file" type="file" accept="image/*" @change="handleFileUpload" />
+    </form>
+    <button @click="uploadImage">Upload</button>
+    <img v-if="this.imageUrl" :src="this.imageUrl" alt="Uploaded Image" />
     <div class="head row">
       <div class="title">
         <h3>VAŠ NALOG</h3>
@@ -57,7 +57,8 @@ export default {
   data() {
     return {
       posts: {},
-      error: ''
+      error: '',
+      imgUrl:''
     }
   },
   async created() {
@@ -99,17 +100,11 @@ export default {
     },
 
     handleFileUpload(event) {
-      console.log(event)
-      console.log('selected fajl kroz event: ' + event.target.files[0])
       this.selectedFile = event.target.files[0]
+      console.log(this.selectedFile)
     },
     uploadImage() {
       if (this.selectedFile) {
-        console.log('selected file je: ' + this.selectedFile)
-        console.log(JSON.stringify(this.selectedFile))
-        const formData = new FormData()
-        formData.append('picture', this.selectedFile)
-        console.log(this.posts)
         const userEmail = localStorage.getItem('token')
 
         console.log('from cookie' + userEmail)
@@ -124,16 +119,24 @@ export default {
             console.log('User ID: ' + this.posts.userId)
 
             const formData = new FormData()
-            formData.append('picture', this.selectedFile)
+            formData.append('file', this.selectedFile)
 
             return axios.put(
-              'http://localhost:3000/users/' + this.posts.userId + '/picture',
-              formData
+              'http://localhost:3000/users/' + this.posts.userId + '/picture',formData,{
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              }
             )
           })
           .then((response) => {
-            // Handle the response after successful upload
-            console.log(response.data);
+            let imageData = response.data.img;
+            console.log(imageData);
+            const uint8Array = new Uint8Array(imageData);
+            const blob = new Blob([uint8Array], { type: 'image/png' });
+            console.log(imageData);
+            this.imgUrl = URL.createObjectURL(blob);
+            console.log(this.imgUrl);
           })
           .catch((error) => {
             // Handle the error if the upload fails
