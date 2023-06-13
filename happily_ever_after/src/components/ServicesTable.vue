@@ -4,13 +4,12 @@
     <hr />
     <p class="error" v-if="error">{{ error }}</p>
     <div class="button-container">
-      <router-link to="/addServicePage" class="add-button">Dodaj uslugu</router-link>
+      <button @click="addService()" class="delete-button">Dodaj</button>
     </div>
     <div class="table-container">
       <table class="users-table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Naziv</th>
             <th>Tip</th>
             <th>Prodavnica</th>
@@ -22,7 +21,6 @@
         </thead>
         <tbody>
           <tr v-for="service in services" :key="service._id">
-            <td>{{ service._id }}</td>
             <td>{{ service.name }}</td>
             <td>{{ service.type }}</td>
             <td>{{ service.store }}</td>
@@ -70,14 +68,18 @@ export default {
     },
     changeService(id) {
       this.$router.push({ path: `/changeServicePage/${id}` })
+    },
+    addService() {
+      this.$router.push({ path: `/addServicePage` })
     }
   }
 }
 </script>
 
 <style scoped>
-div.container {
-  max-width: 1315px; /* Increased max-width value */
+.container {
+  width: 100%;
+  padding:5vw;
   margin: 0 auto;
   padding-bottom: 5%;
 }
@@ -115,7 +117,8 @@ table.users-table th {
   font-size: 13px;
 }
 
-.delete-button {
+.delete-button,
+.add-button {
   background-color: #c38a77;
   color: white;
   border: none;
@@ -124,30 +127,18 @@ table.users-table th {
   cursor: pointer;
 }
 
-.delete-button:hover {
-  background-color: rgb(208, 77, 182);
+.delete-button:hover,
+.add-button {
+  background-color: #c38a77;
 }
 
-.delete-button:focus {
+.delete-button:focus,
+.add-button {
   outline: none;
-  box-shadow: 0 0 0 2px rgb(228, 87, 199);
+  box-shadow: 0 0 0 2px #c38a77;
 }
 
 div.button-container {
   margin-bottom: 15px;
-}
-
-button.add-button {
-  background-color: #c38a77; /* Updated to pink color */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 14px;
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-button.add-button:hover {
-  background-color: rgb(208, 77, 182); /* Updated hover color */
 }
 </style>

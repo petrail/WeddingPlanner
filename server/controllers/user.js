@@ -1,6 +1,4 @@
 const User = require("../models/user");
-const userService = require("../service/userService");
-//const userService = require("../service/userService")
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 
@@ -26,13 +24,13 @@ const get_all_users = async (req, res) => {
 const filter_users_name = async (req, res) => {
   try {
     const { name } = req.body;
-    const users = await User.find({ name: { $regex: name, $options: 'i' } });
+    const users = await User.find({ name: { $regex: name, $options: "i" } });
     let to_return = [];
     users.forEach((user) => {
       to_return.push({
         _id: user._id,
         name: user.name,
-        img: user.picture
+        img: user.picture,
       });
     });
     res.status(200).json(to_return);
@@ -50,7 +48,7 @@ const get_users_with_ids = async (req, res) => {
       to_return.push({
         _id: user._id,
         name: user.name,
-        img: user.picture
+        img: user.picture,
       });
     });
     res.status(200).json(to_return);
@@ -91,14 +89,16 @@ const add_liked = async (req, res) => {
     const { user_id, service_id } = req.body;
     const user = await User.findById(user_id);
     if (!user) {
-      return res.status(404).json({ message: `User with id ${user_id} not found` });
+      return res
+        .status(404)
+        .json({ message: `User with id ${user_id} not found` });
     }
-    if(user.liked.includes(service_id)){
+    if (user.liked === undefined) user.liked = [];
+    if (user.liked.includes(service_id)) {
       return res.status(404).json({ message: `Service already liked!` });
     }
     let updated = user;
-    if(updated.liked==null)
-      updated.liked=[];
+    if (updated.liked == null) updated.liked = [];
     updated.liked.push(service_id);
 
     await User.findByIdAndUpdate(user_id, updated);
@@ -106,6 +106,7 @@ const add_liked = async (req, res) => {
     const updatedUser = await User.findById(user_id);
     res.status(200).json(updatedUser);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -115,14 +116,15 @@ const add_reserved = async (req, res) => {
     const { user_id, service_id } = req.body;
     const user = await User.findById(user_id);
     if (!user) {
-      return res.status(404).json({ message: `User with id ${user_id} not found` });
+      return res
+        .status(404)
+        .json({ message: `User with id ${user_id} not found` });
     }
-    if(user.reserved.includes(service_id)){
+    if (user.reserved.includes(service_id)) {
       return res.status(404).json({ message: `Service already reserved!` });
     }
     let updated = user;
-    if(updated.reserved==null)
-      updated.reserved=[];
+    if (updated.reserved == null) updated.reserved = [];
     updated.reserved.push(service_id);
 
     await User.findByIdAndUpdate(user_id, updated);
@@ -136,12 +138,14 @@ const add_reserved = async (req, res) => {
 
 const remove_liked = async (req, res) => {
   try {
-    const { user_id,service_id } = req.body;
+    const { user_id, service_id } = req.body;
     const user = await User.findById(user_id);
     if (!user) {
-      return res.status(404).json({ message: `User with id ${user_id} not found` });
+      return res
+        .status(404)
+        .json({ message: `User with id ${user_id} not found` });
     }
-    if(!user.liked.includes(service_id)){
+    if (!user.liked.includes(service_id)) {
       return res.status(404).json({ message: `Service not liked!` });
     }
     let updated = user;
@@ -253,39 +257,6 @@ const post_picture_for_user = async (req, res) => {
   }
 };
 
-/*const createUserController = async(req, res) => {
-  try {
-    console.log(req.body);
-    const status = await userService.createUserDBService(req.body);
-    console.log(status);
-    if(status) {
-      res.send({"status": true, "message": "User created succsessfully"});
-    } else {
-      res.send({"status": false, "message": "Error creating user"});
-    }
-    
-  } catch (error) {
-    console.log(error);
-  }
-};
-const loginUserController = async(req, res) => {
-  var result = null;
-  try {
-    result = await userService.loginUserDBService(req.body);
-    if(result.status) {
-      res.send({"status": true, "message": "User created succsessfully"});
-    } else {
-      res.send({"status": false, "message": "Error creating user"});
-    
-    } 
-   }catch (error) {
-    console.log(error);
-  }
-};*/
-
-//@desc Register a user
-//@route POST /api/users/register
-//@access public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, username, email, password } = req.body;
   if (!name || !username || !email || !password) {
@@ -334,5 +305,5 @@ module.exports = {
   add_liked,
   add_reserved,
   remove_liked,
-  filter_users_name
+  filter_users_name,
 };

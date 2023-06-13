@@ -7,7 +7,6 @@
       <table class="users-table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Ime i prezime</th>
             <th>Korsinicko ime</th>
             <th>Email</th>
@@ -16,7 +15,6 @@
         </thead>
         <tbody>
           <tr v-for="user in users" :key="user._id">
-            <td>{{ user._id }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.username }}</td>
             <td>{{ user.email }}</td>
@@ -62,12 +60,16 @@ export default {
 </script>
 
 <style scoped>
-div.container {
-  max-width: 800px;
+.container {
+  width:100%;
+  height:100%;
+  padding:5vw;  
   margin: 0 auto;
   padding-bottom: 5%;
 }
-
+th,td{
+  width:20%;
+}
 p.error {
   border: 1px solid #ff5b5f;
   background-color: #ffc5c1;
@@ -75,12 +77,13 @@ p.error {
   margin-bottom: 15px;
 }
 
-div.table-container {
+.table-container {
   overflow-x: auto;
+  width:100%;
 }
 
-table.users-table {
-  width: 100%;
+.users-table {
+  width: 80vw;
   border-collapse: collapse;
 }
 button {

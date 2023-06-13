@@ -2,6 +2,7 @@
   <div class="background">
     <ChangeService />
   </div>
+ 
   <Footer />
 </template>
 

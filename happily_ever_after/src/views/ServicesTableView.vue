@@ -1,5 +1,5 @@
 <template>
-  <TopBar inStore :barText="'KONTAKT'" />
+  <TopBar inStore :barText="'USLUGE'" />
   <div class="content">
     <Services />
   </div>
@@ -61,17 +61,46 @@ img {
 .content {
   margin-top: 80vh;
 }
-@media (width<700px) {
-  .kontakt {
-    flex-direction: column;
+@media (max-width: 600px) {
+  table.users-table th,
+  table.users-table td {
+    font-size: 12px;
+    padding: 8px;
   }
-  .img {
-    width: 100%;
-    margin: 0;
-    margin-bottom: 2vh;
+
+  button.delete-button {
+    height: 25px;
+    width: 80px;
+    font-size: 12px;
   }
-  .info {
-    width: 100%;
+}
+
+@media (max-width: 600px) {
+  table.users-table th,
+  table.users-table td {
+    white-space: normal;
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  button.delete-button {
+    height: 25px;
+    width: 80px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  table.users-table th,
+  table.users-table td {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  button.delete-button {
+    height: 22px;
+    width: 70px;
+    font-size: 11px;
   }
 }
 </style>

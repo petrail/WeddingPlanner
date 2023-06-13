@@ -17,7 +17,7 @@
     </div>
     <div class="row">
       <label for="name">Email</label>
-      <input placeholder="Email" type="email" id="email" v-model="posts.email" required />
+      <input placeholder="Email" type="email" id="email" v-model="posts.email" required readonly />
     </div>
     <div class="row">
       <label for="name">Korisničko ime</label>
@@ -35,8 +35,14 @@
     </div>
     <div class="row">
       <label for="name">Potvrdi novu sifru</label>
-      <input placeholder="Potvrdi šifru" type="password" id="confirmPassword" v-model="confirmPassword" />
+      <input
+        placeholder="Potvrdi šifru"
+        type="password"
+        id="confirmPassword"
+        v-model="confirmPassword"
+      />
     </div>
+    <p class="warning" v-if="error">Lozinke se ne poklapaju!</p>
     <div class="row">
       <button @click="save">Sačuvaj izmene</button>
     </div>
@@ -67,30 +73,30 @@ export default {
   },
   methods: {
     async save() {
-  try {
-    // Check if the new password and confirm password match
-    if (this.newPassword !== this.confirmPassword) {
-      throw new Error('Passwords do not match')
-    }
+      try {
+        // Check if the new password and confirm password match
+        if (this.newPassword !== this.confirmPassword) {
+          throw new Error('Passwords do not match')
+        }
 
-    // Create a new object to save only the necessary data
-    const userData = {
-      _id: this.posts._id,
-      name: this.posts.name,
-      username: this.posts.username,
-      email: this.posts.email,
-      password: this.newPassword || this.posts.password // Use the new password if provided, otherwise use the existing password
-    }
+        // Create a new object to save only the necessary data
+        const userData = {
+          _id: this.posts._id,
+          name: this.posts.name,
+          username: this.posts.username,
+          email: this.posts.email,
+          password: this.newPassword || this.posts.password // Use the new password if provided, otherwise use the existing password
+        }
 
-    // Make an API request to save user data
-    await UserService.saveUser(this.posts._id, userData)
+        // Make an API request to save user data
+        await UserService.saveUser(this.posts._id, userData)
 
-    console.log('Changes saved!')
-  } catch (error) {
-    console.log(error.message)
-    this.error = 'Error saving user data.'
-  }
-},
+        console.log('Changes saved!')
+      } catch (error) {
+        console.log(error.message)
+        this.error = 'Error saving user data.'
+      }
+    },
 
     handleFileUpload(event) {
       console.log(event)

@@ -139,8 +139,8 @@ input::placeholder{
     color:white;
 }
 .link{
+    width:auto !important;
     color:white;
-    justify-self:left;
     padding:5px;
     font-size:max(1.25vw,16pt);
 }

@@ -29,12 +29,13 @@ const userSchema = mongose.Schema(
       contentType: String,
     },
     usluge: { type: [Object] },
-    chats:{
-      type:[String],
+    chats: {
+      type: [String],
     },
-    reserved:{
-      type:[String],
+    reserved: {
+      type: [String],
     },
+    liked: { type: [String] },
   },
   {
     timestamps: true,

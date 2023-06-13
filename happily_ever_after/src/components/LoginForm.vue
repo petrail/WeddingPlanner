@@ -1,14 +1,21 @@
 <template>
   <div class="login-page">
     <h1>Prijava</h1>
-    <p>Unesite korisničko ime i šifru</p>
+    <p>Unesite e-mail i šifru</p>
     <form @submit.prevent="login">
       <div class="form-group">
-        <input @change = "remove_error()" placeholder="Email" type="email" name="username" v-model="user.email" required />
+        <input
+          @change="remove_error()"
+          placeholder="Email"
+          type="email"
+          name="username"
+          v-model="user.email"
+          required
+        />
       </div>
       <div class="form-group">
         <input
-          @change = "remove_error()"
+          @change="remove_error()"
           placeholder="Šifra"
           type="password"
           name="password"
@@ -44,7 +51,7 @@ export default {
         email: '',
         userType: ''
       },
-      error:false,
+      error: false
     }
   },
   created() {},
@@ -52,8 +59,8 @@ export default {
     console.log('mounted() called...')
   },
   methods: {
-    remove_error(){
-      this.error=false;
+    remove_error() {
+      this.error = false
     },
     login() {
       axios
@@ -73,22 +80,20 @@ export default {
               console.log(response)
               console.log(response.data[0].userType)
 
-             // const userType = response.data[0].userType
-              localStorage.setItem('isCoord',response.data[0].userType!=undefined)
+              // const userType = response.data[0].userType
+              localStorage.setItem('isCoord', response.data[0].userType != undefined)
               console.log(response.data[0].userType)
               // Use userType in further logic
               // For example, use if-else statements to determine redirection based on userType
 
-              
               this.$router.push('/shopmain')
-              
             })
             .catch((error) => {
               console.log('Error:', error.response.data)
             })
         })
         .catch((error) => {
-          this.error=true;
+          this.error = true
           console.log('Error:', error.response.data)
         })
     }
@@ -117,11 +122,11 @@ export default {
 </script>
 
 <style scoped>
-.warning{
-  color:var(--light-red);
-  font-size: max(1vw,12pt);
+.warning {
+  color: var(--light-red);
+  font-size: max(1vw, 12pt);
   font-weight: bold;
-  margin-top:0;
+  margin-top: 0;
 }
 .login-page {
   display: flex;
@@ -186,8 +191,8 @@ input::placeholder {
   color: white;
 }
 .link {
+  width:auto !important;
   color: white;
-  justify-self: left;
   padding: 5px;
   font-size: max(1.25vw, 16pt);
 }

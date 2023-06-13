@@ -1,73 +1,75 @@
-
 <template>
-  <TopBar inStore :barText="'KONTAKT'"/>
-  <div class = "content">
-    <Service/>
+  <TopBar inStore :barText="'KORISNICI'" />
+  <div class="content">
+    <Service />
   </div>
-  <Footer/>
+  <Footer />
 </template>
 
 <script>
 import { RouterLink, RouterView } from 'vue-router'
-import Service from '../components/AdminPage.vue';
+import Service from '../components/AdminPage.vue'
 import TopBar from '../components/TopBar.vue'
 import Contact from '../components/Contact.vue'
-import Footer from '../components/Footer.vue';
-export default({
-  name:"AdminPageView",
-  components:{
-    TopBar,Contact, Footer, Service
+import Footer from '../components/Footer.vue'
+export default {
+  name: 'AdminPageView',
+  components: {
+    TopBar,
+    Contact,
+    Footer,
+    Service
   },
-  mounted () {
+  mounted() {
     window.scrollTo(0, 0)
   }
-})
+}
 </script>
 
 <style scoped>
-.kontakt{
-  width:100vw;
-  padding:3vw;
-  display:flex;
-} 
-.sub{
-  margin-bottom:2vh;
+.kontakt {
+  width: 100vw;
+  padding: 3vw;
+  display: flex;
 }
-p{
-  font-size:16pt;
+.sub {
+  margin-bottom: 2vh;
 }
-h2{
-  font-size:20pt;
+p {
+  font-size: 16pt;
+}
+h2 {
+  font-size: 20pt;
   font-weight: 600;
 }
-.img{
-  width:48%;
-  margin-right:2%;
-  display:flex;
+.img {
+  width: 48%;
+  margin-right: 2%;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
-img{
-  width:80%;
+img {
+  width: 80%;
 }
-.info{
-  width:50%;
-  padding:3vw;
+.info {
+  width: 50%;
+  padding: 3vw;
 }
-.content{
+.content {
   margin-top: 80vh;
 }
-@media (width<700px){
-  .kontakt{
-    flex-direction:column;
+@media (width<700px) {
+  .kontakt {
+    flex-direction: column;
   }
-  .img{
-    width:100%;
-    margin:0;
-    margin-bottom:2vh;
+  .img {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 2vh;
   }
-  .info{
-    width:100%;
+  .info {
+    width: 100%;
   }
 }
 </style>

@@ -151,6 +151,7 @@ export default({
   left:48%;
   width:50px;
   height:50px;
+  z-index:999;
 }
 @keyframes rotate{
   0%{
@@ -269,7 +270,7 @@ h2{
   padding:3vw;
   padding-bottom:0;
   padding-top:0;
-  width:30%;
+  width:50%;
   font-family:"HHoney"
 }
 .link{
