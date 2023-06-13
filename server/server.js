@@ -228,15 +228,14 @@ app.delete("/user/id/:id", UserController.delete_user);
 app.get("/users/id/:id", UserController.get_user_by_id);
 
 const imgStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, '../img/');
-  },
+  destination: "./img",  
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   }
 });
-const imgUpload = multer({ imgStorage });
-
+const imgUpload = multer({ 
+  storage: imgStorage,
+  limits:{fileSize: 1000000 } });
 app.put(
   "/users/:id/picture",
   imgUpload.single('file'), async (req, res) => {

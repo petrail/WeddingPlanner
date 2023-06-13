@@ -97,7 +97,7 @@ export default {
         { first_id:this.me._id,
           second_id:user._id
         });
-      this.otherUser =user.name;
+      this.otherUser = {name: user.name, img: user.img};
       this.messages=this.chat.data.messages;
       this.chat_id = this.chat.data.id;
       this.getMe();

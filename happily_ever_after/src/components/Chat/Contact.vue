@@ -60,8 +60,10 @@
     transition:all 0.5s ease;
 }
 .img{
-    width:20%;
-    aspect-ratio: 1/1;
+    min-height:48px;
+    min-width: 48px;
+    height:48px;
+    width:48px;
     border-radius:100%;
     background-size:cover;
     background-repeat:no-repeat;

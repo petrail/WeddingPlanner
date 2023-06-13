@@ -1,10 +1,13 @@
 <template>
   <div class="acccontainer">
-    <form class="photo"  enctype="multipart/form-data" >
+    <div v-if="!this.imgUrl || this.change" class="photo">
+    <form enctype="multipart/form-data" >
       <input name="file" class="file" type="file" accept="image/*" @change="handleFileUpload" />
     </form>
     <button @click="uploadImage">Upload</button>
-    <img v-if="this.imageUrl" :src="this.imageUrl" alt="Uploaded Image" />
+    <button v-if="this.change" @click="cancelChangeImg">Cancel</button>
+    </div>
+    <img @click="changeImg" class="accImg" v-if="this.imgUrl && !this.change" :style="`background-image: url(http://localhost:3000${this.imgUrl})`" />
     <div class="head row">
       <div class="title">
         <h3>VAŠ NALOG</h3>
@@ -58,7 +61,8 @@ export default {
     return {
       posts: {},
       error: '',
-      imgUrl:''
+      imgUrl:null,
+      change:false, 
     }
   },
   async created() {
@@ -67,6 +71,7 @@ export default {
       const users = await UserService.getUsers(token)
       if (users.length > 0) {
         this.posts = users[0]
+        this.imgUrl = users[0].picture;
       }
     } catch (error) {
       this.error = error.message
@@ -98,7 +103,12 @@ export default {
         this.error = 'Error saving user data.'
       }
     },
-
+    changeImg(){
+      this.change=true;
+    },
+    cancelChangeImg(){
+      this.change=false;
+    },
     handleFileUpload(event) {
       this.selectedFile = event.target.files[0]
       console.log(this.selectedFile)
@@ -130,13 +140,8 @@ export default {
             )
           })
           .then((response) => {
-            let imageData = response.data.img;
-            console.log(imageData);
-            const uint8Array = new Uint8Array(imageData);
-            const blob = new Blob([uint8Array], { type: 'image/png' });
-            console.log(imageData);
-            this.imgUrl = URL.createObjectURL(blob);
-            console.log(this.imgUrl);
+            this.change = false;
+            this.imgUrl = response.data.img;
           })
           .catch((error) => {
             // Handle the error if the upload fails
@@ -149,10 +154,21 @@ export default {
 </script>
 
 <style scoped>
+.accImg{
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 256px;
+  min-height: 256px;
+  width: 256px;
+  min-width:256px;
+  background-color: var(--light-pink);
+}
 h1 {
   font-weight: 600;
-  font-size: 3vw;
+  font-size: max(3vw,24pt);
 }
+
 .acccontainer {
   display: flex;
   flex-direction: column;
@@ -183,7 +199,7 @@ h3 {
   border: 0;
   border-radius: 100%;
   width: 40%;
-  margin-bottom: 10vh;
+  margin-bottom: 3vh;
   /*height:19vh;*/
   background-size: cover;
   background-repeat: no-repeat;

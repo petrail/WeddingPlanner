@@ -1,6 +1,9 @@
 <template>
   <div class="chatContainer">
-  <h2>{{ otherUser }}</h2>
+  <div class="other">
+    <div class="img" :style="`background-image: url(http://localhost:3000${otherUser.img})`"></div>
+    <h2>{{ otherUser.name }}</h2>
+  </div>
   <div class="chat-messages">
     <div v-for="(message,index) in currentActiveChat" :key="index" :class="isMyMessage(message)?'messageRow me':'messageRow other'">
       <div :class="message.me?'message myMsg':'message otherMsg'">
@@ -27,8 +30,14 @@ export default {
       default:null
     },
     otherUser:{
-      type:String,
-      default:''
+      name:{
+        type:String,
+        default:'',
+      },
+      img:{
+        type:String,
+        default:'',
+      }
     },
     myID:{
       type:String,
@@ -80,7 +89,23 @@ export default {
   padding:1vw;
   height:100%;
 }
-
+.other{
+  width:100%;
+  display: flex;
+  align-items: center;
+}
+.img{
+    min-height:48px;
+    min-width: 48px;
+    height:48px;
+    width:48px;
+    margin-right: 10px;
+    aspect-ratio: 1/1;
+    border-radius:100%;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+}
 .messageRow {
   display:flex;
   width:100%;
